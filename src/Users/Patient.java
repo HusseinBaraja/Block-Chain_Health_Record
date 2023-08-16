@@ -1,4 +1,8 @@
-public class Patient extends Users{
+package Users;
+
+import Users.Users;
+
+public class Patient extends Users {
     String patientID;
 
     public Patient(String fullName, String DOB, String gender, int age, int phoneNumber, String patientID) {

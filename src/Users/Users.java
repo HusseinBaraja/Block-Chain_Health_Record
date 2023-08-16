@@ -1,3 +1,5 @@
+package Users;
+
 public class Users {
     String fullName, DOB, gender, role;
     int age, phoneNumber;
