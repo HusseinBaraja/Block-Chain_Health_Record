@@ -7,5 +7,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="json-simple-1.1" level="project" />
+    <orderEntry type="library" name="gson-2.6" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15-tests.jar!/" />
+          <root url="jar://$MODULE_DIR$/../commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../commons-codec-1.15-bin/commons-codec-1.15/commons-codec-1.15-test-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>
