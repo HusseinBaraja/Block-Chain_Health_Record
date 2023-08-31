@@ -28,33 +28,6 @@ public class Patient extends Users {
         this.imagingReports = new ArrayList<>();
     }
 
-    public void addDiagnosis(String diagnosis) {
-        diagnoses.add(diagnosis);
-    }
-
-    public void addAllergy(String allergy) {
-        allergies.add(allergy);
-    }
-
-    public void addImmunization(String immunization) {
-        immunizations.add(immunization);
-    }
-
-    public void addMedication(String medication) {
-        medications.add(medication);
-    }
-
-    public void addProcedure(String procedure) {
-        procedures.add(procedure);
-    }
-
-    public void addLabTestResult(String labTestResult) {
-        labTestResults.add(labTestResult);
-    }
-
-    public void addImagingReport(String imagingReport) {
-        imagingReports.add(imagingReport);
-    }
 
 //    @Override
 //    public String toString() {

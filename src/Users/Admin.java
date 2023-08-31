@@ -32,15 +32,4 @@ public class Admin extends Users {
             System.out.println("User is not managed by this admin.");
         }
     }
-
-//    @Override
-//    public String toString() {
-//        return "Admin{" +
-//                "userID='" + userID + '\'' +
-//                ", fullName='" + fullName + '\'' +
-//                ", role='" + role + '\'' +
-//                ", managedUsersCount=" + managedUsers.size() +
-//                '}';
-//    }
-
 }

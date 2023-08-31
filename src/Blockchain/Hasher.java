@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 import org.apache.commons.codec.binary.Hex;
 
 
-
 public class Hasher {
 
 	/**

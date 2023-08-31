@@ -95,7 +95,8 @@ public class Electronic_Health_Record_Application {
 
     private static void authorizeUser() {
         Scanner scanner = new Scanner(System.in);
-
+        // Make sure to give the user private key + encrypt the private key before giving the user and when they sign in
+        // they will decrypt the private key through symmetric decryption. After that they can
         // Check admin credentials
         System.out.print("Enter username to authorize: ");
         String username = scanner.nextLine();

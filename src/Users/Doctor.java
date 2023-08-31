@@ -1,5 +1,10 @@
 package Users;
 
+import Application.Electronic_Health_Record_Application;
+import org.json.simple.JSONObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +25,50 @@ public class Doctor extends Users {
         this.yearsOfExperience = yearsOfExperience;
         patients = new ArrayList<>();
     }
+    Scanner scanner = new Scanner(System.in);
+    public void DisplayOptions(){
+        System.out.println("""
+                1- Add Diagnosis
+                2- Add Allergies
+                3- Add Immunizations
+                4- Add Medications
+                5- Add Procedures
+                6- Add Lab Test Results
+                7- Vital Signs
+                8- Add Imaging Reports\s""");
+        int option = scanner.nextInt();
+
+//        switch (option) {
+//            case 1:
+//                addDiagnosisToPatient();
+//            case 2:
+//                return Users.UserRole.DOCTOR;
+//            case 3:
+//                return Users.UserRole.PATIENT;
+//            case 4:
+//                return Users.UserRole.HEALTH_PROVIDER;
+//            default:
+//                throw new IllegalArgumentException("Invalid role choice.");
+//        }
+    }
+
+    private void addDiagnosisToPatient() {
+        System.out.println("Please enter the patient's name: ");
+        String patientName = scanner.nextLine();
 
 
+    }
+    public void AddDiagnosis(){
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
+
+        try (FileWriter file = new FileWriter("user_database.json")) {
+            file.write(jsonObject.toJSONString());
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     static class PatientRecord {
         String patientID;
         List<Diagnosis> diagnoses;
@@ -61,6 +108,18 @@ public class Doctor extends Users {
             this.status = status;
             this.provider = provider;
             this.notes = notes;
+        }
+
+        public void AddDiagnosis(){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
+
+            try (FileWriter file = new FileWriter("user_database.json")) {
+                file.write(jsonObject.toJSONString());
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -177,15 +236,7 @@ public class Doctor extends Users {
         }
     }
 
-    void addDiagnosisToPatient(String patientID, Diagnosis diagnosis) {
-        PatientRecord record = patientRecords.get(patientID);
-        if (record == null) {
-            record = new PatientRecord(patientID);
-            patientRecords.put(patientID, record);
-        }
-        record.diagnoses.add(diagnosis);
-        System.out.println("Diagnosis added for patient ID: " + patientID);
-    }
+
 
 
 //    Scanner scanner = new Scanner(System.in);
