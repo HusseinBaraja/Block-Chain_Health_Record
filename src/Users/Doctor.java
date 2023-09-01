@@ -1,7 +1,6 @@
 package Users;
 
 import Application.Electronic_Health_Record_Application;
-import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,19 +11,82 @@ import java.util.Scanner;
 
 public class Doctor extends Users {
     private HashMap<String, PatientRecord> patientRecords;
-    private String workingHospital, speciality, qualification;
+    private String workingHospital, speciality, qualification, username, password;
     private int yearsOfExperience;
     private List<Patient> patients;
 
-    public Doctor(String fullName, String DOB, String gender, int age, int phoneNumber,
-                  String workingHospital, String speciality, String qualification, int yearsOfExperience) {
+    public Doctor(String fullName, String DOB, String gender, int age, int phoneNumber, String username, String password) {
         super(fullName, DOB, gender, age, phoneNumber);
         this.workingHospital = workingHospital;
         this.speciality = speciality;
         this.qualification = qualification;
         this.yearsOfExperience = yearsOfExperience;
         patients = new ArrayList<>();
+        this.username = username;
+        this.password = password;
     }
+
+    public HashMap<String, PatientRecord> getPatientRecords() {
+        return patientRecords;
+    }
+
+    public void setPatientRecords(HashMap<String, PatientRecord> patientRecords) {
+        this.patientRecords = patientRecords;
+    }
+
+    public String getWorkingHospital() {
+        return workingHospital;
+    }
+
+    public void setWorkingHospital(String workingHospital) {
+        this.workingHospital = workingHospital;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getYearsOfExperience() {
+        return yearsOfExperience;
+    }
+
+    public void setYearsOfExperience(int yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
+    }
+
+
     Scanner scanner = new Scanner(System.in);
     public void DisplayOptions(){
         System.out.println("""
@@ -58,17 +120,17 @@ public class Doctor extends Users {
 
 
     }
-    public void AddDiagnosis(){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
-
-        try (FileWriter file = new FileWriter("user_database.json")) {
-            file.write(jsonObject.toJSONString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void AddDiagnosis(){
+//        JSONObject jsonObject = new JSONObject();
+//        jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
+//
+//        try (FileWriter file = new FileWriter("user_database.json")) {
+//            file.write(jsonObject.toJSONString());
+//            file.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     static class PatientRecord {
         String patientID;
         List<Diagnosis> diagnoses;
@@ -110,17 +172,17 @@ public class Doctor extends Users {
             this.notes = notes;
         }
 
-        public void AddDiagnosis(){
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
-
-            try (FileWriter file = new FileWriter("user_database.json")) {
-                file.write(jsonObject.toJSONString());
-                file.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        public void AddDiagnosis(){
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
+//
+//            try (FileWriter file = new FileWriter("user_database.json")) {
+//                file.write(jsonObject.toJSONString());
+//                file.flush();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     class Allergy {
