@@ -1,0 +1,108 @@
+{
+    "Admin": [
+        {
+            "Name": "Gregory Stevens",
+            "Username": "gregory",
+            "Password": "gregoryadminpass"
+        },
+        {
+            "Name": "Rebecca Morgan",
+            "Username": "rebecca",
+            "Password": "rebeccaadminpass"
+        },
+        {
+            "Name": "Liam Nelson",
+            "Username": "liam",
+            "Password": "liamadminpass"
+        },
+        {
+            "Name": "1",
+            "Username": "4",
+            "Password": "5"
+        }
+    ],
+    "HealthProvider": [
+        {
+            "Name": "John Doe",
+            "ClinicOrHospital": "MediCare Clinic",
+            "ContactNumber": "123-456-7890",
+            "Username": "john",
+            "Password": "password123",
+            "AccessGranted": true
+        },
+        {
+            "Name": "Alice Brown",
+            "ClinicOrHospital": "HealFast Hospital",
+            "ContactNumber": "987-654-1234",
+            "Username": "alice",
+            "Password": "alicepass",
+            "AccessGranted": true
+        },
+        {
+            "Name": "Bob Martin",
+            "ClinicOrHospital": "Wellness Clinic",
+            "ContactNumber": "876-543-2109",
+            "Username": "bobm",
+            "Password": "bobpass",
+            "AccessGranted": true
+        },
+        {
+            "Name": "1",
+            "ClinicOrHospital": "2",
+            "ContactNumber": "3",
+            "Username": "4",
+            "Password": "5",
+            "AccessGranted": false
+        }
+    ],
+    "Doctor": [
+        {
+            "Name": "Dr. Smith",
+            "Username": "drsmith",
+            "Password": "smithpassword"
+        },
+        {
+            "Name": "Dr. Jane Foster",
+            "Username": "drjane",
+            "Password": "drjanepass"
+        },
+        {
+            "Name": "Dr. Alan Walker",
+            "Username": "dralan",
+            "Password": "dralanpass"
+        }
+    ],
+    "Receptionist": [
+        {
+            "Name": "Jane",
+            "Username": "jane",
+            "Password": "janepassword"
+        },
+        {
+            "Name": "Lucas Gray",
+            "Username": "lucas",
+            "Password": "lucaspass"
+        },
+        {
+            "Name": "Sarah White",
+            "Username": "sarah",
+            "Password": "sarahpass"
+        }
+    ],
+    "Patient": [
+        {
+            "Name": "Mike",
+            "Username": "mike",
+            "Password": "mikepassword"
+        },
+        {
+            "Name": "Ella Watson",
+            "Username": "ella",
+            "Password": "ellapass"
+        },
+        {
+            "Name": "Robert James",
+            "Username": "robert",
+            "Password": "robertpass"
+        }
+    ]}

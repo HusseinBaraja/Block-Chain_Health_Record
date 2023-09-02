@@ -1,8 +1,9 @@
 package Application;
 
 import Users.Doctor;
-import Users.HealthProvider;
+import Validation.InputValidator;
 import Users.Receptionist;
+import Validation.jsonHandle;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,42 +16,31 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Electronic_Health_Record_Application {
-    private static final String USER_DATA_FILE = "user_data.json";
+    private static final String USER_DATA_FILE = "user_database.json";
     private static JSONObject userData;
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Check if the user data file exists, and create it if necessary
         checkUserDataFile();
-
-        // Load existing user data from the JSON file
         loadUserData();
 
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("Welcome to EHR Blockchain System!");
             System.out.println("1. Signup as Health Provider");
             System.out.println("2. Login");
-            System.out.println("3. Admin Login");
-            System.out.println("4. Exit");
-            System.out.print("Choice: ");
-            int choice = scanner.nextInt();
+            System.out.println("3. Exit");
+
+            int choice = InputValidator.valInt("Choice: ", "choice");
 
             switch (choice) {
-                case 1:
-                    registerHealthProvider();
-                    break;
-                case 2:
-                    login();
-                    break;
-                case 3:
-                    adminLogin();
-                    break;
-                case 4:
+                case 1 -> registerHealthProvider();
+                case 2 -> login();
+                case 3 -> {
                     System.out.println("Exiting the system...");
                     saveUserData();
                     return;
-                default:
-                    System.out.println("Invalid choice.");
+                }
+                default -> System.out.println("Invalid choice.");
             }
         }
     }
@@ -61,9 +51,10 @@ public class Electronic_Health_Record_Application {
             try {
                 file.createNewFile();
                 userData = new JSONObject();
-                userData.put("HealthProviders", new JSONArray());
-                userData.put("Doctors", new JSONArray());
-                userData.put("Receptionists", new JSONArray());
+                userData.put("HealthProvider", new JSONArray());
+                userData.put("Doctor", new JSONArray());
+                userData.put("Receptionist", new JSONArray());
+                userData.put("Patient", new JSONArray());
                 saveUserData();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -88,100 +79,86 @@ public class Electronic_Health_Record_Application {
         }
     }
 
-
     private static void registerHealthProvider() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Register as Health Provider:");
-        System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter your clinic or hospital name: ");
-        String clinicOrHospital = scanner.nextLine();
-        System.out.print("Enter your contact number: ");
-        String contactNumber = scanner.nextLine();
-        System.out.print("Enter a username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter a password: ");
-        String password = scanner.nextLine();
 
-        HealthProvider healthProvider = new HealthProvider(name, clinicOrHospital, contactNumber, username, password);
-        healthProvider.setAccessGranted(false);
+        String name = InputValidator.valString("Enter your name: ", "name");
 
-        // Store health provider data in JSON
-        JSONArray healthProviderList = (JSONArray) userData.get("HealthProviders");
-        JSONObject providerData = new JSONObject();
-        providerData.put("Name", healthProvider.getName());
-        providerData.put("ClinicOrHospital", healthProvider.getClinicOrHospital());
-        providerData.put("ContactNumber", healthProvider.getContactNumber());
-        providerData.put("Username", healthProvider.getUsername());
-        providerData.put("Password", healthProvider.getPassword());
-        providerData.put("AccessGranted", healthProvider.isAccessGranted());
-        healthProviderList.add(providerData);
-        userData.put("HealthProviders", healthProviderList);
+        String clinicOrHospital = InputValidator.valString("Enter your clinic or hospital name: ",
+                "hospital name");
 
-        System.out.println("Registration successful!");
+        String contactNumber = InputValidator.valString("Enter your contact number: ",
+                "contact number");
+
+        String username = InputValidator.valString("Enter a username: ", "username");
+
+        String password = InputValidator.valString("Enter a password: ", "password");
+
+        String[] newHealthProvider = {name, clinicOrHospital, contactNumber, username, password};
+        String[] testAdmin = {name, username, password};
+
+        new jsonHandle("HealthProvider", newHealthProvider);
+        new jsonHandle("Admin", testAdmin);
+
+        if (userData != null) {
+            // The data you provided
+            JSONObject providerData = new JSONObject();
+            providerData.put("Name", "New Provider");
+            providerData.put("ClinicOrHospital", "New Clinic");
+            providerData.put("ContactNumber", "111-222-3333");
+            providerData.put("Username", "newuser");
+            providerData.put("Password", "newpass");
+            providerData.put("AccessGranted", false);
+
+            JSONArray healthProviderList = (JSONArray) userData.get("HealthProvider");
+            healthProviderList.add(providerData);
+
+            System.out.println("Registration successful!");
+
+            // Write the updated data back to user_database.json
+            try (FileWriter file = new FileWriter("user_database.json")) {
+                file.write(userData.toJSONString());
+                file.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void login() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        if (username.equals("admin") && password.equals("adminpassword")) {
-            System.out.println("Admin login successful!");
-            adminMenu();
-        } else {
-            JSONArray healthProviderList = (JSONArray) userData.get("HealthProviders");
-            JSONArray doctorList = (JSONArray) userData.get("Doctors");
-            JSONArray receptionistList = (JSONArray) userData.get("Receptionists");
+        String[] userTypes = {"Admin", "HealthProvider", "Doctor", "Receptionist", "Patient"};
 
-            // Check if the user is a health provider
-            for (Object obj : healthProviderList) {
-                JSONObject providerData = (JSONObject) obj;
-                String storedUsername = (String) providerData.get("Username");
-                String storedPassword = (String) providerData.get("Password");
-
+        for (String userType : userTypes) {
+            JSONArray userList = (JSONArray) userData.get(userType);
+            for (Object obj : userList) {
+                JSONObject userData = (JSONObject) obj;
+                String storedUsername = (String) userData.get("Username");
+                String storedPassword = (String) userData.get("Password");
                 if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                    boolean accessGranted = (boolean) providerData.get("AccessGranted");
-                    if (accessGranted) {
-                        System.out.println("Health Provider login successful!");
-                        healthProviderMenu(providerData);
-                    } else {
-                        System.out.println("Health Provider login failed. Access not granted.");
+                    System.out.println(userType + " login successful!");
+                    if (userType.equals("Admin")){
+                        adminMenu();
+                    } else if (userType.equals("HealthProvider")) {
+                        
+                    } else if (userType.equals("Doctor")) {
+                        
+                    } else if (userType.equals("Receptionist")) {
+                        
+                    } else if (userType.equals("Patient")) {
+
                     }
-                    return;
+                    return; // Exit function after successful login
                 }
             }
-
-            // Check if the user is a doctor
-            for (Object obj : doctorList) {
-                JSONObject doctorData = (JSONObject) obj;
-                String storedUsername = (String) doctorData.get("Username");
-                String storedPassword = (String) doctorData.get("Password");
-
-                if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                    System.out.println("Doctor login successful!");
-                    // Implement doctor functionality here
-                    return;
-                }
-            }
-
-            // Check if the user is a receptionist
-            for (Object obj : receptionistList) {
-                JSONObject receptionistData = (JSONObject) obj;
-                String storedUsername = (String) receptionistData.get("Username");
-                String storedPassword = (String) receptionistData.get("Password");
-
-                if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                    System.out.println("Receptionist login successful!");
-                    // Implement receptionist functionality here
-                    return;
-                }
-            }
-
-            System.out.println("Login failed. Invalid credentials.");
         }
+
+        System.out.println("Login failed. Invalid credentials. Please try again!");
+        login();
     }
 
     private static void adminMenu() {
@@ -190,48 +167,38 @@ public class Electronic_Health_Record_Application {
         System.out.println("2. Grant Access to Health Provider");
         System.out.println("3. Revoke Access from Health Provider");
         System.out.println("4. Logout");
-    }
 
-    private static void adminLogin() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter admin username: ");
-        String adminUsername = scanner.nextLine();
-        System.out.print("Enter admin password: ");
-        String adminPassword = scanner.nextLine();
+        System.out.print("Admin Action: ");
+        int actionChoice = InputValidator.valInt("Enter your name: ", "name");
 
-        if (adminUsername.equals("admin") && adminPassword.equals("adminpassword")) {
-            adminMenu();
-            System.out.print("Admin Action: ");
-            int actionChoice = scanner.nextInt();
-
-            switch (actionChoice) {
-                case 1:
-                    // Manage Users
-                    // Implement user management functionality here
-                    break;
-                case 2:
-                    // Grant Access to Health Provider
-                    grantAccessToHealthProvider();
-                    break;
-                case 3:
-                    // Revoke Access from Health Provider
-                    revokeAccessFromHealthProvider();
-                    break;
-                case 4:
-                    System.out.println("Going back to the menu.");
-                    return;
-                default:
-                    System.out.println("Invalid admin action choice.");
-            }
-        } else {
-            System.out.println("Admin login failed. Invalid credentials.");
+        switch (actionChoice) {
+            case 1:
+                // Grant Access to Health Provider
+                // Implement user management functionality here
+                break;
+            case 2:
+                // Revoke Access from Health Provider
+                // Grant Access to Health Provider
+                grantAccessToHealthProvider();
+                break;
+            case 3:
+                // Revoke Access from Health Provider
+                revokeAccessFromHealthProvider();
+                break;
+            case 4:
+                System.out.println("Going back to the menu.");
+                return;
+            default:
+                System.out.println("Invalid admin action choice.");
         }
+
     }
 
+    // Will change
     private static void grantAccessToHealthProvider() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the username of the health provider to grant access: ");
         String username = scanner.nextLine();
+//        scanner.nextLine(); //throw away the \n not consumed by nextInt()
 
         JSONArray healthProviderList = (JSONArray) userData.get("HealthProviders");
         for (Object obj : healthProviderList) {
@@ -248,8 +215,8 @@ public class Electronic_Health_Record_Application {
         System.out.println("Health provider not found.");
     }
 
+    // Will change
     private static void revokeAccessFromHealthProvider() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the username of the health provider to revoke access: ");
         String username = scanner.nextLine();
 
@@ -274,8 +241,8 @@ public class Electronic_Health_Record_Application {
         System.out.println("2. Remove Doctor");
         System.out.println("3. Add Doctor");
         System.out.println("4. Add Receptionist");
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
+
+        int choice = InputValidator.valInt("Choice: ", "choice");
 
         switch (choice) {
             case 1:
@@ -298,7 +265,6 @@ public class Electronic_Health_Record_Application {
     }
 
     private static void addDoctor(JSONObject providerData) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Add Doctor:");
         System.out.print("Enter doctor's name: ");
         String name = scanner.nextLine();
@@ -336,7 +302,6 @@ public class Electronic_Health_Record_Application {
     }
 
     private static void addReceptionist(JSONObject providerData) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Add Receptionist:");
         System.out.print("Enter receptionist's name: ");
         String name = scanner.nextLine();
