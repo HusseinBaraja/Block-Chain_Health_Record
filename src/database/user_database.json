@@ -19,6 +19,11 @@
             "Name": "1",
             "Username": "4",
             "Password": "5"
+        },
+        {
+            "Name": "Ghassan",
+            "Username": "ghassan",
+            "Password": "ghassan"
         }
     ],
     "HealthProvider": [
@@ -45,6 +50,22 @@
             "Username": "bobm",
             "Password": "bobpass",
             "AccessGranted": false
+        },
+        {
+            "Name": "Ghassan",
+            "ClinicOrHospital": "ghassan",
+            "ContactNumber": "0213123123",
+            "Username": "ghassan",
+            "Password": "ghassan",
+            "AccessGranted": false
+        },
+        {
+            "Name": "dasd",
+            "ClinicOrHospital": "clinic",
+            "ContactNumber": "0324324",
+            "Username": "testt",
+            "Password": "testt",
+            "AccessGranted": false
         }
     ],
     "Doctor": [
@@ -62,23 +83,6 @@
             "Name": "Dr. Alan Walker",
             "Username": "dralan",
             "Password": "dralanpass"
-        }
-    ],
-    "Receptionist": [
-        {
-            "Name": "Jane",
-            "Username": "jane",
-            "Password": "janepassword"
-        },
-        {
-            "Name": "Lucas Gray",
-            "Username": "lucas",
-            "Password": "lucaspass"
-        },
-        {
-            "Name": "Sarah White",
-            "Username": "sarah",
-            "Password": "sarahpass"
         }
     ],
     "Patient": [

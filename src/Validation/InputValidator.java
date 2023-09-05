@@ -17,6 +17,8 @@ public class InputValidator {
      * @param inputName the name of the string input.
      * @return The validated string input.
      */
+
+    // clinic or hospital
     public static String valString(String Prompt, String inputName) {
         while (true) {
             System.out.print(Prompt);

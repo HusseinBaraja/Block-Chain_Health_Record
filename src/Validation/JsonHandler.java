@@ -10,10 +10,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class jsonHandle {
+public class JsonHandler {
     private final String USER_FILE = "src/database/user_database.json";
     private JSONObject userData;
-    public jsonHandle() {
+    public JsonHandler() {
         checkUserDataFile();
         loadUserData();
     }
@@ -27,12 +27,10 @@ public class jsonHandle {
                 JSONArray adminArray = new JSONArray();
                 JSONArray healthProviderArray = new JSONArray();
                 JSONArray doctorArray = new JSONArray();
-                JSONArray receptionistArray = new JSONArray();
                 JSONArray patientArray = new JSONArray();
                 userData.put("Admin", adminArray);
                 userData.put("HealthProvider", healthProviderArray);
                 userData.put("Doctor", doctorArray);
-                userData.put("Receptionist", receptionistArray);
                 userData.put("Patient", patientArray);
 
                 saveUserData();
@@ -166,7 +164,7 @@ public class jsonHandle {
             root.put(userType, newUserArray);
         }
 
-        String[] userTypes = {"Admin", "HealthProvider", "Doctor", "Receptionist", "Patient"};
+        String[] userTypes = {"Admin", "HealthProvider", "Doctor", "Patient"};
         JSONObject newUser = new JSONObject();
         if (userType.equals(userTypes[1])){
             newUser.put("Name", userInfo[0]);
@@ -190,7 +188,6 @@ public class jsonHandle {
             writeOrderedKeys(fileWriter, root, "Admin", "    ");
             writeOrderedKeys(fileWriter, root, "HealthProvider", "    ");
             writeOrderedKeys(fileWriter, root, "Doctor", "    ");
-            writeOrderedKeys(fileWriter, root, "Receptionist", "    ");
             writeOrderedKeys(fileWriter, root, "Patient", "    ", false);
             fileWriter.write("}");
             fileWriter.flush();
