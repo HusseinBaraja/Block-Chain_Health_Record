@@ -6,7 +6,7 @@ import java.security.Signature;
 
 public class MySignature {
 	private static final String ALGORITHM = "SHA256WithRSA";
-	private Signature sig;
+	private final Signature sig;
 	public MySignature() throws Exception {
 		sig = Signature.getInstance(ALGORITHM);
 	}

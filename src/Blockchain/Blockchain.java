@@ -38,8 +38,8 @@ public class Blockchain {
 	
 	public LinkedList<Block> get(){
 		try( FileInputStream fin = new FileInputStream(this.chainFile);
-				ObjectInputStream in = new ObjectInputStream(fin);
-			){
+				ObjectInputStream in = new ObjectInputStream(fin)
+		){
 			return (LinkedList<Block>)in.readObject();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class Blockchain {
 	}
 	private void persist() {
 		try(FileOutputStream fout = new FileOutputStream(this.chainFile);
-				ObjectOutputStream out = new ObjectOutputStream(fout);){
+				ObjectOutputStream out = new ObjectOutputStream(fout)){
 			out.writeObject(db);
 			System.out.println("> Master file is updated!");
 		}catch (Exception e) {

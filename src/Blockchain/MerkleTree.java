@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class MerkleTree {
-	private List<String> tranxLst;
+	private final List<String> tranxLst;
 	private String root = "0";
 
 	public String getRoot() {

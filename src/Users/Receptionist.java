@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Receptionist extends Users {
 
-    private String username, password;
+    private final String username;
+    private final String password;
 
     public Receptionist(String fullName, String DOB, String gender, int age, int phoneNumber, String username, String password) {
         super(fullName, DOB, gender, age, phoneNumber);

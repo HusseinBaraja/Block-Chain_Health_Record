@@ -13,7 +13,7 @@ public class Doctor extends Users {
     private HashMap<String, PatientRecord> patientRecords;
     private String workingHospital, speciality, qualification, username, password;
     private int yearsOfExperience;
-    private List<Patient> patients;
+    private final List<Patient> patients;
 
     public Doctor(String fullName, String DOB, String gender, int age, int phoneNumber, String username, String password) {
         super(fullName, DOB, gender, age, phoneNumber);
@@ -156,12 +156,12 @@ public class Doctor extends Users {
     }
 
     class Diagnosis {
-        private String diagnosisCode;
-        private String description;
-        private String date;
-        private String status;
-        private String provider;
-        private String notes;
+        private final String diagnosisCode;
+        private final String description;
+        private final String date;
+        private final String status;
+        private final String provider;
+        private final String notes;
 
         public Diagnosis(String diagnosisCode, String description, String date, String status, String provider, String notes) {
             this.diagnosisCode = diagnosisCode;
@@ -186,13 +186,13 @@ public class Doctor extends Users {
     }
 
     class Allergy {
-        private String allergenName;
-        private String reactionSeverity;
-        private String reactionDescription;
-        private String date;
-        private String treatmentPlan;
-        private String status;
-        private String medicationToAvoid;
+        private final String allergenName;
+        private final String reactionSeverity;
+        private final String reactionDescription;
+        private final String date;
+        private final String treatmentPlan;
+        private final String status;
+        private final String medicationToAvoid;
 
         public Allergy(String allergenName, String reactionSeverity, String reactionDescription, String date, String treatmentPlan, String status, String medicationToAvoid) {
             this.allergenName = allergenName;
@@ -206,9 +206,9 @@ public class Doctor extends Users {
     }
 
     class Immunization {
-        private String vaccineName;
-        private String date;
-        private String clinic;
+        private final String vaccineName;
+        private final String date;
+        private final String clinic;
 
         public Immunization(String vaccineName, String date, String clinic) {
             this.vaccineName = vaccineName;
@@ -220,9 +220,9 @@ public class Doctor extends Users {
 
 
     class Medication {
-        private String medicationName;
-        private String dosage;
-        private String frequency;
+        private final String medicationName;
+        private final String dosage;
+        private final String frequency;
 
         public Medication(String medicationName, String dosage, String frequency) {
             this.medicationName = medicationName;
@@ -232,10 +232,10 @@ public class Doctor extends Users {
     }
 
     class Procedure {
-        private String procedureName;
-        private String date;
-        private String doctor;
-        private String notes;
+        private final String procedureName;
+        private final String date;
+        private final String doctor;
+        private final String notes;
 
         public Procedure(String procedureName, String date, String doctor, String notes) {
             this.procedureName = procedureName;
@@ -247,10 +247,10 @@ public class Doctor extends Users {
     }
 
     class LabTestResult {
-        private String testName;
-        private String result;
-        private String technicianName;
-        private String timestamp;
+        private final String testName;
+        private final String result;
+        private final String technicianName;
+        private final String timestamp;
 
         public LabTestResult(String testName, String result, String technicianName, String timestamp) {
             this.testName = testName;
@@ -262,11 +262,11 @@ public class Doctor extends Users {
 
 
     class VitalSign {
-        private float temperature;
-        private float height; //
-        private float weight;
-        private String bloodPressure;
-        private int heartRate;
+        private final float temperature;
+        private final float height; //
+        private final float weight;
+        private final String bloodPressure;
+        private final int heartRate;
 
         public VitalSign(float temperature, float height, float weight, String bloodPressure, int heartRate) {
             this.temperature = temperature;
@@ -278,9 +278,9 @@ public class Doctor extends Users {
     }
 
     class ImagingReport {
-        private String reportName;
-        private String result;
-        private String clinic;
+        private final String reportName;
+        private final String result;
+        private final String clinic;
 
         public ImagingReport(String reportName, String result, String clinic) {
             this.reportName = reportName;
@@ -294,7 +294,6 @@ public class Doctor extends Users {
         PatientRecord record = patientRecords.get(patientID);
         if (record == null) {
             System.out.println("No record found for patient ID: " + patientID);
-            return;
         }
     }
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Admin extends Users {
-    private String role;
-    private List<Users> managedUsers;
+    private final String role;
+    private final List<Users> managedUsers;
 
     public Admin(String fullName, String DOB, String gender, int age, int phoneNumber,
                  String role) {
