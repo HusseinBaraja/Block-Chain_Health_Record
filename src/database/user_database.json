@@ -36,7 +36,7 @@
             "ContactNumber": "987-654-1234",
             "Username": "alice",
             "Password": "alicepass",
-            "AccessGranted": true
+            "AccessGranted": false
         },
         {
             "Name": "Bob Martin",
@@ -44,14 +44,6 @@
             "ContactNumber": "876-543-2109",
             "Username": "bobm",
             "Password": "bobpass",
-            "AccessGranted": true
-        },
-        {
-            "Name": "1",
-            "ClinicOrHospital": "2",
-            "ContactNumber": "3",
-            "Username": "4",
-            "Password": "5",
             "AccessGranted": false
         }
     ],

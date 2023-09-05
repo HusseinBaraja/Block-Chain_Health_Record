@@ -11,13 +11,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class jsonHandle {
-    private static final String USER_FILE = "src/database/user_database.json";
-    private static JSONObject userData;
+    private final String USER_FILE = "src/database/user_database.json";
+    private JSONObject userData;
     public jsonHandle() {
         checkUserDataFile();
         loadUserData();
     }
-    private static void checkUserDataFile() {
+    private void checkUserDataFile() {
         File file = new File(USER_FILE);
         if (!file.exists() || file.length() == 0) {
             try {
@@ -41,7 +41,7 @@ public class jsonHandle {
             }
         }
     }
-    private static void loadUserData() {
+    private void loadUserData() {
         try {
             JSONParser parser = new JSONParser();
             userData = (JSONObject) parser.parse(new FileReader(USER_FILE));
@@ -50,7 +50,7 @@ public class jsonHandle {
         }
     }
 
-    private static void saveUserData() {
+    private void saveUserData() {
         try (FileWriter file = new FileWriter(USER_FILE)) {
             file.write(userData.toJSONString());
             file.flush();
@@ -59,7 +59,7 @@ public class jsonHandle {
         }
     }
 
-    public static JSONObject getRootInfo(File jsonFile){
+    public JSONObject getRootInfo(File jsonFile){
         JSONParser parser = new JSONParser();
         JSONObject root;
 
@@ -73,7 +73,7 @@ public class jsonHandle {
         }
     }
 
-    public static void grantAccessToHealthProvider() {
+    public void grantAccessToHealthProvider() {
         String username = InputValidator.valString(
                 "Enter the username of the health provider to grant access: ", "username");
         if (modifyAccessToHealthProvider(username, true)) {
@@ -83,7 +83,7 @@ public class jsonHandle {
         }
     }
 
-    public static void revokeAccessFromHealthProvider() {
+    public void revokeAccessFromHealthProvider() {
         String username = InputValidator.valString(
                 "Enter the username of the health provider to revoke access: ", "username");
         if (modifyAccessToHealthProvider(username, false)) {
@@ -93,7 +93,7 @@ public class jsonHandle {
         }
     }
 
-    private static boolean modifyAccessToHealthProvider(String username, boolean grantAccess) {
+    private boolean modifyAccessToHealthProvider(String username, boolean grantAccess) {
         JSONArray healthProviderList = (JSONArray) userData.get("HealthProvider");
         for (Object obj : healthProviderList) {
             JSONObject providerData = (JSONObject) obj;

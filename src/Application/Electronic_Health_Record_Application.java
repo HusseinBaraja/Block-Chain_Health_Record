@@ -57,12 +57,7 @@ public class Electronic_Health_Record_Application {
         String[] test = {name, username, password};
 
         jsonHandle healthProvider = new jsonHandle();
-//        healthProvider.addNewUser("Admin", newHealthProvider);
-        healthProvider.addNewUser("HealthProvider", test);
-//        healthProvider.addNewUser("Doctor", test);
-//        healthProvider.addNewUser("Receptionist", test);
-//        healthProvider.addNewUser("Patient", test);
-
+        healthProvider.addNewUser("HealthProvider", newHealthProvider);
 
         System.out.println("Registration successful!");
     }
@@ -71,8 +66,10 @@ public class Electronic_Health_Record_Application {
         String username = InputValidator.valString("Enter username: ", "username");
         String password = InputValidator.valString("Enter password: ", "password");
 
+
+        jsonHandle rootLogin = new jsonHandle();
         File jsonFile = new File(USER_FILE);
-        userData = jsonHandle.getRootInfo(jsonFile);
+        userData = rootLogin.getRootInfo(jsonFile);
 
         String[] userTypes = {"Admin", "HealthProvider", "Doctor", "Receptionist", "Patient"};
 
@@ -110,12 +107,13 @@ public class Electronic_Health_Record_Application {
         System.out.print("Admin Action: ");
         int actionChoice = InputValidator.valInt("Enter your name: ", "name");
 
+        jsonHandle manageAccess = new jsonHandle();
         switch (actionChoice) {
             // Grant Access to Health Provider
-            case 1 -> jsonHandle.grantAccessToHealthProvider();
+            case 1 -> manageAccess.grantAccessToHealthProvider();
 
             // Revoke Access from Health Provider
-            case 2 -> jsonHandle.revokeAccessFromHealthProvider();
+            case 2 -> manageAccess.revokeAccessFromHealthProvider();
 
             case 3 -> System.out.println("Going back to the menu.");
 
