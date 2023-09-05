@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
-import com.google.gson.GsonBuilder;
+//import com.google.gson.GsonBuilder;
 
 public class Blockchain {
 	private static LinkedList<Block> db = new LinkedList<>();
@@ -56,8 +56,8 @@ public class Blockchain {
 		}
 	}
 	public void distribute() {
-		String chain = new GsonBuilder().setPrettyPrinting().create().toJson(db);
-		System.out.println(chain);
+//		String chain = new GsonBuilder().setPrettyPrinting().create().toJson(db);
+//		System.out.println(chain);
 	}
 	
 	

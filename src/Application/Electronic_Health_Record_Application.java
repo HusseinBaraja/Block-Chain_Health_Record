@@ -87,21 +87,18 @@ public class Electronic_Health_Record_Application {
         System.out.println("Register as Health Provider:");
 
         String name = InputValidator.valString("Enter the health provider name: ", "name");
-
         String clinicOrHospital = InputValidator.valString("Enter the type of health provider (clinic or hospital): ",
                 "hospital name");
-
         String contactNumber = InputValidator.valString("Enter health provider contact number: ",
                 "contact number");
-
         String username = InputValidator.valString("Enter a username: ", "username");
-
         String password = InputValidator.valString("Enter a password: ", "password");
 
-        String[] newHealthProvider = {name, clinicOrHospital, contactNumber, username, password};
+        String[] userAttributes = {"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"};
+        Object[] newHealthProvider = {name, clinicOrHospital, contactNumber, username, password, false};
 
         JsonHandler healthProvider = new JsonHandler();
-        healthProvider.addNewUser("HealthProvider", newHealthProvider);
+        healthProvider.addNewUser("HealthProvider", userAttributes, newHealthProvider);
 
         System.out.println("Registration successful!");
     }
@@ -175,7 +172,7 @@ public class Electronic_Health_Record_Application {
 
         switch (choice) {
             case 1:
-                addDoctor(providerData);
+                addDoctor();
                 break;
             case 2:
                 // Remove doctor
@@ -188,39 +185,26 @@ public class Electronic_Health_Record_Application {
         }
     }
 
-    private static void addDoctor(JSONObject providerData) {
+    private static void addDoctor() {
         System.out.println("Add Doctor:");
-        System.out.print("Enter doctor's name: ");
-        String name = scanner.nextLine();
-        System.out.print("Enter doctor's DOB: ");
-        String DOB = scanner.nextLine();
-        System.out.print("Enter doctor's gender: ");
-        String gender = scanner.nextLine();
-        System.out.print("Enter doctor's age: ");
-        int age = scanner.nextInt();
-        System.out.print("Enter doctor's phone number: ");
-        int phoneNumber = scanner.nextInt();
-        scanner.nextLine();
 
-        System.out.print("Enter doctor's username: ");
-        String username = scanner.nextLine();
-        System.out.print("Enter doctor's password: ");
-        String password = scanner.nextLine();
+        String name = InputValidator.valString("Enter doctor's name: ", "doctor's name");
+        String username = InputValidator.valString("Enter doctor's username: ", "username");
+        String password = InputValidator.valString("Enter doctor's password: ", "password");
+        int phoneNumber = InputValidator.valInt("Enter doctor's phone number: ", "phone number");
+        String DOB = InputValidator.valString("Enter doctor's DOB: ", "date of birth");
+        int age = InputValidator.valInt("Enter doctor's age: ", "age");
+        String gender = InputValidator.valString("Enter doctor's gender: ", "gender");
+
 
         Doctor doctor = new Doctor(name, DOB, gender, age, phoneNumber, username, password);
 
-        // Store doctor data in the top-level JSON userData object
-        JSONArray doctorsList = (JSONArray) userData.getOrDefault("Doctors", new JSONArray());
-        JSONObject doctorData = new JSONObject();
-        doctorData.put("Name", doctor.getFullName());
-        doctorData.put("DOB", doctor.getDOB());
-        doctorData.put("Gender", doctor.getGender());
-        doctorData.put("Age", doctor.getAge());
-        doctorData.put("PhoneNumber", doctor.getPhoneNumber());
-        doctorData.put("Username", doctor.getUsername());
-        doctorData.put("Password", doctor.getPassword());
-        doctorsList.add(doctorData);
-        userData.put("Doctors", doctorsList); // Add the doctor to the top-level "Doctors" array
+        String[] userAttributes = {"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender"};
+        Object[] newDoctor = {name, username, password, phoneNumber, DOB, age, gender};
+
+        JsonHandler healthProvider = new JsonHandler();
+        healthProvider.addNewUser("Doctor", userAttributes, newDoctor);
+
 
         System.out.println("Doctor added successfully!");
     }

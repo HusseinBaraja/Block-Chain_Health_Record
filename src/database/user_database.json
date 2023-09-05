@@ -16,11 +16,6 @@
             "Password": "liamadminpass"
         },
         {
-            "Name": "1",
-            "Username": "4",
-            "Password": "5"
-        },
-        {
             "Name": "Ghassan",
             "Username": "ghassan",
             "Password": "ghassan"
@@ -60,29 +55,50 @@
             "AccessGranted": false
         },
         {
-            "Name": "dasd",
+            "Name": "Hussein",
             "ClinicOrHospital": "clinic",
-            "ContactNumber": "0324324",
-            "Username": "testt",
-            "Password": "testt",
+            "ContactNumber": "23442432",
+            "Username": "huss",
+            "Password": "hussainman1233",
             "AccessGranted": false
         }
     ],
     "Doctor": [
         {
-            "Name": "Dr. Smith",
-            "Username": "drsmith",
-            "Password": "smithpassword"
+            "Name": "Dr. Emma Watson",
+            "Username": "emwatson",
+            "Password": "emwatson123",
+            "PhoneNumber": "111-111-1111",
+            "DOB": "1985-04-15",
+            "Age": 38,
+            "Gender": "Female"
         },
         {
-            "Name": "Dr. Jane Foster",
-            "Username": "drjane",
-            "Password": "drjanepass"
+            "Name": "Dr. Chris Hemsworth",
+            "Username": "chrishem",
+            "Password": "chrishem456",
+            "PhoneNumber": "222-222-2222",
+            "DOB": "1983-08-11",
+            "Age": 40,
+            "Gender": "Male"
         },
         {
-            "Name": "Dr. Alan Walker",
-            "Username": "dralan",
-            "Password": "dralanpass"
+            "Name": "Dr. Natalie Portman",
+            "Username": "natport",
+            "Password": "natport789",
+            "PhoneNumber": "333-333-3333",
+            "DOB": "1981-06-09",
+            "Age": 42,
+            "Gender": "Female"
+        },
+        {
+            "Name": "Huss",
+            "Username": "sada",
+            "Password": "ads",
+            "PhoneNumber": 3,
+            "DOB": "3",
+            "Age": 3,
+            "Gender": "3"
         }
     ],
     "Patient": [

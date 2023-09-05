@@ -9,9 +9,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class JsonHandler {
-    private final String USER_FILE = "src/database/user_database.json";
+    private static final String USER_FILE = "src/database/user_database.json";
     private JSONObject userData;
     public JsonHandler() {
         checkUserDataFile();
@@ -106,50 +108,19 @@ public class JsonHandler {
         return false;
     }
 
+    private static final String[] USER_TYPES = {"Admin", "HealthProvider", "Doctor", "Patient"};
+    private final List<String[]> USER_FIELDS = Arrays.asList(
+            new String[]{"Name", "Username", "Password"},
+            new String[]{"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"},
+            new String[]{"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender"},
+            new String[]{"Name", "Username", "Password"}
+    );
 
-//    public static void grantAccessToHealthProvider() {
-//        String username = InputValidator.valString(
-//                "Enter the username of the health provider to grant access: ","username");
-//
-//        JSONArray healthProviderList = (JSONArray) userData.get("HealthProvider");
-//        for (Object obj : healthProviderList) {
-//            JSONObject providerData = (JSONObject) obj;
-//            String storedUsername = (String) providerData.get("Username");
-//
-//            if (storedUsername.equals(username)) {
-//                providerData.put("AccessGranted", true);
-//                System.out.println("Access granted to the health provider.");
-//                saveUserData(); // Save the updated data.
-//                return;
-//            }
-//        }
-//        System.out.println("Health provider not found.");
-//    }
-
-//    private static void revokeAccessFromHealthProvider() {
-//        String username = InputValidator.valString(
-//                "Enter the username of the health provider to revoke access: ","username");
-//
-//        JSONArray healthProviderList = (JSONArray) userData.get("HealthProvider");
-//        for (Object obj : healthProviderList) {
-//            JSONObject providerData = (JSONObject) obj;
-//            String storedUsername = (String) providerData.get("Username");
-//
-//            if (storedUsername.equals(username)) {
-//                providerData.put("AccessGranted", false);
-//                System.out.println("Access revoked from the health provider.");
-//                saveUserData(); // Save the updated data.
-//                return;
-//            }
-//        }
-//        System.out.println("Health provider not found.");
-//    }
-
-
-    public void addNewUser(String userType, String[] userInfo){
+    private int counter;
+    public void addNewUser(String userType, String[] userAttributes, Object[] userInfo){
         File jsonFile = new File(USER_FILE);
 
-        JSONObject root = getRootInfo(jsonFile);
+        JSONObject root = userData;
         if (root == null){
             System.out.println("The JSON file is empty!");
             return;
@@ -164,31 +135,27 @@ public class JsonHandler {
             root.put(userType, newUserArray);
         }
 
-        String[] userTypes = {"Admin", "HealthProvider", "Doctor", "Patient"};
         JSONObject newUser = new JSONObject();
-        if (userType.equals(userTypes[1])){
-            newUser.put("Name", userInfo[0]);
-            newUser.put("ClinicOrHospital", userInfo[1]);
-            newUser.put("ContactNumber", userInfo[2]);
-            newUser.put("Username", userInfo[3]);
-            newUser.put("Password", userInfo[4]);
-            newUser.put("AccessGranted", false);
-            newUserArray.add(newUser);
-        } else {
-            newUser.put("Name", userInfo[0]);
-            newUser.put("Username", userInfo[1]);
-            newUser.put("Password", userInfo[2]);
-            newUserArray.add(newUser);
+
+
+
+        for (int i = 0; i < userInfo.length; i++) {
+            newUser.put(userAttributes[i], userInfo[i]);
         }
+        newUserArray.add(newUser);
 
-
+        counter = 0;
         // Step 3: Write back to file preserving order and with indentation
         try (FileWriter fileWriter = new FileWriter(jsonFile)) {
             fileWriter.write("{\n");
-            writeOrderedKeys(fileWriter, root, "Admin", "    ");
-            writeOrderedKeys(fileWriter, root, "HealthProvider", "    ");
-            writeOrderedKeys(fileWriter, root, "Doctor", "    ");
-            writeOrderedKeys(fileWriter, root, "Patient", "    ", false);
+            for(int i = 0; i < USER_TYPES.length; i++){
+                if(!(i == USER_TYPES.length - 1)){
+                    writeOrderedKeys(fileWriter, root, USER_TYPES[i], "    ", true);
+                } else {
+                    writeOrderedKeys(fileWriter, root, USER_TYPES[i], "    ", false);
+                }
+
+            }
             fileWriter.write("}");
             fileWriter.flush();
         } catch (IOException e) {
@@ -196,24 +163,16 @@ public class JsonHandler {
         }
     }
 
-    private void writeOrderedKeys(FileWriter writer, JSONObject root, String key, String indent) throws IOException {
-        writeOrderedKeys(writer, root, key, indent, true);
-    }
-
-    private void writeOrderedKeys(FileWriter writer, JSONObject root, String key, String indent, boolean withComma) throws IOException {
-        if (root.containsKey(key)) {
-            writer.write(indent + "\"" + key + "\": [\n");
-            JSONArray array = (JSONArray) root.get(key);
+    private void writeOrderedKeys(FileWriter writer, JSONObject root, String userKey, String indent, boolean withComma) throws IOException {
+        if (root.containsKey(userKey)) {
+            writer.write(indent + "\"" + userKey + "\": [\n");
+            JSONArray array = (JSONArray) root.get(userKey);
             for (int i = 0; i < array.size(); i++) {
                 JSONObject obj = (JSONObject) array.get(i);
 
-                if ("HealthProvider".equals(key)) {
-                    writeHealthProviderOrdered(writer, obj, indent);
-                } else {
-                    writeUsersOrdered(writer, obj, indent);
-//                    writer.write(indent + indent);
-//                    writer.write(obj.toString().replace(",", ",\n" + indent + indent).replace("{", "{\n" + indent + indent).replace("}", "\n" + indent + indent + "}"));
-                }
+                String[] userAttributes = USER_FIELDS.get(counter);
+                writeUsersOrdered(writer, obj, indent, userAttributes);
+
 
                 if (i < array.size() - 1) {
                     writer.write(",\n");
@@ -225,23 +184,20 @@ public class JsonHandler {
             if (withComma) {
                 writer.write(",\n");
             }
+            counter++;
         }
     }
-    private void writeHealthProviderOrdered(FileWriter writer, JSONObject obj, String indent) throws IOException {
+    private void writeUsersOrdered(FileWriter writer, JSONObject obj, String indent, String[] userAttributes) throws IOException {
         writer.write(indent + indent + "{\n");
-        writeKeyValue(writer, obj, "Name", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "ClinicOrHospital", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "ContactNumber", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "Username", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "Password", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "AccessGranted", indent + indent + indent, false);
-        writer.write("\n" + indent + indent + "}");
-    }
-    private void writeUsersOrdered(FileWriter writer, JSONObject obj, String indent) throws IOException {
-        writer.write(indent + indent + "{\n");
-        writeKeyValue(writer, obj, "Name", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "Username", indent + indent + indent, true);
-        writeKeyValue(writer, obj, "Password", indent + indent + indent, false);
+        for (int i = 0; i < userAttributes.length; i++){
+            if(!(i == userAttributes.length - 1)){
+                writeKeyValue(writer, obj, userAttributes[i], indent + indent + indent, true);
+            } else {
+                writeKeyValue(writer, obj, userAttributes[i], indent + indent + indent, false);
+            }
+
+
+        }
         writer.write("\n" + indent + indent + "}");
     }
 

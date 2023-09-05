@@ -2,7 +2,7 @@ package Blockchain;
 
 import java.security.MessageDigest;
 
-import org.apache.commons.codec.binary.Hex;
+//import org.apache.commons.codec.binary.Hex;
 
 
 public class Hasher {
@@ -16,11 +16,12 @@ public class Hasher {
 	{
 		try {
 			byte[] hashBytes = MessageDigest.getInstance("SHA-256").digest( blockBytes );
-			return Hex.encodeHexString(hashBytes);
+//			return Hex.encodeHexString(hashBytes);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+		return null;
 	}
 	
 	/**
@@ -123,12 +124,13 @@ public class Hasher {
 			//digest it
 			byte[] hashBytes = md.digest();
 			//convert to Hex format with Hex API from Apache common
-			return String.valueOf(Hex.encodeHex(hashBytes));
+//			return String.valueOf(Hex.encodeHex(hashBytes));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+		return input;
 	}
 	
 	private static String hash(String input, byte[] salt, String algorithm) 
@@ -145,11 +147,12 @@ public class Hasher {
 			//digest it
 			byte[] hashBytes = md.digest();
 			//convert to Hex format with Hex API from Apache common
-			return String.valueOf(Hex.encodeHex(hashBytes));
+//			return String.valueOf(Hex.encodeHex(hashBytes));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+		return input;
 	}
 }
