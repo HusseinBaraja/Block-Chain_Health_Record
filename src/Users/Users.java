@@ -2,6 +2,9 @@ package Users;
 
 
 public class Users {
+    public Users(String username) {
+    }
+
     public enum UserRole { ADMIN, RECEPTIONIST, DOCTOR, PATIENT, HEALTH_PROVIDER, NONE }
 
     private String fullName, DOB, gender;

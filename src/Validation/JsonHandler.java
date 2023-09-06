@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,6 +58,49 @@ public class JsonHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public JSONObject getUserInfoByUserName(String userType, String username) {
+        if (userData.containsKey(userType)) {
+            JSONArray userArray = (JSONArray) userData.get(userType);
+            for (Object o : userArray) {
+                JSONObject user = (JSONObject) o;
+                if (user.get("Username").equals(username)) {
+                    return user;
+                }
+            }
+        }
+        return null; // Return null if user is not found.
+    }
+    private String patientKey;
+    private static final String PATIENT_FILE = "src/database/insignificant_data.json";
+    public JSONObject getPatientInfoByUsername(String username) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject patInfo = (JSONObject) parser.parse(new FileReader(Paths.get(PATIENT_FILE).toFile()));
+
+            for (Object key : patInfo.keySet()) {
+                if (!(patInfo.get(key) instanceof JSONArray)) {
+                    continue;
+                }
+                JSONArray patientArray = (JSONArray) patInfo.get(key);
+                for (Object obj : patientArray) {
+                    JSONObject patient = (JSONObject) obj;
+                    JSONObject identifiers = (JSONObject) patient.get("PatientIdentifiers");
+                    if (username.equalsIgnoreCase((String) identifiers.get("Username"))) {
+                        patientKey = (String) key;
+                        return patient; // return the matching patient's information
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getPatientKey() {
+        return patientKey;
     }
 
     public JSONObject getRootInfo(File jsonFile){
@@ -126,7 +170,7 @@ public class JsonHandler {
             return;
         }
 
-        // Step 2: Modify in-memory data
+        // Step 2: Get level 1
         JSONArray newUserArray;
         if (root.containsKey(userType)) {
             newUserArray = (JSONArray) root.get(userType);

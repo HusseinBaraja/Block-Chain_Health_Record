@@ -1,355 +1,130 @@
 package Users;
 
-import Application.Electronic_Health_Record_Application;
+import Validation.InputValidator;
+import Validation.JsonHandler;
+import Validation.orderSignificance;
+import org.json.simple.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class Doctor extends Users {
-    private HashMap<String, PatientRecord> patientRecords;
-    private String workingHospital, speciality, qualification, username, password;
-    private int yearsOfExperience;
-    private final List<Patient> patients;
+    private String name, username, phoneNumber, DOB, gender, currPatientID;
+    private int age;
 
-    public Doctor(String fullName, String DOB, String gender, int age, int phoneNumber, String username, String password) {
-        super(fullName, DOB, gender, age, phoneNumber);
-        this.workingHospital = workingHospital;
-        this.speciality = speciality;
-        this.qualification = qualification;
-        this.yearsOfExperience = yearsOfExperience;
-        patients = new ArrayList<>();
-        this.username = username;
-        this.password = password;
-    }
+    public Doctor(String username) {
+        super(username); // Assuming the parent class "Users" needs this for its own reasons.
+        JsonHandler handler = new JsonHandler();
+        JSONObject userInfo = handler.getUserInfoByUserName("Doctor", username);
 
-    public HashMap<String, PatientRecord> getPatientRecords() {
-        return patientRecords;
-    }
-
-    public void setPatientRecords(HashMap<String, PatientRecord> patientRecords) {
-        this.patientRecords = patientRecords;
-    }
-
-    public String getWorkingHospital() {
-        return workingHospital;
-    }
-
-    public void setWorkingHospital(String workingHospital) {
-        this.workingHospital = workingHospital;
-    }
-
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
-    public String getQualification() {
-        return qualification;
-    }
-
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getYearsOfExperience() {
-        return yearsOfExperience;
-    }
-
-    public void setYearsOfExperience(int yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
-    }
-
-
-    Scanner scanner = new Scanner(System.in);
-    public void DisplayOptions(){
-        System.out.println("""
-                1- Add Diagnosis
-                2- Add Allergies
-                3- Add Immunizations
-                4- Add Medications
-                5- Add Procedures
-                6- Add Lab Test Results
-                7- Vital Signs
-                8- Add Imaging Reports\s""");
-        int option = scanner.nextInt();
-
-//        switch (option) {
-//            case 1:
-//                addDiagnosisToPatient();
-//            case 2:
-//                return Users.UserRole.DOCTOR;
-//            case 3:
-//                return Users.UserRole.PATIENT;
-//            case 4:
-//                return Users.UserRole.HEALTH_PROVIDER;
-//            default:
-//                throw new IllegalArgumentException("Invalid role choice.");
-//        }
-    }
-
-    private void addDiagnosisToPatient() {
-        System.out.println("Please enter the patient's name: ");
-        String patientName = scanner.nextLine();
-
+        if (userInfo != null) {
+            this.name = (String) userInfo.get("Name");
+            this.username = (String) userInfo.get("Username");
+            this.phoneNumber = (String) userInfo.get("PhoneNumber");
+            this.DOB = (String) userInfo.get("DOB");
+            this.age = ((Long) userInfo.get("Age")).intValue();
+            this.gender = (String) userInfo.get("Gender");
+        } else {
+            System.out.println("Doctor info was not found!");
+        }
+        doctorMenu();
 
     }
-//    public void AddDiagnosis(){
-//        JSONObject jsonObject = new JSONObject();
-//        jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
-//
-//        try (FileWriter file = new FileWriter("user_database.json")) {
-//            file.write(jsonObject.toJSONString());
-//            file.flush();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-    static class PatientRecord {
-        String patientID;
-        List<Diagnosis> diagnoses;
-        List<Allergy> allergies;
-        List<Immunization> immunizations;
-        List<Medication> medications;
-        List<Procedure> procedures;
-        List<LabTestResult> labTestResults;
-        List<VitalSign> vitalSigns;
-        List<ImagingReport> imagingReports;
+    private void doctorMenu(){
+        System.out.println("Doctor Menu:");
+        System.out.println("1. View Patient Information");
+        System.out.println("2. Add patient");
 
-        PatientRecord(String patientID) {
-            this.patientID = patientID;
-            this.diagnoses = new ArrayList<>();
-            this.allergies = new ArrayList<>();
-            this.immunizations = new ArrayList<>();
-            this.medications = new ArrayList<>();
-            this.procedures = new ArrayList<>();
-            this.labTestResults = new ArrayList<>();
-            this.vitalSigns = new ArrayList<>();
-            this.imagingReports = new ArrayList<>();
+
+        int choice = InputValidator.valInt("Choice: ", "choice");
+
+        switch (choice) {
+            case 1:
+                ViewPatientData();
+                break;
+            case 2:
+                AddPatientIdentifiers();
+            case 9:
+                System.out.println("Logging out from the account, Bye :-)");
+                return;
+            default:
+                System.out.println("Invalid choice.");
         }
     }
+    private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
 
-    class Diagnosis {
-        private final String diagnosisCode;
-        private final String description;
-        private final String date;
-        private final String status;
-        private final String provider;
-        private final String notes;
+    // Significant
+    private void ViewPatientData() {
+        String patient_username = InputValidator.valString("Enter patient username: ", "username");
 
-        public Diagnosis(String diagnosisCode, String description, String date, String status, String provider, String notes) {
-            this.diagnosisCode = diagnosisCode;
-            this.description = description;
-            this.date = date;
-            this.status = status;
-            this.provider = provider;
-            this.notes = notes;
-        }
+        JsonHandler getPatInfo = new JsonHandler();
+        JSONObject demographicData = getPatInfo.getPatientInfoByUsername(patient_username);
 
-//        public void AddDiagnosis(){
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.putAll(Electronic_Health_Record_Application.userDatabase);
-//
-//            try (FileWriter file = new FileWriter("user_database.json")) {
-//                file.write(jsonObject.toJSONString());
-//                file.flush();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        currPatientID = getPatInfo.getPatientKey();
+
+        JSONObject identifiers = (JSONObject) demographicData.get("PatientIdentifiers");
+        JSONObject diagnosis = (JSONObject) demographicData.get("Diagnosis");
+        JSONObject allergies = (JSONObject) demographicData.get("Allergies");
+        JSONObject procedures = (JSONObject) demographicData.get("Procedures");
+        JSONObject vitalSigns = (JSONObject) demographicData.get("VitalSigns");
+        JSONObject imagingReports = (JSONObject) demographicData.get("ImagingReports");
+
+        System.out.println("Patient Identifiers:");
+        System.out.println("username: " + identifiers.get("DateOfBirth"));
+        System.out.println("Address: " + identifiers.get("Address"));
+        System.out.println("Phone Number: " + identifiers.get("PhoneNumber"));
+
+        System.out.println("\nDiagnosis:");
+        System.out.println("Diagnose ID: " + diagnosis.get("DiagnoseID"));
+        System.out.println("Description: " + diagnosis.get("DiagnosisDescription"));
+        System.out.println("Notes: " + diagnosis.get("Notes"));
+
+        System.out.println("\nAllergies:");
+        System.out.println("Reaction Description: " + allergies.get("ReactionDescription"));
+        System.out.println("Treatment Plan: " + allergies.get("TreatmentPlan"));
+
+        System.out.println("\nProcedures:");
+        System.out.println("Procedure Notes: " + procedures.get("ProcedureNotes"));
+
+        System.out.println("\nVital Signs:");
+        System.out.println("Height: " + vitalSigns.get("Height"));
+        System.out.println("Weight: " + vitalSigns.get("Weight"));
+
+        System.out.println("\nImaging Reports:");
+        System.out.println("Administering Clinic: " + imagingReports.get("AdministeringClinic"));
+
     }
 
-    class Allergy {
-        private final String allergenName;
-        private final String reactionSeverity;
-        private final String reactionDescription;
-        private final String date;
-        private final String treatmentPlan;
-        private final String status;
-        private final String medicationToAvoid;
+    private void AddPatientIdentifiers(){
+        ViewPatientData();
 
-        public Allergy(String allergenName, String reactionSeverity, String reactionDescription, String date, String treatmentPlan, String status, String medicationToAvoid) {
-            this.allergenName = allergenName;
-            this.reactionSeverity = reactionSeverity;
-            this.reactionDescription = reactionDescription;
-            this.date = date;
-            this.treatmentPlan = treatmentPlan;
-            this.status = status;
-            this.medicationToAvoid = medicationToAvoid;
-        }
-    }
+        Scanner scanner = new Scanner(System.in);
+        JSONObject patientData = new JSONObject();
 
-    class Immunization {
-        private final String vaccineName;
-        private final String date;
-        private final String clinic;
+        System.out.println("--- Patient Identifiers ---");
+        JSONObject patientIdentifiers = new JSONObject();
+        System.out.println("Enter FullName:");
+        patientIdentifiers.put("FullName", scanner.nextLine());
+        System.out.println("Enter DateOfBirth:");
+        patientIdentifiers.put("DateOfBirth", scanner.nextLine());
+        System.out.println("Enter Address:");
+        patientIdentifiers.put("Address", scanner.nextLine());
+        System.out.println("Enter PhoneNumber:");
+        patientIdentifiers.put("PhoneNumber", scanner.nextLine());
 
-        public Immunization(String vaccineName, String date, String clinic) {
-            this.vaccineName = vaccineName;
-            this.date = date;
-            this.clinic = clinic;
+        patientData.put("PatientIdentifiers", patientIdentifiers);
+
+        JSONObject inputData = new JSONObject();
+
+        //Here we should generate new PatientIDs for new patients
+        inputData.put("P3", patientData);
+
+        orderSignificance addUser = new orderSignificance();
+        try {
+            addUser.sortData(inputData);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
-
-
-    class Medication {
-        private final String medicationName;
-        private final String dosage;
-        private final String frequency;
-
-        public Medication(String medicationName, String dosage, String frequency) {
-            this.medicationName = medicationName;
-            this.dosage = dosage;
-            this.frequency = frequency;
-        }
-    }
-
-    class Procedure {
-        private final String procedureName;
-        private final String date;
-        private final String doctor;
-        private final String notes;
-
-        public Procedure(String procedureName, String date, String doctor, String notes) {
-            this.procedureName = procedureName;
-            this.date = date;
-            this.doctor = doctor;
-            this.notes = notes;
-        }
-
-    }
-
-    class LabTestResult {
-        private final String testName;
-        private final String result;
-        private final String technicianName;
-        private final String timestamp;
-
-        public LabTestResult(String testName, String result, String technicianName, String timestamp) {
-            this.testName = testName;
-            this.result = result;
-            this.technicianName = technicianName;
-            this.timestamp = timestamp;
-        }
-    }
-
-
-    class VitalSign {
-        private final float temperature;
-        private final float height; //
-        private final float weight;
-        private final String bloodPressure;
-        private final int heartRate;
-
-        public VitalSign(float temperature, float height, float weight, String bloodPressure, int heartRate) {
-            this.temperature = temperature;
-            this.height = height;
-            this.weight = weight;
-            this.bloodPressure = bloodPressure;
-            this.heartRate = heartRate;
-        }
-    }
-
-    class ImagingReport {
-        private final String reportName;
-        private final String result;
-        private final String clinic;
-
-        public ImagingReport(String reportName, String result, String clinic) {
-            this.reportName = reportName;
-            this.result = result;
-            this.clinic = clinic;
-        }
-    }
-
-
-    void viewPatientInfo(String patientID) {
-        PatientRecord record = patientRecords.get(patientID);
-        if (record == null) {
-            System.out.println("No record found for patient ID: " + patientID);
-        }
-    }
-
-
-
-
-//    Scanner scanner = new Scanner(System.in);
-//    public void addDiagnosis(){
-//        int diagnosis_code = 0; // Will be changed
-//        // Read current diagnoses from file
-//        diagnosis_code ++;
-//
-//        System.out.println("Enter Diagnosis description: ");
-//        String Description = scanner.nextLine();
-//
-//        System.out.println("Enter Diagnoses Date: ");
-//        String DateOfDiagnoses = scanner.nextLine();
-//
-//        System.out.println("Enter Diagnoses status: ");
-//        String DiagnosesStatus = scanner.nextLine();
-//
-//        System.out.println("Enter Diagnoses provider: ");
-//        String DiagnosesProvider = scanner.nextLine();
-//
-//        System.out.println("Enter additional notes: ");
-//        String Notes = scanner.nextLine();
-//
-//    }
-//
-//    public void addAllergies(){
-//        System.out.println("Enter Allergy Name: ");
-//        String AllergyName = scanner.nextLine();
-//
-//        System.out.println("Enter Reaction severity: ");
-//        String ReactionSeverity = scanner.nextLine();
-//
-//        System.out.println("Enter Reaction description: ");
-//        String ReactionDescription = scanner.nextLine();
-//
-//       // and more
-//    }
-//
-//    public void addPatient(Patient patient) {
-//        if (!patients.contains(patient)) {
-//            patients.add(patient);
-//        } else {
-//            System.out.println("Patient already exists in the list.");
-//        }
-//    }
-//
-//    public void removePatient(Patient patient) {
-//        if (patients.contains(patient)) {
-//            patients.remove(patient);
-//        } else {
-//            System.out.println("Patient does not exist in the list.");
-//        }
-//    }
 
 }

@@ -1,0 +1,67 @@
+{
+  "PatientIdentifiers": {
+    "Username": "insignificant",
+    "PatientID": "significant",
+    "FullName": "significant",
+    "DateOfBirth": "significant",
+    "Address": "insignificant",
+    "PhoneNumber": "insignificant"
+  },
+  "DemographicInformation": {
+    "Gender": "significant",
+    "Age": "significant",
+    "Race": "significant",
+    "BloodType": "significant"
+  },
+  "Diagnosis": {
+    "DiagnoseCode": "significant",
+    "DiagnosisDescription": "insignificant",
+    "DateOfDiagnosis": "significant",
+    "DiagnosisStatus": "significant",
+    "DiagnosisProvider": "significant",
+    "Notes": "insignificant"
+  },
+  "Allergies": {
+    "AllergenName": "significant",
+    "ReactionSeverity": "significant",
+    "ReactionDescription": "insignificant",
+    "DiagnosisDate": "significant",
+    "TreatmentPlan": "insignificant",
+    "Status": "significant",
+    "MedicationToAvoid": "significant"
+  },
+  "Immunizations": {
+    "VaccineName": "significant",
+    "DateAdministered": "significant",
+    "AdministeringClinic": "significant"
+  },
+  "Medications": {
+    "MedicationName": "significant",
+    "Dosage": "significant",
+    "Frequency": "significant"
+  },
+  "Procedures": {
+    "ProcedureName": "significant",
+    "ProcedureDate": "significant",
+    "ProcedureDoctor": "significant",
+    "ProcedureNotes": "insignificant"
+  },
+  "LaboratoryTestResults": {
+    "TestName": "significant",
+    "Result": "significant",
+    "LabTechnicianName": "significant",
+    "TestTimestamp": "significant"
+  },
+  "VitalSigns": {
+    "Temperature": "significant",
+    "Height": "insignificant",
+    "Weight": "insignificant",
+    "BloodPressure": "significant",
+    "HeartRate": "significant"
+  },
+  "ImagingReports": {
+    "ReportName": "significant",
+    "ReportResult": "significant",
+    "AdministeringClinic": "insignificant"
+  }
+}

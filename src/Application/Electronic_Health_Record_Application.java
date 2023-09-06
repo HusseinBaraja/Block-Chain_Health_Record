@@ -125,7 +125,7 @@ public class Electronic_Health_Record_Application {
                     switch (userType) {
                         case "Admin" -> adminMenu();
 //                        case "HealthProvider" -> healthProviderMenu();
-//                        case "Doctor" -> adminMenu();
+                        case "Doctor" -> new Doctor(username);
 //                        case "Patient" -> adminMenu();
                         default -> System.out.println("Invalid choice.");
                     }
@@ -196,8 +196,6 @@ public class Electronic_Health_Record_Application {
         int age = InputValidator.valInt("Enter doctor's age: ", "age");
         String gender = InputValidator.valString("Enter doctor's gender: ", "gender");
 
-
-        Doctor doctor = new Doctor(name, DOB, gender, age, phoneNumber, username, password);
 
         String[] userAttributes = {"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender"};
         Object[] newDoctor = {name, username, password, phoneNumber, DOB, age, gender};
