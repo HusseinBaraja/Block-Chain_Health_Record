@@ -95,7 +95,7 @@ public class Doctor extends Users {
     }
 
     private void AddPatientIdentifiers(){
-        ViewPatientData();
+//        ViewPatientData();
 
         Scanner scanner = new Scanner(System.in);
         JSONObject patientData = new JSONObject();

@@ -44,6 +44,7 @@ public class orderSignificance {
         return prettyJSONBuilder.toString();
     }
 
+    String display;
 
     public void sortData(JSONObject inputObject) throws IOException{
         JSONObject significanceObject = readJsonFile("src/database/data_significance.json");
@@ -103,12 +104,17 @@ public class orderSignificance {
         }
 
         // Here is the significant data, you can handle it however you like
-//        try (FileWriter significantFile = new FileWriter("significant_data.json")) {
-//            significantFile.write(formatJson(significantDataObject.toJSONString()));
-//        }
+        try (FileWriter significantFile = new FileWriter("significant_data.json")) {
+            display = formatJson(significantDataObject.toJSONString());
+        }
 
         try (FileWriter insignificantFile = new FileWriter("src/database/insignificant_data.json")) {
             insignificantFile.write(formatJson(insignificantDataObject.toJSONString()));
         }
     }
+
+    public String getDisplay(){
+        return display;
+    }
+
 }

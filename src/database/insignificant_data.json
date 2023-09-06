@@ -55,5 +55,13 @@
 				"ReactionDescription":"8"
 			}
 		}
+	],
+	"P3":[
+		{
+			"PatientIdentifiers":{
+				"Address":"sdf",
+				"PhoneNumber":"sdf"
+			}
+		}
 	]
 }

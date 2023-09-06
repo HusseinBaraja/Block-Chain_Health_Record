@@ -1,13 +1,18 @@
 package Application;
 
 import Users.Doctor;
-import Validation.InputValidator;
+import Validation.*;
 import Blockchain.Blockchain;
 import Validation.JsonHandler;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import Blockchain.MerkleTree;
+import Blockchain.TransactionCollection;
+import Blockchain.Block;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -18,12 +23,18 @@ public class Electronic_Health_Record_Application {
 
     private static String masterFolder = "master";
     private static String fileName = masterFolder + "/chain.bin";
+    private static orderSignificance test;
 
     public static void main(String[] args) {
         mainMenu();
+//        System.out.println(test.getDisplay());
+        DisplaySignificantData();
 //        addDataToBlockchain();
     }
 
+    private static void DisplaySignificantData(){
+
+    }
     private static void addDataToBlockchain() {
         Blockchain bc = Blockchain.getInstance(fileName);
         if(!new File(masterFolder).exists()) {
@@ -31,38 +42,38 @@ public class Electronic_Health_Record_Application {
             new File(masterFolder).mkdir();
             bc.genesis();
         }else {
-//            String line1 = "bob|alice|debit|100";
-//            String line2 = "mick|alice|debit|200";
-//            String line3 = "peter|alice|debit|300";
-//            String line4 = "ali|alice|debit|201";
+            String line1 = "bob|alice|debit|100";
+            String line2 = "mick|alice|debit|200";
+            String line3 = "peter|alice|debit|300";
+            String line4 = "ali|alice|debit|201";
 
 
-//            List<String> lst = new ArrayList<>();
-//            lst.add(line1);
-//            lst.add(line2);
-//            lst.add(line3);
-//            lst.add(line4);
+            List<String> lst = new ArrayList<>();
+            lst.add(line1);
+            lst.add(line2);
+            lst.add(line3);
+            lst.add(line4);
 
 
-//            MerkleTree mt = MerkleTree.getInstance(lst);
-//            mt.build();
-//            String root = mt.getRoot();
-//
-//            TransactionCollection trxlst = new TransactionCollection();
-//            trxlst.setMerkleRoot(root);
-//            trxlst.setTranxLst(lst);
-//
-//            String previousHash = bc.get().getLast().getHeader().getCurrHash();
-//            Block b1 = new Block(previousHash);
-//            b1.setTransactions(trxlst);
-//            bc.nextBlock(b1);
-//            bc.distribute();
+            MerkleTree mt = MerkleTree.getInstance(lst);
+            mt.build();
+            String root = mt.getRoot();
+
+            TransactionCollection trxlst = new TransactionCollection();
+            trxlst.setMerkleRoot(root);
+            trxlst.setTranxLst(lst);
+
+            String previousHash = bc.get().getLast().getHeader().getCurrHash();
+            Block b1 = new Block(previousHash);
+            b1.setTransactions(trxlst);
+            bc.nextBlock(b1);
+            bc.distribute();
 
         }
     }
 
     private static void mainMenu(){
-        while (true) {
+//        while (true) {
             System.out.println("Welcome to EHR Blockchain System!");
             System.out.println("1. Sign in");
             System.out.println("2. Sign up");
@@ -79,7 +90,7 @@ public class Electronic_Health_Record_Application {
                 }
                 default -> System.out.println("Invalid choice.");
             }
-        }
+//        }
     }
 
     // validation for clinicOrHospital, username, password, contactNumber
