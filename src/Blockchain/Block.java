@@ -8,8 +8,7 @@ public class Block implements Serializable{
 	
 	public Header header;
 	public TransactionCollection tranxLst;
-	
-	
+
 	public Block(String previousHash) {
 		this.header = new Header();
 		header.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime() ) ;
@@ -23,27 +22,18 @@ public class Block implements Serializable{
 		header.setCurrHash(blockHash) ;
 	}
 	
-	public TransactionCollection getTransactions() {
-		
-		return this.tranxLst;
-		
-	}
+	public TransactionCollection getTransactions() { return this.tranxLst; }
 
 	public void setTransactions(TransactionCollection tranxLst) {
 		this.tranxLst = tranxLst;
 	}
 	
-	public Header getHeader() {
-		
-		return this.header;
-	}
+	public Header getHeader() { return this.header; }
 	
 	@Override
 	public String toString() {
 		return "Block [header=" + header + ", tranxLst=" + tranxLst + "]";
 	}
-
-	
 	
 	public class Header implements Serializable{
 		
@@ -51,8 +41,6 @@ public class Block implements Serializable{
 		public String currentHash;
 		public String previousHash;
 		public long timestamp;
-		
-		
 
 		@Override
 		public String toString() {
@@ -67,14 +55,15 @@ public class Block implements Serializable{
 		public void setTimestamp(long timestamp) {
 			this.timestamp = timestamp;
 		}
+
 		public long getTimestamp() {
 			return timestamp;
 		}
 		
-		
 		public void setCurrHash(String currentHash) {
 			this.currentHash = currentHash;
 		}
+
 		public String getCurrHash() {
 			return currentHash;
 		}
@@ -82,6 +71,7 @@ public class Block implements Serializable{
 		public void setPrevHash(String previousHash) {
 			this.previousHash = previousHash;
 		}
+
 		public String getPrevHash() {
 			return previousHash;
 		}

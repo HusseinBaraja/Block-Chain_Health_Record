@@ -2,16 +2,18 @@ package Users;
 
 
 public class Users {
-    public Users(String username) {
-    }
-
-    public enum UserRole { ADMIN, RECEPTIONIST, DOCTOR, PATIENT, HEALTH_PROVIDER, NONE }
 
     private String fullName, DOB, gender;
     private int age, phoneNumber;
     private String username;
     private String password;
     private UserRole role;
+
+    public Users(String username) {
+    }
+
+    public enum UserRole { ADMIN, RECEPTIONIST, DOCTOR, PATIENT, HEALTH_PROVIDER, NONE }
+
 
     public Users(String username, String password, UserRole role) {
         this.username = username;

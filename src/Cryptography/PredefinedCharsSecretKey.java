@@ -14,8 +14,7 @@ public class PredefinedCharsSecretKey {
 		int keySize = 16;
 		return new SecretKeySpec(Arrays.copyOf(SECRET_CHARS.getBytes(), keySize), ALGORITHM);
 	}
-	
-	
+
 	public static void main(String[] args) {
 		System.out.println(create());
 	}

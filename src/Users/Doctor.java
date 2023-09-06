@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class Doctor extends Users {
     private String name, username, phoneNumber, DOB, gender, currPatientID;
     private int age;
+    private Scanner scanner = new Scanner(System.in);
+    private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
 
     public Doctor(String username) {
         super(username); // Assuming the parent class "Users" needs this for its own reasons.
@@ -29,31 +31,152 @@ public class Doctor extends Users {
         doctorMenu();
 
     }
-    private void doctorMenu(){
-        System.out.println("Doctor Menu:");
-        System.out.println("1. View Patient Information");
-        System.out.println("2. Add patient");
 
+    private void doctorMenu() {
+        System.out.println("\u001B[36mDoctor Menu:\u001B[0m"); // Cyan header
+        System.out.println("\u001B[32m1. View Patient Information\u001B[0m"); // Green menu item
+        System.out.println("\u001B[32m2. Add Patient Information\u001B[0m"); // Green menu item
+        System.out.println("\u001B[32m3. Modify Patient Information Patient\u001B[0m"); // Green menu item
+        System.out.println("\u001B[32m4. Logout\u001B[0m"); // Green menu item
 
-        int choice = InputValidator.valInt("Choice: ", "choice");
+        int choice = InputValidator.valInt("\u001B[36mChoice:\u001B[0m ", "choice"); // Cyan input prompt
 
         switch (choice) {
             case 1:
-                ViewPatientData();
+                viewPatientData();
                 break;
             case 2:
-                AddPatientIdentifiers();
-            case 9:
-                System.out.println("Logging out from the account, Bye :-)");
+                addData();
+                break;
+            case 4:
+//                modifyPatientData();
+                break;
+            case 3:
+                System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
                 return;
             default:
-                System.out.println("Invalid choice.");
+                System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
         }
     }
-    private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
+
+    private void addData() {
+        System.out.println("\u001B[36mData Entry Menu:\u001B[0m"); // Cyan header
+        System.out.println("1. \u001B[32mAdd Patient Identifiers Data\u001B[0m"); // Green menu item
+        System.out.println("2. \u001B[32mAdd Patient Demographic Data\u001B[0m"); // Green menu item
+        System.out.println("3. \u001B[32mAdd Patient Diagnosis Data\u001B[0m"); // Green menu item
+        System.out.println("4. \u001B[32mAdd Patient Allergies Data\u001B[0m"); // Green menu item
+        System.out.println("5. \u001B[32mAdd Patient Immunizations Data\u001B[0m"); // Green menu item
+        System.out.println("6. \u001B[32mAdd Patient Medications Data\u001B[0m"); // Green menu item
+        System.out.println("7. \u001B[32mAdd Patient Procedures Data\u001B[0m"); // Green menu item
+        System.out.println("8. \u001B[32mAdd Patient Laboratory Test Results Data\u001B[0m"); // Green menu item
+        System.out.println("9. \u001B[32mAdd Patient Vital Signs Data\u001B[0m"); // Green menu item
+        System.out.println("10. \u001B[32mAdd Patient Imaging Reports Data\u001B[0m"); // Green menu item
+        System.out.println("11. \u001B[32mBack to Doctor Menu\u001B[0m"); // Green menu item
+
+        int option = InputValidator.valInt("\u001B[36mEnter your choice:\u001B[0m ", "choice"); // Cyan input prompt
+
+        switch (option) {
+            case 1:
+                addIdentifiersData();
+                break;
+            case 2:
+                addDemographicData();
+                break;
+            case 3:
+                addDiagnosisData();
+                break;
+            case 4:
+                addAllergiesData();
+                break;
+            case 5:
+                addImmunizationsData();
+                break;
+            case 6:
+                addMedicationsData();
+                break;
+            case 7:
+                addProceduresData();
+                break;
+            case 8:
+                addLaboratoryTestResultsData();
+                break;
+            case 9:
+                addVitalSignsData();
+                break;
+            case 10:
+                addImagingReportsData();
+                break;
+            case 11:
+                System.out.println("\u001B[32mReturning to Doctor Menu, Bye :-)\u001B[0m"); // Green return message
+                return;
+            default:
+                System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
+        }
+    }
+
+    private void addDemographicData() {
+        JSONObject patientData = new JSONObject();
+
+        System.out.println("--- Patient Demographic ---");
+        JSONObject DemographicInformation = new JSONObject();
+
+        // Validate and set patient gender
+        String gender = InputValidator.valGender("Enter patient gender ('male,' 'female,' or 'other'): ", "gender");
+        DemographicInformation.put("Gender", gender);
+
+        // Validate and set patient age
+        int age = InputValidator.valInt("Enter patient age: ", "age");
+        DemographicInformation.put("Age", age);
+
+        String race = InputValidator.valString("Enter patient race: ", "race");
+        DemographicInformation.put("Race", race);
+
+        // Validate and set patient blood type
+        String bloodType = InputValidator.valBloodType("Enter patient blood type (e.g., 'A+', 'B-', 'AB+'): ", "blood type");
+        DemographicInformation.put("BloodType", bloodType);
+
+        patientData.put("DemographicInformation", DemographicInformation);
+
+        JSONObject inputData = new JSONObject();
+
+        //Here we should generate new PatientIDs for new patients
+        inputData.put("P3", patientData);
+
+        orderSignificance addUser = new orderSignificance();
+        try {
+            addUser.sortData(inputData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        doctorMenu();
+    }
+
+    private void addDiagnosisData() {
+    }
+
+    private void addAllergiesData() {
+    }
+
+    private void addImmunizationsData() {
+    }
+
+    private void addMedicationsData() {
+    }
+
+    private void addProceduresData() {
+    }
+
+    private void addVitalSignsData() {
+    }
+
+    private void addLaboratoryTestResultsData() {
+    }
+
+    private void addImagingReportsData() {
+    }
 
     // Significant
-    private void ViewPatientData() {
+    private void viewPatientData() {
         String patient_username = InputValidator.valString("Enter patient username: ", "username");
 
         JsonHandler getPatInfo = new JsonHandler();
@@ -94,21 +217,18 @@ public class Doctor extends Users {
 
     }
 
-    private void AddPatientIdentifiers(){
-//        ViewPatientData();
-
-        Scanner scanner = new Scanner(System.in);
+    private void addIdentifiersData(){
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Patient Identifiers ---");
         JSONObject patientIdentifiers = new JSONObject();
-        System.out.println("Enter FullName:");
+        System.out.print("Enter FullName: ");
         patientIdentifiers.put("FullName", scanner.nextLine());
-        System.out.println("Enter DateOfBirth:");
+        System.out.print("Enter DateOfBirth: ");
         patientIdentifiers.put("DateOfBirth", scanner.nextLine());
-        System.out.println("Enter Address:");
+        System.out.print("Enter Address: ");
         patientIdentifiers.put("Address", scanner.nextLine());
-        System.out.println("Enter PhoneNumber:");
+        System.out.print("Enter PhoneNumber: ");
         patientIdentifiers.put("PhoneNumber", scanner.nextLine());
 
         patientData.put("PatientIdentifiers", patientIdentifiers);
@@ -124,7 +244,7 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        doctorMenu();
     }
 
 }

@@ -8,13 +8,17 @@ import java.util.Base64;
 import javax.crypto.Cipher;
 
 public class Asymmetric {
+
 	private Cipher cipher;
+
 	public Asymmetric() {
 		
 	}
+
 	public Asymmetric(String ALGORITHM) throws Exception{
 		cipher = Cipher.getInstance(ALGORITHM);
 	}
+
 	public String encrypt(String data, PublicKey pubKey) throws Exception {
 		String cipherText = null;
 		

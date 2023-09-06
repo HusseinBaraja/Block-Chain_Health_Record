@@ -15,13 +15,13 @@ public class MyKeyPair {
 	private KeyPair keyPair;
 	private static PublicKey publicKey;
 	private static PrivateKey privateKey;
-	public static PublicKey getPublicKey() {
-		return publicKey;
-		
-	}
+
+	public static PublicKey getPublicKey() { return publicKey; }
+
 	public static PrivateKey getPrivateKey() {
 		return privateKey;
 	}
+
 	private MyKeyPair() {
 		try {
 			keygen = KeyPairGenerator.getInstance(ALGORITHM);
@@ -29,12 +29,14 @@ public class MyKeyPair {
 			e.printStackTrace();
 		}
 	}
+
 	public static void create() {
 		MyKeyPair keyMaker = new MyKeyPair();
 		keyMaker.keyPair = keyMaker.keygen.generateKeyPair();
 		publicKey = keyMaker.keyPair.getPublic();
 		privateKey = keyMaker.keyPair.getPrivate();
 	}
+
 	public static void put(byte[] keyBytes,String path) {
 		File f = new File(path);
 		f.getParentFile().mkdir();

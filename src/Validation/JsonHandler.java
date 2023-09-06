@@ -157,7 +157,7 @@ public class JsonHandler {
             new String[]{"Name", "Username", "Password"},
             new String[]{"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"},
             new String[]{"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender"},
-            new String[]{"Name", "Username", "Password"}
+            new String[]{"PatientId", "Username", "Password"}
     );
 
     private int counter;

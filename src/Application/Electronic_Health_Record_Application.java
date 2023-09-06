@@ -9,115 +9,103 @@ import org.json.simple.JSONObject;
 import Blockchain.MerkleTree;
 import Blockchain.TransactionCollection;
 import Blockchain.Block;
+import Blockchain.Hasher;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.Collections;
 
 
 public class Electronic_Health_Record_Application {
     private static final String USER_FILE = "src/database/user_database.json";
     private static JSONObject userData;
-    private static final Scanner scanner = new Scanner(System.in);
-
     private static String masterFolder = "master";
     private static String fileName = masterFolder + "/chain.bin";
-    private static orderSignificance test;
 
     public static void main(String[] args) {
         mainMenu();
-//        System.out.println(test.getDisplay());
-        DisplaySignificantData();
-//        addDataToBlockchain();
     }
 
-    private static void DisplaySignificantData(){
-
-    }
-    private static void addDataToBlockchain() {
+    public static void addDataToBlockchain(JSONObject significantPatientData) {
         Blockchain bc = Blockchain.getInstance(fileName);
-        if(!new File(masterFolder).exists()) {
+        if (!new File(masterFolder).exists()) {
             System.err.println("> creating Blockchain binary !");
             new File(masterFolder).mkdir();
             bc.genesis();
-        }else {
-            String line1 = "bob|alice|debit|100";
-            String line2 = "mick|alice|debit|200";
-            String line3 = "peter|alice|debit|300";
-            String line4 = "ali|alice|debit|201";
+        } else {
+            JSONArray jsonArray = new JSONArray();
 
+            // Add the JSON object directly to the JSON array
+            jsonArray.add(significantPatientData);
 
-            List<String> lst = new ArrayList<>();
-            lst.add(line1);
-            lst.add(line2);
-            lst.add(line3);
-            lst.add(line4);
-
-
-            MerkleTree mt = MerkleTree.getInstance(lst);
+            MerkleTree mt = MerkleTree.getInstance(Collections.singletonList(jsonArray.toJSONString()));
             mt.build();
             String root = mt.getRoot();
 
             TransactionCollection trxlst = new TransactionCollection();
             trxlst.setMerkleRoot(root);
-            trxlst.setTranxLst(lst);
+
+            // Set tranxLst as the JSON array
+            trxlst.setTranxLst(jsonArray);
 
             String previousHash = bc.get().getLast().getHeader().getCurrHash();
             Block b1 = new Block(previousHash);
             b1.setTransactions(trxlst);
             bc.nextBlock(b1);
             bc.distribute();
-
         }
     }
 
-    private static void mainMenu(){
-//        while (true) {
-            System.out.println("Welcome to EHR Blockchain System!");
-            System.out.println("1. Sign in");
-            System.out.println("2. Sign up");
-            System.out.println("3. Exit");
+    private static void mainMenu() {
+        while (true) {
+            clearScreen();
+            System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
+            System.out.println("\u001B[33m|Welcome to EHR Blockchain System!\u001B[0m\u001B[33m|\u001B[0m"); // Cyan header
+            System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
+            System.out.println("\u001B[33m| \u001B[0m\u001B[32m1. Sign in                      \u001B[0m\u001B[33m|\u001B[0m"); // Green text
+            System.out.println("\u001B[33m| \u001B[0m\u001B[32m2. Sign up                      \u001B[0m\u001B[33m|\u001B[0m"); // Green text
+            System.out.println("\u001B[33m| \u001B[0m\u001B[32m3. Exit                         \u001B[0m\u001B[33m|\u001B[0m"); // Green text
+            System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
 
-            int choice = InputValidator.valInt("Choice: ", "choice");
+            int choice = InputValidator.valInt("\u001B[33mChoose an option: \u001B[0m", "choice");
 
             switch (choice) {
-                case 1 -> signIn();
-                case 2 -> signUp();
-                case 3 -> {
+                case 1:
+                    signIn();
+                    break;
+                case 2:
+                    signUp();
+                    break;
+                case 3:
                     System.out.println("Exiting the system...");
                     return;
-                }
-                default -> System.out.println("Invalid choice.");
+                default:
+                    System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red text
+                    // You can add a delay before clearing the screen
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
             }
-//        }
+        }
     }
 
-    // validation for clinicOrHospital, username, password, contactNumber
-    private static void signUp() {
-        System.out.println("Register as Health Provider:");
-
-        String name = InputValidator.valString("Enter the health provider name: ", "name");
-        String clinicOrHospital = InputValidator.valString("Enter the type of health provider (clinic or hospital): ",
-                "hospital name");
-        String contactNumber = InputValidator.valString("Enter health provider contact number: ",
-                "contact number");
-        String username = InputValidator.valString("Enter a username: ", "username");
-        String password = InputValidator.valString("Enter a password: ", "password");
-
-        String[] userAttributes = {"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"};
-        Object[] newHealthProvider = {name, clinicOrHospital, contactNumber, username, password, false};
-
-        JsonHandler healthProvider = new JsonHandler();
-        healthProvider.addNewUser("HealthProvider", userAttributes, newHealthProvider);
-
-        System.out.println("Registration successful!");
+    private static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     private static void signIn() {
-        String username = InputValidator.valString("Enter username: ", "username");
-        String password = InputValidator.valString("Enter password: ", "password");
+        clearScreen();
 
+        System.out.println();
+        System.out.println("\u001B[36mSign in:\u001B[0m"); // Cyan header
+
+        System.out.print("\u001B[33mEnter username:\u001B[0m "); // Cyan input prompt
+        String username = InputValidator.valString("", "username");
+
+        System.out.print("\u001B[33mEnter password:\u001B[0m "); // Cyan input prompt
+        String password = InputValidator.valString("", "password");
 
         JsonHandler rootLogin = new JsonHandler();
         File jsonFile = new File(USER_FILE);
@@ -131,49 +119,195 @@ public class Electronic_Health_Record_Application {
                 JSONObject userData = (JSONObject) obj;
                 String storedUsername = (String) userData.get("Username");
                 String storedPassword = (String) userData.get("Password");
-                if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                    System.out.println(userType + " login successful!");
+
+                // Hash the entered password and compare it with stored password
+                String hashedEnteredPassword = Hasher.sha384(password);
+                if (storedUsername.equals(username) && storedPassword.equals(hashedEnteredPassword)) {
+                    System.out.println("\u001B[32m" + userType + " login successful!\u001B[0m"); // Green success message
                     switch (userType) {
                         case "Admin" -> adminMenu();
-//                        case "HealthProvider" -> healthProviderMenu();
+                        case "HealthProvider" -> healthProviderMenu();
                         case "Doctor" -> new Doctor(username);
-//                        case "Patient" -> adminMenu();
-                        default -> System.out.println("Invalid choice.");
+//                        case "Patient" -> patientMenu();
+                        default -> System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
                     }
-                    return; // Exit function after successful login
+                    return;
                 }
             }
         }
 
-        System.out.println("Login failed. Invalid credentials. Please try again!");
+        System.out.println("\u001B[31mLogin failed. Invalid credentials. Please try again!\u001B[0m"); // Red error message
         signIn();
     }
 
-    private static void adminMenu() {
-        System.out.println("Admin Menu:");
-        System.out.println("1. Grant Access to Health Provider");
-        System.out.println("2. Revoke Access from Health Provider");
-        System.out.println("3. Logout");
+    private static void signUp() {
+        while (true) {
+            clearScreen();
+            System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
+            System.out.println("\u001B[33m|            Sign up !\u001B[0m\u001B[33m            |\u001B[0m"); // Cyan header
+            System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
+            System.out.println("\u001B[33m| \u001B[0m\u001B[32m1. Sign up as Health Provider   \u001B[0m\u001B[33m|\u001B[0m"); // Green text
+            System.out.println("\u001B[33m| \u001B[0m\u001B[32m2. Sign up as Patient           \u001B[0m\u001B[33m|\u001B[0m"); // Green text
+            System.out.println("\u001B[33m| \u001B[0m\u001B[32m3. Main Menu                    \u001B[0m\u001B[33m|\u001B[0m"); // Green text
+            System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
 
-        System.out.print("Admin Action: ");
-        int actionChoice = InputValidator.valInt("Enter your name: ", "name");
+            int choice = InputValidator.valInt("\u001B[33mChoose an option: \u001B[0m", "choice");
+
+            switch (choice) {
+                case 1 -> registerHealthProvider();
+                case 2 -> registerPatient();
+                case 3 -> {
+                    System.out.println("Returning back to main menu...");
+                    return;
+                }
+                default -> {
+                    System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red text
+
+                    // You can add a delay before clearing the screen
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    private static void registerPatient() {
+        System.out.println();
+        System.out.println("\u001B[36mRegister as Patient:\u001B[0m"); // Cyan header
+
+        String username;
+        String password;
+
+        // Read the JSON file and get the entire data
+        JsonHandler patient = new JsonHandler();
+        JSONObject data = patient.getRootInfo(new File(USER_FILE));
+
+        while (true) {
+            username = InputValidator.valUsername("\u001B[33mEnter username:\u001B[0m ", "username"); // Yellow input
+            password = InputValidator.valPassword("\u001B[33mEnter password:\u001B[0m ", "password"); // Yellow input
+
+            // Hash the password using SHA-384
+            String hashedPassword = Hasher.sha384(password);
+
+            // Check if the username already exists in any section
+            if (isUsernameExistsInSections(data, username)) {
+                System.out.println("\u001B[31mUsername already exists. Please choose another one.\u001B[0m"); // Red error message
+            } else {
+                // Find the last PatientId and increment it
+                String lastPatientId = "";
+                JSONArray patientArray = (JSONArray) data.get("Patient");
+                if (patientArray.size() > 0) {
+                    JSONObject lastPatient = (JSONObject) patientArray.get(patientArray.size() - 1);
+                    lastPatientId = (String) lastPatient.get("PatientId");
+                }
+
+                String newPatientId = incrementPatientId(lastPatientId);
+
+                String[] userAttributes = {"PatientId", "Username", "Password"};
+                Object[] newPatient = {newPatientId, username, hashedPassword};
+
+                patient.addNewUser("Patient", userAttributes, newPatient);
+
+                System.out.println("\u001B[32mRegistration successful!\u001B[0m"); // Green success message
+                break; // Exit the loop when registration is successful
+            }
+        }
+    }
+
+    private static String incrementPatientId(String lastPatientId) {
+        if (lastPatientId.isEmpty()) {
+            return "PID0";
+        }
+
+        String[] parts = lastPatientId.split("PID");
+        int lastId = Integer.parseInt(parts[1]);
+        int newId = lastId + 1;
+        return "PID" + newId;
+    }
+
+    private static void registerHealthProvider() {
+        System.out.println();
+        System.out.println("\u001B[36mRegister as Health Provider:\u001B[0m"); // Cyan header
+
+        String name, username, contactNumber, clinicOrHospital, password;
+
+        JsonHandler healthProvider = new JsonHandler();
+        JSONObject data = healthProvider.getRootInfo(new File(USER_FILE));
+
+        while (true) {
+            username = InputValidator.valUsername("\u001B[33mEnter a username:\u001B[0m ", "username"); // Yellow input
+
+            if (isUsernameExistsInSections(data, username)) {
+                System.out.println("\u001B[31mUsername already exists. Please choose another one.\u001B[0m"); // Red error message
+                continue; // Continue to the next iteration of the loop to ask for a new username
+            }
+
+            password = InputValidator.valPassword("\u001B[33mEnter a password:\u001B[0m ", "password"); // Yellow input
+            name = InputValidator.valString("\u001B[33mEnter the health provider name:\u001B[0m ", "name"); // Yellow input
+            clinicOrHospital = InputValidator.valFacilityType("\u001B[33mEnter the type of health provider (clinic or hospital):\u001B[0m ",
+                    "facility type"); // Yellow input
+            contactNumber = InputValidator.valPhoneNumber("\u001B[33mEnter health provider contact number:\u001B[0m ",
+                    "phone number"); // Yellow input
+
+            // Hash the password using SHA-384
+            String hashedPassword = Hasher.sha384(password);
+
+            String[] userAttributes = {"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"};
+            Object[] newHealthProvider = {name, clinicOrHospital, contactNumber, username, hashedPassword, false};
+
+            healthProvider.addNewUser("HealthProvider", userAttributes, newHealthProvider);
+
+            System.out.println("\u001B[32mRegistration successful!\u001B[0m"); // Green success message
+            break; // Exit the loop when registration is successful
+        }
+    }
+
+    private static boolean isUsernameExistsInSections(JSONObject data, String username) {
+        String[] sections = {"Admin", "HealthProvider", "Doctor", "Patient"};
+        for (String section : sections) {
+            JSONArray sectionArray = (JSONArray) data.get(section);
+            if (isUsernameExists(sectionArray, username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isUsernameExists(JSONArray jsonArray, String username) {
+        for (Object obj : jsonArray) {
+            JSONObject jsonObject = (JSONObject) obj;
+            String existingUsername = (String) jsonObject.get("Username");
+            if (existingUsername.equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void adminMenu() {
+        clearScreen();
+
+        System.out.println("\u001B[36mAdmin Menu:\u001B[0m");
+        System.out.println("\u001B[32m1. Grant Access to Health Provider\u001B[0m");
+        System.out.println("\u001B[32m2. Revoke Access from Health Provider\u001B[0m");
+        System.out.println("\u001B[32m3. Logout\u001B[0m");
+
+        System.out.print("\u001B[33mChoose an option: \u001B[0m");
+        int actionChoice = InputValidator.valInt("", "name");
 
         JsonHandler manageAccess = new JsonHandler();
         switch (actionChoice) {
-            // Grant Access to Health Provider
-            case 1 -> manageAccess.grantAccessToHealthProvider();
-
-            // Revoke Access from Health Provider
-            case 2 -> manageAccess.revokeAccessFromHealthProvider();
-
-            case 3 -> System.out.println("Going back to the menu.");
-
-            default -> System.out.println("Invalid admin action choice.");
+            case 1 -> manageAccess.grantAccessToHealthProvider(); // Grant Access to Health Provider
+            case 2 -> manageAccess.revokeAccessFromHealthProvider(); // Revoke Access from Health Provider
+            case 3 -> System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
+            default -> System.out.println("\u001B[31mInvalid admin action choice.\u001B[0m");
         }
-
     }
 
-    private static void healthProviderMenu(JSONObject providerData) {
+    private static void healthProviderMenu() {
         System.out.println("Health Provider Menu:");
         System.out.println("1. Add Doctor");
         System.out.println("2. Remove Doctor");
@@ -197,29 +331,28 @@ public class Electronic_Health_Record_Application {
     }
 
     private static void addDoctor() {
-        System.out.println("Add Doctor:");
+        clearScreen();
 
-        String name = InputValidator.valString("Enter doctor's name: ", "doctor's name");
-        String username = InputValidator.valString("Enter doctor's username: ", "username");
-        String password = InputValidator.valString("Enter doctor's password: ", "password");
-        int phoneNumber = InputValidator.valInt("Enter doctor's phone number: ", "phone number");
-        String DOB = InputValidator.valString("Enter doctor's DOB: ", "date of birth");
-        int age = InputValidator.valInt("Enter doctor's age: ", "age");
-        String gender = InputValidator.valString("Enter doctor's gender: ", "gender");
+        System.out.println("\u001B[36mAdd Doctor:\u001B[0m"); // Cyan header
 
+        String name = InputValidator.valString("\u001B[33mEnter doctor's name: \u001B[0m", "doctor's name"); // Yellow input
+        String username = InputValidator.valUsername("\u001B[33mEnter doctor's username: \u001B[0m", "username"); // Yellow input
+        String password = InputValidator.valPassword("\u001B[33mEnter doctor's password: \u001B[0m", "password"); // Yellow input
+        String phoneNumber = InputValidator.valPhoneNumber("\u001B[33mEnter doctor's phone number: \u001B[0m", "phone number"); // Yellow input
+        String dob = InputValidator.valDateOfBirth("\u001B[33mEnter doctor's date of birth (YYYY-MM-DD): \u001B[0m", "date of birth", "yyyy-MM-dd");
+        int age = InputValidator.valInt("\u001B[33mEnter doctor's age: \u001B[0m", "age"); // Yellow input
+        String gender = InputValidator.valGender("\u001B[33mEnter your gender ('male,' 'female,' or 'other'): \u001B[0m", "gender");
+
+        // Hash the password using SHA-384
+        String hashedPassword = Hasher.sha384(password);
 
         String[] userAttributes = {"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender"};
-        Object[] newDoctor = {name, username, password, phoneNumber, DOB, age, gender};
+        Object[] newDoctor = {name, username, hashedPassword, phoneNumber, dob, age, gender};
 
         JsonHandler healthProvider = new JsonHandler();
         healthProvider.addNewUser("Doctor", userAttributes, newDoctor);
 
-
-        System.out.println("Doctor added successfully!");
-    }
-
-    private void doctorMenu(){
-        // Menu
+        System.out.println("\u001B[32mDoctor added successfully!\u001B[0m"); // Green success message
     }
 
 }

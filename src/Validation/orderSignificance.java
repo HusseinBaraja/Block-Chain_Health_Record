@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static Application.Electronic_Health_Record_Application.addDataToBlockchain;
+
 public class orderSignificance {
 
     public JSONObject readJsonFile(String filePath) {
@@ -44,11 +46,9 @@ public class orderSignificance {
         return prettyJSONBuilder.toString();
     }
 
-    String display;
-
     public void sortData(JSONObject inputObject) throws IOException{
         JSONObject significanceObject = readJsonFile("src/database/data_significance.json");
-        JSONObject significantDataObject = readJsonFile("significant_data.json");
+        JSONObject significantDataObject = new JSONObject();
         JSONObject insignificantDataObject = readJsonFile("src/database/insignificant_data.json");
 
         for (Object patientIdObj : inputObject.keySet()) {
@@ -103,18 +103,11 @@ public class orderSignificance {
             }
         }
 
-        // Here is the significant data, you can handle it however you like
-        try (FileWriter significantFile = new FileWriter("significant_data.json")) {
-            display = formatJson(significantDataObject.toJSONString());
-        }
+        addDataToBlockchain(significantDataObject);
 
         try (FileWriter insignificantFile = new FileWriter("src/database/insignificant_data.json")) {
             insignificantFile.write(formatJson(insignificantDataObject.toJSONString()));
         }
-    }
-
-    public String getDisplay(){
-        return display;
     }
 
 }

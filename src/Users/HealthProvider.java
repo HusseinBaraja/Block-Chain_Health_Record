@@ -8,7 +8,6 @@ public class HealthProvider {
     private String clinicOrHospital;
     private String contactNumber;
     private boolean accessGranted;
-
     private String username, password;
 
 

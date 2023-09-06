@@ -6,7 +6,6 @@ import java.util.List;
 
 public class TransactionCollection implements Serializable {
 
-	
 	private final int SIZE = 10;
 	public String merkleRoot;
 
