@@ -39,6 +39,18 @@
 			},
 			"Procedures":{
 				"ProcedureNotes":"10"
+			},
+			"VitalSigns":{
+				"Height":"11",
+				"Weight":"12"
+			},
+			"Diagnosis":{
+				"DiagnosisDescription":"5",
+				"Notes":"6"
+			},
+			"Allergies":{
+				"TreatmentPlan":"9",
+				"ReactionDescription":"8"
 			}
 		}
 	],
