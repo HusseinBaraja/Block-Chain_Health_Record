@@ -3,9 +3,10 @@ package Users;
 import Validation.InputValidator;
 import Validation.JsonHandler;
 import Validation.orderSignificance;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -136,9 +137,44 @@ public class Doctor extends Users {
         return InputValidator.valInt("Enter the number of the field to update (1-" + fields.size() + "): ", "field") - 1;
     }
 
+    private String CheckItemsExist(String reqItem, String username){
+        JsonHandler getPatInfo = new JsonHandler();
+        getPatInfo.getPatientInfoByUsername(username);
 
+        String currentInfo = getPatInfo.getPatientKey();
+        JsonHandler handler = new JsonHandler();
+        String patientDataKeys = handler.getPatientDataKeys(currentInfo);
+        List<String> keyList = Arrays.asList(patientDataKeys.split(","));
+        return Boolean.toString(keyList.contains(reqItem));
+    }
 
     private void addData() {
+        String patient_username = InputValidator.valString("Enter patient username: ", "username");
+        String reqItem = "PatientIdentifiers";
+
+        while (true){
+            switch (CheckItemsExist(reqItem, patient_username)){
+                case "true":
+                    break;
+                case "False":
+                    String checkDocOptions = InputValidator.valString(
+                            "This patient didn't add his basic information yet, would you like to that? ",
+                            "yes or no");
+                    switch (checkDocOptions) {
+                        case "yes" -> addIdentifiersData();
+                        case "no" -> {
+                            return;
+                        }
+                        default -> {
+                            System.out.println("Wrong input, please input yes or no!");
+                            continue;
+                        }
+                    }
+
+            }
+            break;
+        }
+
         System.out.println("\u001B[36mData Entry Menu:\u001B[0m"); // Cyan header
         System.out.println("1. \u001B[32mAdd Patient Identifiers Data\u001B[0m"); // Green menu item
         System.out.println("2. \u001B[32mAdd Patient Demographic Data\u001B[0m"); // Green menu item
@@ -192,6 +228,8 @@ public class Doctor extends Users {
                 System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
         }
     }
+
+
 
     private void addDemographicData() {
         JSONObject patientData = new JSONObject();
@@ -327,5 +365,6 @@ public class Doctor extends Users {
         }
         doctorMenu();
     }
+
 
 }

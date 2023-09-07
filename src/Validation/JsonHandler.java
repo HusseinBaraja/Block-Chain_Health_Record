@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class JsonHandler {
     private static final String USER_FILE = "src/database/user_database.json";
@@ -407,6 +408,38 @@ public class JsonHandler {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public String getPatientDataKeys(String patientId) {
+        JSONParser parser = new JSONParser();
+
+        try (FileReader reader = new FileReader("src/database/insignificant_data.json")) {
+            // Load and parse the JSON file
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            // Check if the patient ID exists
+            if (jsonObject.containsKey(patientId)) {
+                JSONArray patientArray = (JSONArray) jsonObject.get(patientId);
+                if (patientArray.size() == 0) {
+                    return "The patient exists but has no data.";
+                }
+
+                JSONObject patientData = (JSONObject) patientArray.get(0);
+
+                // Retrieve the keys and create a comma-separated string
+                Set<String> keySet = patientData.keySet();
+                return String.join(",", keySet);
+
+            } else {
+                return "Error: Patient not found.";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error: Failed to read the JSON file.";
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "Error: Failed to parse the JSON content.";
         }
     }
 

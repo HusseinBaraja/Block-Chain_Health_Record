@@ -46,7 +46,7 @@ public class orderSignificance {
     }
 
     public void sortData(JSONObject inputObject) throws IOException{
-        JSONObject significanceObject = readJsonFile("database/catagorization.json");
+        JSONObject significanceObject = readJsonFile("database/categorization.json");
         JSONObject significantDataObject = new JSONObject();
         JSONObject insignificantDataObject = readJsonFile("src/database/insignificant_data.json");
 
@@ -108,5 +108,7 @@ public class orderSignificance {
             insignificantFile.write(formatJson(insignificantDataObject.toJSONString()));
         }
     }
+
+
 
 }
