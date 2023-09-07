@@ -375,6 +375,36 @@ public class JsonHandler {
 
         return false; // Item not found
     }
+    public void updatePatientData(String username, JSONObject updatedData) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject patInfo = (JSONObject) parser.parse(new FileReader(Paths.get(PATIENT_FILE).toFile()));
 
+            for (Object key : patInfo.keySet()) {
+                if (!(patInfo.get(key) instanceof JSONArray)) {
+                    continue;
+                }
+                JSONArray patientArray = (JSONArray) patInfo.get(key);
+                for (Object obj : patientArray) {
+                    JSONObject patient = (JSONObject) obj;
+                    JSONObject identifiers = (JSONObject) patient.get("PatientIdentifiers");
+                    if (username.equalsIgnoreCase((String) identifiers.get("Username"))) {
+                        // Update the patient's data
+                        patient.putAll(updatedData);
+                        // Save the updated JSON data back to the file
+                        try (FileWriter file = new FileWriter(PATIENT_FILE)) {
+                            file.write(patInfo.toJSONString());
+                            file.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

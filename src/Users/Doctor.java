@@ -3,9 +3,11 @@ package Users;
 import Validation.InputValidator;
 import Validation.JsonHandler;
 import Validation.orderSignificance;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.Scanner;
+import java.util.Set;
 
 public class Doctor extends Users {
     private String name, username, phoneNumber, DOB, gender, currPatientID;
@@ -48,16 +50,88 @@ public class Doctor extends Users {
             case 2:
                 addData();
                 break;
-            case 4:
-//                modifyPatientData();
-                break;
             case 3:
+                String patientUsername = InputValidator.valString("Enter the patient's username: ", "username");
+                modifyPatientData(patientUsername);
+                break;
+            case 4:
                 System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
                 return;
             default:
                 System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
         }
     }
+
+    private void modifyPatientData(String patientUsername) {
+        // Retrieve patient data from the JSON file
+        JsonHandler jsonHandler = new JsonHandler();
+        JSONObject patientInfo = jsonHandler.getPatientInfoByUsername(patientUsername);
+
+        if (patientInfo != null) {
+            // Get the categories available for modification from the JSON data
+            Set<String> categories = patientInfo.keySet();
+
+            // Display categories to the doctor and ask for selection
+            int categoryChoice = displayAndSelectCategory(categories);
+
+            if (categoryChoice >= 0 && categoryChoice < categories.size()) {
+                String selectedCategory = (String) categories.toArray()[categoryChoice];
+                JSONObject categoryData = (JSONObject) patientInfo.get(selectedCategory);
+
+                // Get the fields available for modification in the selected category
+                Set<String> fields = categoryData.keySet();
+
+                // Display fields to the doctor and ask for selection
+                int fieldChoice = displayAndSelectField(fields);
+
+                if (fieldChoice >= 0 && fieldChoice < fields.size()) {
+                    String selectedField = (String) fields.toArray()[fieldChoice];
+
+                    // Ask the doctor to enter the new value for the selected field
+                    String newValue = InputValidator.valString("Enter the new value for " + selectedField + ": ", selectedField);
+
+                    // Update the selected field with the new value
+                    categoryData.put(selectedField, newValue);
+
+                    // Save the updated patient data
+                    jsonHandler.updatePatientData(patientUsername, patientInfo);
+                    System.out.println("Field updated successfully.");
+                } else {
+                    System.out.println("Invalid field choice.");
+                }
+            } else {
+                System.out.println("Invalid category choice.");
+            }
+        } else {
+            System.out.println("Patient not found.");
+        }
+    }
+
+    private int displayAndSelectCategory(Set<String> categories) {
+        System.out.println("Select a category to update:");
+
+        int index = 0;
+        for (String category : categories) {
+            System.out.println((index + 1) + ". " + category);
+            index++;
+        }
+
+        return InputValidator.valInt("Enter the number of the category to update (1-" + categories.size() + "): ", "category") - 1;
+    }
+
+    private int displayAndSelectField(Set<String> fields) {
+        System.out.println("Select a field to update:");
+
+        int index = 0;
+        for (String field : fields) {
+            System.out.println((index + 1) + ". " + field);
+            index++;
+        }
+
+        return InputValidator.valInt("Enter the number of the field to update (1-" + fields.size() + "): ", "field") - 1;
+    }
+
+
 
     private void addData() {
         System.out.println("\u001B[36mData Entry Menu:\u001B[0m"); // Cyan header

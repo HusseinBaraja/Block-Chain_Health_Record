@@ -19,7 +19,7 @@ public class orderSignificance {
         }
     }
 
-    private String formatJson(String jsonString) {
+    public String formatJson(String jsonString) {
         String indentString = "";
         StringBuilder prettyJSONBuilder = new StringBuilder();
         char[] chars = jsonString.toCharArray();
