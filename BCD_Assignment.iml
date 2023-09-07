@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-tests.jar!/" />
@@ -22,6 +22,24 @@
           <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-sources.jar!/" />
           <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-test-sources.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/gson-2.6.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/json_simple-1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>
