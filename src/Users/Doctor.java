@@ -186,6 +186,40 @@ public class Doctor extends Users {
         }
     }
 
+    private void addIdentifiersData(){
+        JSONObject patientData = new JSONObject();
+
+        System.out.println("--- Patient Identifiers Data ---");
+        JSONObject patientIdentifiers = new JSONObject();
+
+        String fullName = InputValidator.valString("Enter FullName: ", "Full Name");
+        patientIdentifiers.put("FullName", fullName);
+
+        String dob = InputValidator.valDateOfBirth("Enter DateOfBirth: ", "Date of Birth", "yyyy-MM-dd");
+        patientIdentifiers.put("DateOfBirth", dob);
+
+        String address = InputValidator.valString("Enter Address: ", "Address");
+        patientIdentifiers.put("Address", address);
+
+        String phoneNumber = InputValidator.valPhoneNumber("Enter PhoneNumber: ", "Phone Number");
+        patientIdentifiers.put("PhoneNumber", phoneNumber);
+
+        patientData.put("PatientIdentifiers", patientIdentifiers);
+
+        JSONObject inputData = new JSONObject();
+
+        //Here we should generate new PatientIDs for new patients
+        inputData.put("P3", patientData);
+
+        orderSignificance addUser = new orderSignificance();
+        try {
+            addUser.sortData(inputData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        doctorMenu();
+    }
+
     private void addDemographicData() {
         JSONObject patientData = new JSONObject();
 
@@ -546,36 +580,6 @@ public class Doctor extends Users {
         System.out.println("\nImaging Reports:");
         System.out.println("Administering Clinic: " + imagingReports.get("AdministeringClinic"));
 
-    }
-
-    private void addIdentifiersData(){
-        JSONObject patientData = new JSONObject();
-
-        System.out.println("--- Patient Identifiers Data ---");
-        JSONObject patientIdentifiers = new JSONObject();
-        System.out.print("Enter FullName: ");
-        patientIdentifiers.put("FullName", scanner.nextLine());
-        System.out.print("Enter DateOfBirth: ");
-        patientIdentifiers.put("DateOfBirth", scanner.nextLine());
-        System.out.print("Enter Address: ");
-        patientIdentifiers.put("Address", scanner.nextLine());
-        System.out.print("Enter PhoneNumber: ");
-        patientIdentifiers.put("PhoneNumber", scanner.nextLine());
-
-        patientData.put("PatientIdentifiers", patientIdentifiers);
-
-        JSONObject inputData = new JSONObject();
-
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
 }
