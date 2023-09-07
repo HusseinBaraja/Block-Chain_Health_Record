@@ -30,8 +30,13 @@ public class Doctor extends Users {
         } else {
             System.out.println("Doctor info was not found!");
         }
-        doctorMenu();
 
+        switch (new JsonHandler().getAccessStatus(username, "Doctor")) {
+            case 1 -> doctorMenu();
+            case 0 -> System.out.println("This doctor doesn't have access to the system!");
+            case 2 -> System.out.println("This doctor is not in the system!");
+            default -> System.out.println("There was an error in the system!");
+        }
     }
 
     private void doctorMenu() {

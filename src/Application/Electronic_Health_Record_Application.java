@@ -123,7 +123,8 @@ public class Electronic_Health_Record_Application {
                 // Hash the entered password and compare it with stored password
                 String hashedEnteredPassword = Hasher.sha384(password);
                 if (storedUsername.equals(username) && storedPassword.equals(hashedEnteredPassword)) {
-                    System.out.println("\u001B[32m" + userType + " login successful!\u001B[0m"); // Green success message
+//                    Check this
+//                    System.out.println("\u001B[32m" + userType + " login successful!\u001B[0m"); // Green success message
                     switch (userType) {
                         case "Admin" -> new Admin(username);
                         case "HealthProvider" -> new HealthProvider(username);
