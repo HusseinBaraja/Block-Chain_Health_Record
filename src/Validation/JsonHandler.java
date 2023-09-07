@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +55,29 @@ public class JsonHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getItem(String itemToGet, String userType) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(Paths.get(USER_FILE).toFile()));
+
+            JSONArray healthProviders = (JSONArray) jsonObject.get(userType);
+
+            for (Object o : healthProviders) {
+                JSONObject provider = (JSONObject) o;
+                String item = (String) provider.get(itemToGet);
+                return item;
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     public JSONObject getUserInfoByUserName(String userType, String username) {
@@ -156,7 +176,7 @@ public class JsonHandler {
     private final List<String[]> USER_FIELDS = Arrays.asList(
             new String[]{"Name", "Username", "Password"},
             new String[]{"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"},
-            new String[]{"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender"},
+            new String[]{"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender", "PlaceOfWork"},
             new String[]{"PatientId", "Username", "Password"}
     );
 
@@ -254,6 +274,75 @@ public class JsonHandler {
         }
         if (withComma) {
             writer.write(",\n");
+        }
+    }
+
+    public static int getAccessStatus(String username) {
+        JSONParser parser = new JSONParser();
+
+        try {
+            // Parse the JSON string into a JSONObject
+            JSONObject rootObject = (JSONObject) parser.parse(new FileReader(Paths.get(USER_FILE).toFile()));
+
+            // Get the JSONArray for the 'Doctor' key
+            JSONArray doctorsArray = (JSONArray) rootObject.get("Doctor");
+
+            // Variable to store the place of work for the given username
+            String placeOfWork = null;
+
+            // Iterate through the doctors array to get the place of work for the given username
+            for (Object doctorObject : doctorsArray) {
+                JSONObject doctor = (JSONObject) doctorObject;
+                if (username.equals(doctor.get("Username"))) {
+                    placeOfWork = (String) doctor.get("PlaceOfWork");
+                    System.out.println("Place of work: " + placeOfWork);
+                    break;
+                }
+            }
+
+            // If we couldn't find the doctor or the place of work, return false
+            if (placeOfWork == null) {
+                return 2;
+            }
+
+            // Get the JSONArray for the 'HealthProvider' key
+            JSONArray healthProvidersArray = (JSONArray) rootObject.get("HealthProvider");
+
+            // Iterate through the health providers array to match the place of work and get the 'AccessGranted' status
+            for (Object healthProviderObject : healthProvidersArray) {
+                JSONObject healthProvider = (JSONObject) healthProviderObject;
+                if (placeOfWork.equals(healthProvider.get("Name"))) {
+                    String access = Boolean.toString ((Boolean) healthProvider.get("AccessGranted"));
+                    System.out.println("access: " + access);
+                    switch (access){
+                        case "true":
+                            return 1;
+                        case "false":
+                            return 0;
+                    }
+                }
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // If we reach here, it means we couldn't find the matching health provider, so return false
+        return 2;
+    }
+
+    public static void main(String[] args) {
+        // Testing for multiple usernames
+        String[] testUsernames = {"hussein", "chrishem", "natport"};
+
+
+        for (String username : testUsernames) {
+            int accessStatus = getAccessStatus(username);
+            System.out.println("Access Status for " + username + ": " + Integer.toString(accessStatus));
         }
     }
 }

@@ -6,7 +6,6 @@ import org.json.simple.parser.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 import static Application.Electronic_Health_Record_Application.addDataToBlockchain;
 
@@ -47,7 +46,7 @@ public class orderSignificance {
     }
 
     public void sortData(JSONObject inputObject) throws IOException{
-        JSONObject significanceObject = readJsonFile("src/database/data_significance.json");
+        JSONObject significanceObject = readJsonFile("database/catagorization.json");
         JSONObject significantDataObject = new JSONObject();
         JSONObject insignificantDataObject = readJsonFile("src/database/insignificant_data.json");
 

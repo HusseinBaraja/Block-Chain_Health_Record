@@ -13,24 +13,24 @@
     ],
     "HealthProvider": [
         {
-            "Name": "John Doe",
-            "ClinicOrHospital": "MediCare Clinic",
+            "Name": "MediCare Clinic",
+            "ClinicOrHospital": "clinic",
             "ContactNumber": "123-456-7890",
             "Username": "john",
-            "Password": "password123",
+            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9",
             "AccessGranted": true
         },
         {
-            "Name": "Alice Brown",
-            "ClinicOrHospital": "HealFast Hospital",
+            "Name": "HealFast Hospital",
+            "ClinicOrHospital": "hospital",
             "ContactNumber": "987-654-1234",
             "Username": "alice",
             "Password": "alicepass",
             "AccessGranted": false
         },
         {
-            "Name": "Bob Martin",
-            "ClinicOrHospital": "Wellness Clinic",
+            "Name": "Wellness Clinic",
+            "ClinicOrHospital": "clinic",
             "ContactNumber": "876-543-2109",
             "Username": "bobm",
             "Password": "bobpass",
@@ -38,7 +38,7 @@
         },
         {
             "Name": "Ghassan",
-            "ClinicOrHospital": "ghassan",
+            "ClinicOrHospital": "hospital",
             "ContactNumber": "0213123123",
             "Username": "ghassan",
             "Password": "ghassan",
@@ -54,7 +54,7 @@
         },
         {
             "Name": "test",
-            "ClinicOrHospital": "test",
+            "ClinicOrHospital": "clinic",
             "ContactNumber": "324324",
             "Username": "test",
             "Password": "2601e55ee790519019f7df108924bc1397edbfad18c74bd7371b761d791fc91ce1109bcc6b24c91eaafebc0eb6d60d37",
@@ -77,7 +77,8 @@
             "PhoneNumber": "111-111-1111",
             "DOB": "1985-04-15",
             "Age": 38,
-            "Gender": "Female"
+            "Gender": "Female",
+            "PlaceOfWork": "MediCare Clinic"
         },
         {
             "Name": "Dr. Chris Hemsworth",
@@ -86,7 +87,8 @@
             "PhoneNumber": "222-222-2222",
             "DOB": "1983-08-11",
             "Age": 40,
-            "Gender": "Male"
+            "Gender": "Male",
+            "PlaceOfWork": "HealFast Hospital"
         },
         {
             "Name": "Dr. Natalie Portman",
@@ -95,7 +97,8 @@
             "PhoneNumber": "333-333-3333",
             "DOB": "1981-06-09",
             "Age": 42,
-            "Gender": "Female"
+            "Gender": "Female",
+            "PlaceOfWork": "test"
         },
         {
             "Name": "Huss",
@@ -104,7 +107,8 @@
             "PhoneNumber": 3,
             "DOB": "3",
             "Age": 3,
-            "Gender": "3"
+            "Gender": "3",
+            "PlaceOfWork": "test"
         },
         {
             "Name": "Hamza",
@@ -113,7 +117,18 @@
             "PhoneNumber": "0123456789",
             "DOB": "2023-10-23",
             "Age": 13,
-            "Gender": "male"
+            "Gender": "male",
+            "PlaceOfWork": "test"
+        },
+        {
+            "Name": "Hamza",
+            "Username": "hamzaa",
+            "Password": "43c72bf82f5cee461ee697023d931ce6e7b7745124028861343f9522befc5d5cd8a53ea91759f7b87187271f9748d545",
+            "PhoneNumber": "0123456789",
+            "DOB": "4123-12-31",
+            "Age": 14,
+            "Gender": "male",
+            "PlaceOfWork": "test"
         }
     ],
     "Patient": [

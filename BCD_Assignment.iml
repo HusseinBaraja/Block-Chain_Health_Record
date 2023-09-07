@@ -10,34 +10,29 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/commons-codec-1.15/commons-codec-1.15-tests.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/commons-codec-1.15/commons-codec-1.15.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/gson-2.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/json-simple-1.1.jar!/" />
+          <root url="file://$MODULE_DIR$" />
         </CLASSES>
-        <JAVADOC>
-          <root url="jar://$USER_HOME$/Downloads/commons-codec-1.15/commons-codec-1.15-javadoc.jar!/" />
-        </JAVADOC>
+        <JAVADOC />
         <SOURCES>
-          <root url="jar://$USER_HOME$/Downloads/commons-codec-1.15/commons-codec-1.15-sources.jar!/" />
-          <root url="jar://$USER_HOME$/Downloads/commons-codec-1.15/commons-codec-1.15-test-sources.jar!/" />
+          <root url="file://$MODULE_DIR$/src" />
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/gson-2.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-tests.jar!/" />
         </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/json_simple-1.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-test-sources.jar!/" />
+          <root url="jar://$USER_HOME$/Desktop/Semester 5/BCD/Commons/commons-codec-1.15/commons-codec-1.15-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>
