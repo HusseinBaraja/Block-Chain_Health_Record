@@ -102,11 +102,9 @@ public class Electronic_Health_Record_Application {
         System.out.println();
         System.out.println("\u001B[36mSign in:\u001B[0m"); // Cyan header
 
-        System.out.print("\u001B[33mEnter username:\u001B[0m "); // Cyan input prompt
-        String username = InputValidator.valString("", "username");
+        String username = InputValidator.valString("\u001B[33mEnter username:\u001B[0m ", "username");
 
-        System.out.print("\u001B[33mEnter password:\u001B[0m "); // Cyan input prompt
-        String password = InputValidator.valString("", "password");
+        String password = InputValidator.valString("\u001B[33mEnter password:\u001B[0m ", "password");
 
         JsonHandler rootLogin = new JsonHandler();
         File jsonFile = new File(USER_FILE);
