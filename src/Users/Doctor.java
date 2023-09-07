@@ -255,19 +255,8 @@ public class Doctor extends Users {
 
         patientData.put("DemographicInformation", DemographicInformation);
 
-        inputData = new JSONObject();
+        inputData.put("P1", patientData);
 
-        //Here we should generate new PatientIDs for new patients
-
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
     private void addDiagnosisData() {
@@ -296,17 +285,8 @@ public class Doctor extends Users {
 
         patientData.put("Diagnosis", DiagnosisInformation);
 
-        inputData = new JSONObject();
+        inputData.put("P1", patientData);
 
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-        orderSignificance addUser = new orderSignificance();
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
     private void addAllergiesData() {
@@ -338,18 +318,8 @@ public class Doctor extends Users {
 
         patientData.put("Allergies", allergiesInformation);
 
-        inputData = new JSONObject();
+        inputData.put("P1", patientData);
 
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
     private void addImmunizationsData() {
@@ -369,19 +339,7 @@ public class Doctor extends Users {
 
         patientData.put("Immunizations", immunizationsInformation);
 
-        inputData = new JSONObject();
-
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
+        inputData.put("P1", patientData);
     }
 
     private void addMedicationsData() {
@@ -401,19 +359,9 @@ public class Doctor extends Users {
         medicationsInformation.put("Frequency", frequency);
 
         patientData.put("Medications", medicationsInformation);
-        inputData = new JSONObject();
 
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
+        inputData.put("P1", patientData);
 
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
     private void addProceduresData() {
@@ -436,19 +384,8 @@ public class Doctor extends Users {
 
         patientData.put("Procedures", proceduresInformation);
 
-        inputData = new JSONObject();
+        inputData.put("P1", patientData);
 
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
     private void addVitalSignsData() {
@@ -472,19 +409,8 @@ public class Doctor extends Users {
         laboratoryTestResultsInformation.put("TestTimestamp", testTimestamp);
         patientData.put("LaboratoryTestResults", laboratoryTestResultsInformation);
 
-        inputData = new JSONObject();
-        //Here we should generate new PatientIDs for new patients
+        inputData.put("P1", patientData);
 
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
     }
 
     private void addLaboratoryTestResultsData() {
@@ -510,19 +436,7 @@ public class Doctor extends Users {
         vitalSignsInformation.put("HeartRate", heartRate);
         patientData.put("VitalSigns", vitalSignsInformation);
 
-        inputData = new JSONObject();
-
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
+        inputData.put("P1", patientData);
     }
 
     private void addImagingReportsData() {
@@ -542,19 +456,8 @@ public class Doctor extends Users {
         imagingReportsInformation.put("AdministeringClinic", administeringClinic);
 
         patientData.put("ImagingReports", imagingReportsInformation);
-        inputData = new JSONObject();
 
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
+        inputData.put("P1", patientData);
     }
 
     // Significant
@@ -620,19 +523,8 @@ public class Doctor extends Users {
         patientIdentifiers.put("PhoneNumber", phoneNumber);
 
         patientData.put("PatientIdentifiers", patientIdentifiers);
-        inputData = new JSONObject();
 
-        //Here we should generate new PatientIDs for new patients
-        inputData.put("P3", patientData);
-
-        orderSignificance addUser = new orderSignificance();
-
-        try {
-            addUser.sortData(inputData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        doctorMenu();
+        inputData.put("P1", patientData);
     }
 
 }
