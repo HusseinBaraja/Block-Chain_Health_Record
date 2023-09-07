@@ -1,5 +1,6 @@
 package Application;
 
+import Users.Admin;
 import Users.Doctor;
 import Users.HealthProvider;
 import Validation.*;
@@ -124,7 +125,7 @@ public class Electronic_Health_Record_Application {
                 if (storedUsername.equals(username) && storedPassword.equals(hashedEnteredPassword)) {
                     System.out.println("\u001B[32m" + userType + " login successful!\u001B[0m"); // Green success message
                     switch (userType) {
-                        case "Admin" -> adminMenu();
+                        case "Admin" -> new Admin(username);
                         case "HealthProvider" -> new HealthProvider(username);
                         case "Doctor" -> new Doctor(username);
 //                        case "Patient" -> patientMenu();
@@ -285,26 +286,5 @@ public class Electronic_Health_Record_Application {
         }
         return false;
     }
-
-    private static void adminMenu() {
-        clearScreen();
-
-        System.out.println("\u001B[36mAdmin Menu:\u001B[0m");
-        System.out.println("\u001B[32m1. Grant Access to Health Provider\u001B[0m");
-        System.out.println("\u001B[32m2. Revoke Access from Health Provider\u001B[0m");
-        System.out.println("\u001B[32m3. Logout\u001B[0m");
-
-        System.out.print("\u001B[33mChoose an option: \u001B[0m");
-        int actionChoice = InputValidator.valInt("", "name");
-
-        JsonHandler manageAccess = new JsonHandler();
-        switch (actionChoice) {
-            case 1 -> manageAccess.grantAccessToHealthProvider(); // Grant Access to Health Provider
-            case 2 -> manageAccess.revokeAccessFromHealthProvider(); // Revoke Access from Health Provider
-            case 3 -> System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
-            default -> System.out.println("\u001B[31mInvalid admin action choice.\u001B[0m");
-        }
-    }
-
 
 }

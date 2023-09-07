@@ -10,6 +10,7 @@ public class Users {
     private UserRole role;
 
     public Users(String username) {
+        this.username = username;
     }
 
     public enum UserRole { ADMIN, RECEPTIONIST, DOCTOR, PATIENT, HEALTH_PROVIDER, NONE }

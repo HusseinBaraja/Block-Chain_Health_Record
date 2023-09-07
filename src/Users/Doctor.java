@@ -292,6 +292,8 @@ public class Doctor extends Users {
     }
 
     private void addIdentifiersData(){
+
+
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Patient Identifiers ---");
