@@ -3,7 +3,6 @@ package Users;
 import Validation.InputValidator;
 import Validation.JsonHandler;
 import Validation.orderSignificance;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.Arrays;
@@ -12,9 +11,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Doctor extends Users {
-    private String name, username, phoneNumber, DOB, gender, currPatientID;
-    private int age;
-    private Scanner scanner = new Scanner(System.in);
+    private String currPatientID;
     private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
 
     public Doctor(String username) {
@@ -23,12 +20,7 @@ public class Doctor extends Users {
         JSONObject userInfo = handler.getUserInfoByUserName("Doctor", username);
 
         if (userInfo != null) {
-            this.name = (String) userInfo.get("Name");
-            this.username = (String) userInfo.get("Username");
-            this.phoneNumber = (String) userInfo.get("PhoneNumber");
-            this.DOB = (String) userInfo.get("DOB");
-            this.age = ((Long) userInfo.get("Age")).intValue();
-            this.gender = (String) userInfo.get("Gender");
+            username = (String) userInfo.get("Username");
         } else {
             System.out.println("Doctor info was not found!");
         }
@@ -158,7 +150,7 @@ public class Doctor extends Users {
                     break;
                 case "False":
                     String checkDocOptions = InputValidator.valString(
-                            "This patient didn't add his basic information yet, would you like to that? ",
+                            "This patient didn't add his basic information yet, would you like to do that? ",
                             "yes or no");
                     switch (checkDocOptions) {
                         case "yes" -> addIdentifiersData();
@@ -222,6 +214,7 @@ public class Doctor extends Users {
                 addImagingReportsData();
                 break;
             case 11:
+                writeFinalDataToFile();
                 System.out.println("\u001B[32mReturning to Doctor Menu, Bye :-)\u001B[0m"); // Green return message
                 return;
             default:
@@ -229,6 +222,16 @@ public class Doctor extends Users {
         }
     }
 
+    private JSONObject inputData = new JSONObject();
+
+    public void writeFinalDataToFile() {
+        orderSignificance addUser = new orderSignificance();
+        try {
+            addUser.sortData(inputData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void addDemographicData() {
         JSONObject patientData = new JSONObject();
 
@@ -252,9 +255,10 @@ public class Doctor extends Users {
 
         patientData.put("DemographicInformation", DemographicInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
+
         inputData.put("P3", patientData);
 
         orderSignificance addUser = new orderSignificance();
@@ -292,7 +296,7 @@ public class Doctor extends Users {
 
         patientData.put("Diagnosis", DiagnosisInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -334,7 +338,7 @@ public class Doctor extends Users {
 
         patientData.put("Allergies", allergiesInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -365,7 +369,7 @@ public class Doctor extends Users {
 
         patientData.put("Immunizations", immunizationsInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -397,7 +401,7 @@ public class Doctor extends Users {
         medicationsInformation.put("Frequency", frequency);
 
         patientData.put("Medications", medicationsInformation);
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -432,7 +436,7 @@ public class Doctor extends Users {
 
         patientData.put("Procedures", proceduresInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -468,7 +472,7 @@ public class Doctor extends Users {
         laboratoryTestResultsInformation.put("TestTimestamp", testTimestamp);
         patientData.put("LaboratoryTestResults", laboratoryTestResultsInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
         //Here we should generate new PatientIDs for new patients
 
         inputData.put("P3", patientData);
@@ -506,7 +510,7 @@ public class Doctor extends Users {
         vitalSignsInformation.put("HeartRate", heartRate);
         patientData.put("VitalSigns", vitalSignsInformation);
 
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -538,7 +542,7 @@ public class Doctor extends Users {
         imagingReportsInformation.put("AdministeringClinic", administeringClinic);
 
         patientData.put("ImagingReports", imagingReportsInformation);
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
@@ -616,7 +620,7 @@ public class Doctor extends Users {
         patientIdentifiers.put("PhoneNumber", phoneNumber);
 
         patientData.put("PatientIdentifiers", patientIdentifiers);
-        JSONObject inputData = new JSONObject();
+        inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
         inputData.put("P3", patientData);
