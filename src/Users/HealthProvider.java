@@ -12,9 +12,14 @@ public class HealthProvider {
 
     public HealthProvider(String username) {
         this.username = username;
-        healthProviderMenu();
+        switch (new JsonHandler().getAccessStatus(username, "HealthProvider")) {
+            case 1 -> healthProviderMenu();
+            case 0 -> System.out.println("This health provider doesn't have access to the system!");
+            case 2 -> System.out.println("This health provider is not in the system!");
+            default -> System.out.println("There was an error in the system!");
+        }
     }
-    private static void healthProviderMenu() {
+    private void healthProviderMenu() {
         System.out.println("Health Provider Menu:");
         System.out.println("1. Add Doctor");
         System.out.println("2. Remove Doctor");
@@ -36,7 +41,7 @@ public class HealthProvider {
                 System.out.println("Invalid choice.");
         }
     }
-    private static void addDoctor() {
+    private void addDoctor() {
         clearScreen();
 
         System.out.println("\u001B[36mAdd Doctor:\u001B[0m"); // Cyan header
@@ -49,7 +54,7 @@ public class HealthProvider {
         int age = InputValidator.valInt("\u001B[33mEnter doctor's age: \u001B[0m", "age"); // Yellow input
         String gender = InputValidator.valGender("\u001B[33mEnter your gender ('male,' 'female,' or 'other'): \u001B[0m", "gender");
 
-        String placeOfWork = new JsonHandler().getItem("ClinicOrHospital", "HealthProvider");
+        String placeOfWork = new JsonHandler().getItem("Name", "HealthProvider", this.username);
 
         // Hash the password using SHA-384
         String hashedPassword = Hasher.sha384(password);

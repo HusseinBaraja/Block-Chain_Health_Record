@@ -57,7 +57,7 @@ public class JsonHandler {
         }
     }
 
-    public String getItem(String itemToGet, String userType) {
+    public String getItem(String itemToGet, String userType, String username) {
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(Paths.get(USER_FILE).toFile()));
@@ -66,8 +66,10 @@ public class JsonHandler {
 
             for (Object o : healthProviders) {
                 JSONObject provider = (JSONObject) o;
-                String item = (String) provider.get(itemToGet);
-                return item;
+                String user = (String) provider.get("Username");
+                if(user.equals(username)) { // Check for the provided username
+                    return (String) provider.get(itemToGet);
+                }
             }
 
         } catch (ParseException e) {
@@ -277,7 +279,7 @@ public class JsonHandler {
         }
     }
 
-    public static int getAccessStatus(String username) {
+    public int getAccessStatus(String username, String userType) {
         JSONParser parser = new JSONParser();
 
         try {
@@ -285,17 +287,30 @@ public class JsonHandler {
             JSONObject rootObject = (JSONObject) parser.parse(new FileReader(Paths.get(USER_FILE).toFile()));
 
             // Get the JSONArray for the 'Doctor' key
-            JSONArray doctorsArray = (JSONArray) rootObject.get("Doctor");
+            JSONArray userArray = (JSONArray) rootObject.get(userType);
 
             // Variable to store the place of work for the given username
             String placeOfWork = null;
 
+
             // Iterate through the doctors array to get the place of work for the given username
-            for (Object doctorObject : doctorsArray) {
-                JSONObject doctor = (JSONObject) doctorObject;
-                if (username.equals(doctor.get("Username"))) {
-                    placeOfWork = (String) doctor.get("PlaceOfWork");
-                    System.out.println("Place of work: " + placeOfWork);
+            for (Object userObject : userArray) {
+                JSONObject user = (JSONObject) userObject;
+                if (username.equals(user.get("Username"))) {
+                    switch (userType) {
+                        case "Doctor" -> placeOfWork = (String) user.get("PlaceOfWork");
+                        case "HealthProvider" -> {
+                            String access = Boolean.toString((Boolean) user.get("AccessGranted"));
+                            switch (access) {
+                                case "true" -> {
+                                    return 1;
+                                }
+                                case "false" -> {
+                                    return 0;
+                                }
+                            }
+                        }
+                    }
                     break;
                 }
             }
@@ -313,7 +328,6 @@ public class JsonHandler {
                 JSONObject healthProvider = (JSONObject) healthProviderObject;
                 if (placeOfWork.equals(healthProvider.get("Name"))) {
                     String access = Boolean.toString ((Boolean) healthProvider.get("AccessGranted"));
-                    System.out.println("access: " + access);
                     switch (access){
                         case "true":
                             return 1;
@@ -333,17 +347,6 @@ public class JsonHandler {
 
         // If we reach here, it means we couldn't find the matching health provider, so return false
         return 2;
-    }
-
-    public static void main(String[] args) {
-        // Testing for multiple usernames
-        String[] testUsernames = {"hussein", "chrishem", "natport"};
-
-
-        for (String username : testUsernames) {
-            int accessStatus = getAccessStatus(username);
-            System.out.println("Access Status for " + username + ": " + Integer.toString(accessStatus));
-        }
     }
 
     public void printItems(String itemType) {
