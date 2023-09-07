@@ -345,4 +345,36 @@ public class JsonHandler {
             System.out.println("Access Status for " + username + ": " + Integer.toString(accessStatus));
         }
     }
+
+    public void printItems(String itemType) {
+        JSONArray itemArray = (JSONArray) userData.get(itemType);
+        if (itemArray == null || itemArray.isEmpty()) {
+            System.out.println("No items found in " + itemType);
+        } else {
+            System.out.println("Items in " + itemType + ":");
+            for (Object item : itemArray) {
+                System.out.println(item.toString());
+            }
+        }
+    }
+
+    public boolean removeItem(String itemType, String key, String value) {
+        JSONArray itemArray = (JSONArray) userData.get(itemType);
+        if (itemArray == null || itemArray.isEmpty()) {
+            return false;
+        }
+
+        for (int i = 0; i < itemArray.size(); i++) {
+            JSONObject item = (JSONObject) itemArray.get(i);
+            if (value.equals(item.get(key))) {
+                itemArray.remove(i);
+                saveUserData();
+                return true;
+            }
+        }
+
+        return false; // Item not found
+    }
+
+
 }

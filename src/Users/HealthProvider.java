@@ -27,6 +27,7 @@ public class HealthProvider {
                 addDoctor();
                 break;
             case 2:
+                removeDoctor();
                 break;
             case 3:
                 System.out.println("Logging out from the account, Bye :-)");
@@ -61,6 +62,25 @@ public class HealthProvider {
 
         System.out.println("\u001B[32mDoctor added successfully!\u001B[0m"); // Green success message
     }
+
+    private static void removeDoctor() {
+        clearScreen();
+        System.out.println("\u001B[36mRemove Doctor:\u001B[0m");
+
+        // List all doctors from the JSON data
+        JsonHandler jsonHandler = new JsonHandler();
+        jsonHandler.printItems("Doctor");
+
+        String doctorUsernameToRemove = InputValidator.valString(  "\u001B[33mEnter the username of the doctor to remove: \u001B[0m", "username");
+
+        // Remove the doctor with the specified username
+        if (jsonHandler.removeItem("Doctor", "Username", doctorUsernameToRemove)) {
+            System.out.println("\u001B[32mDoctor removed successfully!\u001B[0m");
+        } else {
+            System.out.println("\u001B[31mDoctor not found or could not be removed.\u001B[0m");
+        }
+    }
+
     private static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();

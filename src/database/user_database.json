@@ -1,140 +1,131 @@
 {
-    "Admin": [
-        {
-            "Name": "Hussein",
-            "Username": "hussein",
-            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9"
-        },
-        {
-            "Name": "Ghassan Y. J. Rashwan",
-            "Username": "ghassan",
-            "Password": "2601e55ee790519019f7df108924bc1397edbfad18c74bd7371b761d791fc91ce1109bcc6b24c91eaafebc0eb6d60d37"
-        }
-    ],
-    "HealthProvider": [
-        {
-            "Name": "MediCare Clinic",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "123-456-7890",
-            "Username": "john",
-            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9",
-            "AccessGranted": true
-        },
-        {
-            "Name": "HealFast Hospital",
-            "ClinicOrHospital": "hospital",
-            "ContactNumber": "987-654-1234",
-            "Username": "alice",
-            "Password": "alicepass",
-            "AccessGranted": false
-        },
-        {
-            "Name": "Wellness Clinic",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "876-543-2109",
-            "Username": "bobm",
-            "Password": "bobpass",
-            "AccessGranted": false
-        },
-        {
-            "Name": "Ghassan",
-            "ClinicOrHospital": "hospital",
-            "ContactNumber": "0213123123",
-            "Username": "ghassan",
-            "Password": "ghassan",
-            "AccessGranted": false
-        },
-        {
-            "Name": "Hussein",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "23442432",
-            "Username": "huss",
-            "Password": "hussainman1233",
-            "AccessGranted": false
-        },
-        {
-            "Name": "test",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "324324",
-            "Username": "test",
-            "Password": "2601e55ee790519019f7df108924bc1397edbfad18c74bd7371b761d791fc91ce1109bcc6b24c91eaafebc0eb6d60d37",
-            "AccessGranted": true
-        },
-        {
-            "Name": "asdasd",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "0123413121",
-            "Username": "ghassan1",
-            "Password": "b28400c0cf7b65fcd63ccd16b78d0bc5c25a6531e6fc3fcd5b6fa9b5798049a04d9bcaca15fc68140881d28c332c7786",
-            "AccessGranted": false
-        }
-    ],
-    "Doctor": [
-        {
-            "Name": "Dr. Emma Watson",
-            "Username": "hussein",
-            "Password": "48a3c4db80ed3e181eb849b62afc377eef5d3ef9cef296dd1b044e1c2c2d3cd0980da9cf52d608c8f0c4e077d6945b19",
-            "PhoneNumber": "111-111-1111",
-            "DOB": "1985-04-15",
-            "Age": 38,
-            "Gender": "Female",
-            "PlaceOfWork": "MediCare Clinic"
-        },
-        {
-            "Name": "Dr. Chris Hemsworth",
-            "Username": "chrishem",
-            "Password": "chrishem456",
-            "PhoneNumber": "222-222-2222",
-            "DOB": "1983-08-11",
-            "Age": 40,
-            "Gender": "Male",
-            "PlaceOfWork": "HealFast Hospital"
-        },
-        {
-            "Name": "Dr. Natalie Portman",
-            "Username": "natport",
-            "Password": "natport789",
-            "PhoneNumber": "333-333-3333",
-            "DOB": "1981-06-09",
-            "Age": 42,
-            "Gender": "Female",
-            "PlaceOfWork": "test"
-        },
-        {
-            "Name": "Huss",
-            "Username": "sada",
-            "Password": "ads",
-            "PhoneNumber": 3,
-            "DOB": "3",
-            "Age": 3,
-            "Gender": "3",
-            "PlaceOfWork": "test"
-        },
-        {
-            "Name": "Hamza",
-            "Username": "Hamza123",
-            "Password": "22fb611cd86ce683197f835b60d6d0156fd72cdc8a55dc4f02d5943caaa61676879572e728681d633f5a8ad94f307d21",
-            "PhoneNumber": "0123456789",
-            "DOB": "2023-10-23",
-            "Age": 13,
-            "Gender": "male",
-            "PlaceOfWork": "test"
-        },
-        {
-            "Name": "Hamza",
-            "Username": "hamzaa",
-            "Password": "43c72bf82f5cee461ee697023d931ce6e7b7745124028861343f9522befc5d5cd8a53ea91759f7b87187271f9748d545",
-            "PhoneNumber": "0123456789",
-            "DOB": "4123-12-31",
-            "Age": 14,
-            "Gender": "male",
-            "PlaceOfWork": "test"
-        }
-    ],
-    "Patient": [
-        {
-            "PatientId": "PID0",
-            "Username": "Ghassanyjr1",
-            "Password": "15c11dec29d6ee8d56c0fca89f6c146bc27c770bbc145b24aca7c6e8efe8e0e2a6ebd807a683600be442b35bd46e4418"
-        }
-    ]}
+  "Patient": [
+    {
+      "Username": "Ghassanyjr1",
+      "PatientId": "PID0",
+      "Password": "15c11dec29d6ee8d56c0fca89f6c146bc27c770bbc145b24aca7c6e8efe8e0e2a6ebd807a683600be442b35bd46e4418"
+    }
+  ],
+  "Doctor": [
+    {
+      "Username": "hussein",
+      "DOB": "1985-04-15",
+      "PhoneNumber": "111-111-1111",
+      "Gender": "Female",
+      "Age": 38,
+      "Name": "Dr. Emma Watson",
+      "Password": "48a3c4db80ed3e181eb849b62afc377eef5d3ef9cef296dd1b044e1c2c2d3cd0980da9cf52d608c8f0c4e077d6945b19",
+      "PlaceOfWork": "MediCare Clinic"
+    },
+    {
+      "Username": "chrishem",
+      "DOB": "1983-08-11",
+      "PhoneNumber": "222-222-2222",
+      "Gender": "Male",
+      "Age": 40,
+      "Name": "Dr. Chris Hemsworth",
+      "Password": "chrishem456",
+      "PlaceOfWork": "HealFast Hospital"
+    },
+    {
+      "Username": "natport",
+      "DOB": "1981-06-09",
+      "PhoneNumber": "333-333-3333",
+      "Gender": "Female",
+      "Age": 42,
+      "Name": "Dr. Natalie Portman",
+      "Password": "natport789",
+      "PlaceOfWork": "test"
+    },
+    {
+      "Username": "Hamza123",
+      "DOB": "2023-10-23",
+      "PhoneNumber": "0123456789",
+      "Gender": "male",
+      "Age": 13,
+      "Name": "Hamza",
+      "Password": "22fb611cd86ce683197f835b60d6d0156fd72cdc8a55dc4f02d5943caaa61676879572e728681d633f5a8ad94f307d21",
+      "PlaceOfWork": "test"
+    },
+    {
+      "Username": "hamzaa",
+      "DOB": "4123-12-31",
+      "PhoneNumber": "0123456789",
+      "Gender": "male",
+      "Age": 14,
+      "Name": "Hamza",
+      "Password": "43c72bf82f5cee461ee697023d931ce6e7b7745124028861343f9522befc5d5cd8a53ea91759f7b87187271f9748d545",
+      "PlaceOfWork": "test"
+    }
+  ],
+  "Admin": [
+    {
+      "Username": "hussein",
+      "Name": "Hussein",
+      "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9"
+    },
+    {
+      "Username": "ghassan",
+      "Name": "Ghassan Y. J. Rashwan",
+      "Password": "2601e55ee790519019f7df108924bc1397edbfad18c74bd7371b761d791fc91ce1109bcc6b24c91eaafebc0eb6d60d37"
+    }
+  ],
+  "HealthProvider": [
+    {
+      "ClinicOrHospital": "clinic",
+      "AccessGranted": true,
+      "Username": "john",
+      "ContactNumber": "123-456-7890",
+      "Name": "MediCare Clinic",
+      "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9"
+    },
+    {
+      "ClinicOrHospital": "hospital",
+      "AccessGranted": false,
+      "Username": "alice",
+      "ContactNumber": "987-654-1234",
+      "Name": "HealFast Hospital",
+      "Password": "alicepass"
+    },
+    {
+      "ClinicOrHospital": "clinic",
+      "AccessGranted": false,
+      "Username": "bobm",
+      "ContactNumber": "876-543-2109",
+      "Name": "Wellness Clinic",
+      "Password": "bobpass"
+    },
+    {
+      "ClinicOrHospital": "hospital",
+      "AccessGranted": false,
+      "Username": "ghassan",
+      "ContactNumber": "0213123123",
+      "Name": "Ghassan",
+      "Password": "ghassan"
+    },
+    {
+      "ClinicOrHospital": "clinic",
+      "AccessGranted": false,
+      "Username": "huss",
+      "ContactNumber": "23442432",
+      "Name": "Hussein",
+      "Password": "hussainman1233"
+    },
+    {
+      "ClinicOrHospital": "clinic",
+      "AccessGranted": true,
+      "Username": "test",
+      "ContactNumber": "324324",
+      "Name": "test",
+      "Password": "2601e55ee790519019f7df108924bc1397edbfad18c74bd7371b761d791fc91ce1109bcc6b24c91eaafebc0eb6d60d37"
+    },
+    {
+      "ClinicOrHospital": "clinic",
+      "AccessGranted": false,
+      "Username": "ghassan1",
+      "ContactNumber": "0123413121",
+      "Name": "asdasd",
+      "Password": "b28400c0cf7b65fcd63ccd16b78d0bc5c25a6531e6fc3fcd5b6fa9b5798049a04d9bcaca15fc68140881d28c332c7786"
+    }
+  ]
+}
