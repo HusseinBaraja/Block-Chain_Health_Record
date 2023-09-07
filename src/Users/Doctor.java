@@ -256,7 +256,7 @@ public class Doctor extends Users {
         patientData.put("DemographicInformation", DemographicInformation);
 
         inputData.put("P1", patientData);
-
+        addData();
     }
 
     private void addDiagnosisData() {
@@ -286,7 +286,7 @@ public class Doctor extends Users {
         patientData.put("Diagnosis", DiagnosisInformation);
 
         inputData.put("P1", patientData);
-
+        addData();
     }
 
     private void addAllergiesData() {
@@ -319,7 +319,7 @@ public class Doctor extends Users {
         patientData.put("Allergies", allergiesInformation);
 
         inputData.put("P1", patientData);
-
+        addData();
     }
 
     private void addImmunizationsData() {
@@ -340,6 +340,7 @@ public class Doctor extends Users {
         patientData.put("Immunizations", immunizationsInformation);
 
         inputData.put("P1", patientData);
+        addData();
     }
 
     private void addMedicationsData() {
@@ -361,7 +362,7 @@ public class Doctor extends Users {
         patientData.put("Medications", medicationsInformation);
 
         inputData.put("P1", patientData);
-
+        addData();
     }
 
     private void addProceduresData() {
@@ -385,7 +386,7 @@ public class Doctor extends Users {
         patientData.put("Procedures", proceduresInformation);
 
         inputData.put("P1", patientData);
-
+        addData();
     }
 
     private void addVitalSignsData() {
@@ -410,7 +411,7 @@ public class Doctor extends Users {
         patientData.put("LaboratoryTestResults", laboratoryTestResultsInformation);
 
         inputData.put("P1", patientData);
-
+        addData();
     }
 
     private void addLaboratoryTestResultsData() {
@@ -437,6 +438,7 @@ public class Doctor extends Users {
         patientData.put("VitalSigns", vitalSignsInformation);
 
         inputData.put("P1", patientData);
+        addData();
     }
 
     private void addImagingReportsData() {
@@ -458,6 +460,7 @@ public class Doctor extends Users {
         patientData.put("ImagingReports", imagingReportsInformation);
 
         inputData.put("P1", patientData);
+        addData();
     }
 
     // Significant
@@ -500,6 +503,7 @@ public class Doctor extends Users {
         System.out.println("\nImaging Reports:");
         System.out.println("Administering Clinic: " + imagingReports.get("AdministeringClinic"));
 
+
     }
 
     private void addIdentifiersData(){
@@ -525,6 +529,7 @@ public class Doctor extends Users {
         patientData.put("PatientIdentifiers", patientIdentifiers);
 
         inputData.put("P1", patientData);
+        addData();
     }
 
 }

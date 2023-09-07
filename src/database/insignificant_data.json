@@ -34,8 +34,8 @@
 			},
 			"PatientIdentifiers":{
 				"Address":"2",
-				"PhoneNumber":"3",
-				"Username":"1"
+				"Username":"1",
+				"PhoneNumber":"3"
 			},
 			"Procedures":{
 				"ProcedureNotes":"10"
@@ -55,6 +55,6 @@
 		}
 	],
 	"P3":[
-
+		
 	]
 }
