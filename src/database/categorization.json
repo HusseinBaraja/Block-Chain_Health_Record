@@ -6,16 +6,14 @@
     "DateOfBirth": "significant",
     "Address": "insignificant",
     "PhoneNumber": "insignificant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "DemographicInformation": {
     "Gender": "significant",
     "Age": "significant",
     "Race": "significant",
     "BloodType": "significant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "Diagnosis": {
     "DiagnoseID": "significant",
@@ -24,8 +22,7 @@
     "DiagnosisStatus": "significant",
     "DiagnosisProvider": "significant",
     "Notes": "insignificant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "Allergies": {
     "AllergyID": "significant",
@@ -36,22 +33,19 @@
     "TreatmentPlan": "insignificant",
     "Status": "significant",
     "MedicationToAvoid": "significant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "Immunizations": {
     "VaccineName": "significant",
     "DateAdministered": "significant",
     "AdministeringClinic": "significant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "Medications": {
     "MedicationName": "significant",
     "Dosage": "significant",
     "Frequency": "significant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "Procedures": {
     "ProcedureID": "significant",
@@ -59,16 +53,14 @@
     "ProcedureDate": "significant",
     "ProcedureDoctor": "significant",
     "ProcedureNotes": "insignificant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "LaboratoryTestResults": {
     "TestName": "significant",
     "Result": "significant",
     "LabTechnicianName": "significant",
     "TestTimestamp": "significant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "VitalSigns": {
     "VitalSignsID": "significant",
@@ -77,15 +69,13 @@
     "Weight": "insignificant",
     "BloodPressure": "significant",
     "HeartRate": "significant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   },
   "ImagingReports": {
     "ImagingReportID": "significant",
     "ReportName": "significant",
     "ReportResult": "significant",
     "AdministeringClinic": "insignificant",
-    "Signature": "significant",
-    "PublicKey": "significant"
+    "Signature": "significant"
   }
 }

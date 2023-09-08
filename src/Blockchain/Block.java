@@ -2,41 +2,44 @@ package Blockchain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Collections;
 
-
-public class Block implements Serializable{
-	
+public class Block implements Serializable {
 	public Header header;
 	public TransactionCollection tranxLst;
 
-	public Block(String previousHash) {
+	public Block(int index, String previousHash) {
 		this.header = new Header();
-		header.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime() ) ;
-		header.setPrevHash(previousHash) ;
+		header.setIndex(index); // Set the index
+		header.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());
+		header.setPrevHash(previousHash);
 		String info = String.join("+",
-				Integer.toString( header.getIndex()),
+				Integer.toString(header.getIndex()),
 				Long.toString(header.getTimestamp()),
 				header.getPrevHash()
-				);
-		String blockHash = Hasher.sha256( info ) ;
-		header.setCurrHash(blockHash) ;
+		);
+		String blockHash = Hasher.sha256(info);
+		header.setCurrHash(blockHash);
 	}
-	
-	public TransactionCollection getTransactions() { return this.tranxLst; }
+
+	public TransactionCollection getTransactions() {
+		return this.tranxLst;
+	}
 
 	public void setTransactions(TransactionCollection tranxLst) {
 		this.tranxLst = tranxLst;
 	}
-	
-	public Header getHeader() { return this.header; }
-	
+
+	public Header getHeader() {
+		return this.header;
+	}
+
 	@Override
 	public String toString() {
 		return "Block [header=" + header + ", tranxLst=" + tranxLst + "]";
 	}
-	
-	public class Header implements Serializable{
-		
+
+	public class Header implements Serializable {
 		public int index;
 		public String currentHash;
 		public String previousHash;
@@ -52,6 +55,10 @@ public class Block implements Serializable{
 			return index;
 		}
 
+		public void setIndex(int index) {
+			this.index = index;
+		}
+
 		public void setTimestamp(long timestamp) {
 			this.timestamp = timestamp;
 		}
@@ -59,7 +66,7 @@ public class Block implements Serializable{
 		public long getTimestamp() {
 			return timestamp;
 		}
-		
+
 		public void setCurrHash(String currentHash) {
 			this.currentHash = currentHash;
 		}
@@ -67,7 +74,7 @@ public class Block implements Serializable{
 		public String getCurrHash() {
 			return currentHash;
 		}
-		
+
 		public void setPrevHash(String previousHash) {
 			this.previousHash = previousHash;
 		}
@@ -77,5 +84,3 @@ public class Block implements Serializable{
 		}
 	}
 }
-
-

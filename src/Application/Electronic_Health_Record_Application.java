@@ -52,7 +52,7 @@ public class Electronic_Health_Record_Application {
             trxlst.setTranxLst(jsonArray);
 
             String previousHash = bc.get().getLast().getHeader().getCurrHash();
-            Block b1 = new Block(previousHash);
+            Block b1 = new Block(bc.get().size(), previousHash); // Set the index
             b1.setTransactions(trxlst);
             bc.nextBlock(b1);
             bc.distribute();

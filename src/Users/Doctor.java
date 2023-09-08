@@ -61,25 +61,21 @@ public class Doctor extends Users {
         JSONObject data = patient.getRootInfo(new File(user_file));
         if (isUsernameExistsInSections(data, currPatientName)){
             System.out.println("\u001B[36mDoctor Menu:\u001B[0m"); // Cyan header
-            System.out.println("\u001B[32m1. View Patient Information\u001B[0m"); // Green menu item
-            System.out.println("\u001B[32m2. Add Patient Information\u001B[0m"); // Green menu item
-            System.out.println("\u001B[32m3. Modify Patient Information Patient\u001B[0m"); // Green menu item
-            System.out.println("\u001B[32m4. Logout\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m1. Add Patient Information\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m2. Modify Patient Information Patient\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m3. Logout\u001B[0m"); // Green menu item
 
             int choice = InputValidator.valInt("\u001B[36mChoice:\u001B[0m ", "choice"); // Cyan input prompt
 
             switch (choice) {
                 case 1:
-                    viewPatientData();
-                    break;
-                case 2:
                     addData(privateKey, publicKey);
                     break;
-                case 3:
+                case 2:
                     String patientUsername = InputValidator.valString("Enter the patient's username: ", "username");
                     modifyPatientData(patientUsername);
                     break;
-                case 4:
+                case 3:
                     System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
                     return;
                 default:
@@ -693,48 +689,6 @@ public class Doctor extends Users {
             e.printStackTrace();
         }
         addData(privateKey, publicKey);
-    }
-
-    private void viewPatientData() {
-        String patient_username = InputValidator.valString("Enter patient username: ", "username");
-
-        JsonHandler getPatInfo = new JsonHandler();
-        JSONObject demographicData = getPatInfo.getPatientInfoByUsername(patient_username);
-
-        currPatientID = getPatInfo.getPatientKey();
-
-        JSONObject identifiers = (JSONObject) demographicData.get("PatientIdentifiers");
-        JSONObject diagnosis = (JSONObject) demographicData.get("Diagnosis");
-        JSONObject allergies = (JSONObject) demographicData.get("Allergies");
-        JSONObject procedures = (JSONObject) demographicData.get("Procedures");
-        JSONObject vitalSigns = (JSONObject) demographicData.get("VitalSigns");
-        JSONObject imagingReports = (JSONObject) demographicData.get("ImagingReports");
-
-        System.out.println("Patient Identifiers:");
-        System.out.println("username: " + identifiers.get("DateOfBirth"));
-        System.out.println("Address: " + identifiers.get("Address"));
-        System.out.println("Phone Number: " + identifiers.get("PhoneNumber"));
-
-        System.out.println("\nDiagnosis:");
-        System.out.println("Diagnose ID: " + diagnosis.get("DiagnoseID"));
-        System.out.println("Description: " + diagnosis.get("DiagnosisDescription"));
-        System.out.println("Notes: " + diagnosis.get("Notes"));
-
-        System.out.println("\nAllergies:");
-        System.out.println("Reaction Description: " + allergies.get("ReactionDescription"));
-        System.out.println("Treatment Plan: " + allergies.get("TreatmentPlan"));
-
-        System.out.println("\nProcedures:");
-        System.out.println("Procedure Notes: " + procedures.get("ProcedureNotes"));
-
-        System.out.println("\nVital Signs:");
-        System.out.println("Height: " + vitalSigns.get("Height"));
-        System.out.println("Weight: " + vitalSigns.get("Weight"));
-
-        System.out.println("\nImaging Reports:");
-        System.out.println("Administering Clinic: " + imagingReports.get("AdministeringClinic"));
-
-
     }
 
     private void addIdentifiersData(String patientId, PrivateKey privateKey, PublicKey publicKey){

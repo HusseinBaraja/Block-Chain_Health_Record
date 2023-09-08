@@ -4,57 +4,40 @@
 			"ImagingReports":[
 				{
 					"ImagingReportsID":"IR1",
-					"Report Name":"asdsad",
-					"AdministeringClinic":"asdsad"
-				},
-				{
-					"ImagingReportsID":"IR2",
-					"Report Name":"asdsad",
-					"AdministeringClinic":"asdsad"
+					"Report Name":"Chest X-Ray",
+					"AdministeringClinic":"Imaging Center A"
 				}
 			],
 			"PatientIdentifiers":{
-				"Address":"231321",
-				"Username":"testtest",
+				"Address":"Kuala Lumpur",
+				"Username":"Cristina",
 				"PhoneNumber":"0123456789"
 			},
 			"Procedures":[
-				
+				{
+					"ProcedureNotes":"Check for fractures",
+					"ProceduresID":"Pro1"
+				}
 			],
 			"VitalSigns":[
-				
+				{
+					"VitalSignsID":"VS1",
+					"Height":160.0,
+					"Weight":50.0
+				}
 			],
 			"Diagnosis":[
 				{
-					"DiagnosisDescription":"sfa",
-					"Notes":"sfasf",
-					"DiagnosisID":"Di1"
-				},
-				{
-					"DiagnosisDescription":"fsdsg",
-					"Notes":"dsfg",
-					"DiagnosisID":"Di2"
-				},
-				{
-					"DiagnosisDescription":"sdfd",
-					"Notes":"wrtbw",
-					"DiagnosisID":"Di3"
+					"DiagnosisDescription":"Hypertension",
+					"Notes":"High blood pressure",
+					"DiagnosisID":"Dia1"
 				}
 			],
 			"Allergies":[
-				
-			]
-		}
-	],
-	"null":[
-		{
-			"PatientIdentifiers":[
 				{
-					"PatientIdentifiers":{
-						"Address":"31212",
-						"Username":"mohammed",
-						"PhoneNumber":"0123456789"
-					}
+					"AllergiesID":"AL1",
+					"ReactionDescription":"Skin rash",
+					"TreatmentPlan":"Antihistamines"
 				}
 			]
 		}

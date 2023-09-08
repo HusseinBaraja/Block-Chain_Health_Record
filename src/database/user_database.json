@@ -16,77 +16,49 @@
             "Name": "MediCare Clinic",
             "ClinicOrHospital": "clinic",
             "ContactNumber": "123-456-7890",
-            "Username": "john",
-            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9",
+            "Username": "MediCareClinic",
+            "Password": "c29be641d3498b4679806878386a29c5c553530c8a861dfc053139d29c3876f4e43e74c3380de8b9969285d3d5c0c6e6",
             "AccessGranted": true
-        },
-        {
-            "Name": "HealFast Hospital",
-            "ClinicOrHospital": "hospital",
-            "ContactNumber": "987-654-1234",
-            "Username": "alice",
-            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9",
-            "AccessGranted": false
         },
         {
             "Name": "Wellness Clinic",
             "ClinicOrHospital": "clinic",
             "ContactNumber": "876-543-2109",
-            "Username": "bobm",
-            "Password": "bobpass",
-            "AccessGranted": false
-        },
-        {
-            "Name": "Ghassan",
-            "ClinicOrHospital": "hospital",
-            "ContactNumber": "0213123123",
-            "Username": "ghassan",
-            "Password": "ghassan",
-            "AccessGranted": false
-        },
-        {
-            "Name": "Hussein",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "23442432",
-            "Username": "huss",
-            "Password": "hussainman1233",
-            "AccessGranted": false
-        },
-        {
-            "Name": "test",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "324324",
-            "Username": "test",
-            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9",
-            "AccessGranted": true
-        },
-        {
-            "Name": "asdasd",
-            "ClinicOrHospital": "clinic",
-            "ContactNumber": "0123413121",
-            "Username": "ghassan1",
-            "Password": "b28400c0cf7b65fcd63ccd16b78d0bc5c25a6531e6fc3fcd5b6fa9b5798049a04d9bcaca15fc68140881d28c332c7786",
+            "Username": "WellnessClinic",
+            "Password": "ea29db8d2fa7f76b0a7b80530fff5a098968be744a44aac956ae38b566d19ee6329001508ad1a9868340884c72ffdb45",
             "AccessGranted": false
         }
     ],
     "Doctor": [
         {
-            "Name": "mohammed",
-            "Username": "mohammed",
-            "Password": "5abb43339ce945e2e41f0984192ba2ee0babbe3d6ee7a443287457335580ec11fe22ff329da2982663645f2c636bc4c9",
+            "Name": "Mohammed",
+            "Username": "Mohammed",
+            "Password": "646f3ddb847cab8845c9e88e343b9f84e5acf352318606c36f3a9a659c3a39245439cd8141c297d5c56a85eeeaeef4f1",
             "PhoneNumber": "0123456789",
             "DOB": "2023-10-23",
-            "Age": 12,
+            "Age": 30,
             "Gender": "male",
             "PlaceOfWork": "MediCare Clinic",
             "PublicKeyPath": "account_directory/mohammed_public_key.pem",
             "PrivateKeyPath": "account_directory/mohammed_private_key.pem"
+        },
+        {
+            "Name": "Suliman",
+            "Username": "Suliman",
+            "Password": "020ede1f112306cbb686694e4f832d07772bb054917b724c01e58d8093d1e35ba4836543bc84fade0bd027944a4958a9",
+            "PhoneNumber": "0102232983",
+            "DOB": "1999-10-10",
+            "Age": 24,
+            "Gender": "male",
+            "PlaceOfWork": "MediCare Clinic",
+            "PublicKeyPath": "account_directory/Suliman_public_key.pem",
+            "PrivateKeyPath": "account_directory/Suliman_private_key.pem"
         }
     ],
     "Patient": [
         {
             "PatientId": "P0",
-            "Username": "testtest",
-            "Password": "cf1a19b3596101f8575212fff127cafcc1121a5247436cc5917fc36784f11f291f46e961f99ab0492aee71a3b73ddf8a"
+            "Username": "Cristina",
+            "Password": "b73c3d8a1bf3ff549670b5a99b0aae2be51e150010147e32a4220e21eaf945a62074f11a796fbe9a28407d51c363f345"
         }
     ]}
