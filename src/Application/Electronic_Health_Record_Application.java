@@ -14,12 +14,14 @@ import Blockchain.Block;
 import Blockchain.Hasher;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 
 
 public class Electronic_Health_Record_Application {
     private static final String USER_FILE = "src/database/user_database.json";
+    private static final String INSIGNIFICANT_FILE = "src/database/insignificant_data.json";
     private static JSONObject userData;
     private static String masterFolder = "master";
     private static String fileName = masterFolder + "/chain.bin";
@@ -213,6 +215,8 @@ public class Electronic_Health_Record_Application {
 
                 patient.addNewUser("Patient", userAttributes, newPatient);
 
+                addToInsignificantData(newPatientId, username);
+
                 System.out.println("\u001B[32mRegistration successful!\u001B[0m"); // Green success message
                 break; // Exit the loop when registration is successful
             }
@@ -221,13 +225,13 @@ public class Electronic_Health_Record_Application {
 
     private static String incrementPatientId(String lastPatientId) {
         if (lastPatientId.isEmpty()) {
-            return "PID0";
+            return "P0";
         }
 
-        String[] parts = lastPatientId.split("PID");
+        String[] parts = lastPatientId.split("P");
         int lastId = Integer.parseInt(parts[1]);
         int newId = lastId + 1;
-        return "PID" + newId;
+        return "P" + newId;
     }
 
     private static void registerHealthProvider() {
@@ -288,5 +292,44 @@ public class Electronic_Health_Record_Application {
         }
         return false;
     }
+
+    private static void addToInsignificantData(String patientId, String username) {
+        try {
+            // Read the existing insignificant data JSON file
+            JsonHandler insignificantDataHandler = new JsonHandler();
+            File insignificantFile = new File(INSIGNIFICANT_FILE);
+            JSONObject insignificantData = insignificantDataHandler.getRootInfo(insignificantFile);
+
+            // Create a new block for the patient using the patientId as the key
+            JSONObject patientBlock = new JSONObject();
+
+            // Create a JSON object for PatientIdentifiers
+            JSONObject patientIdentifiers = new JSONObject();
+            patientIdentifiers.put("Username", username);
+
+            // Add the PatientIdentifiers object to the patient block
+            patientBlock.put("PatientIdentifiers", patientIdentifiers);
+            patientBlock.put("ImagingReports", new JSONArray());
+            patientBlock.put("Procedures", new JSONArray());
+            patientBlock.put("VitalSigns", new JSONArray());
+            patientBlock.put("Diagnosis", new JSONArray());
+            patientBlock.put("Allergies", new JSONArray());
+
+            // Add the patient block to the existing insignificant data
+            JSONArray patientArray = (JSONArray) insignificantData.get(patientId);
+            if (patientArray == null) {
+                patientArray = new JSONArray();
+            }
+            patientArray.add(patientBlock);
+            insignificantData.put(patientId, patientArray);
+
+            // Write the updated data back to the JSON file
+            insignificantDataHandler.writeDataToFile(insignificantData, insignificantFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

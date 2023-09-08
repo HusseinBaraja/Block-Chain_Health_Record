@@ -85,8 +85,8 @@
     ],
     "Patient": [
         {
-            "PatientId": "PID0",
-            "Username": "Ghassanyjr1",
-            "Password": "15c11dec29d6ee8d56c0fca89f6c146bc27c770bbc145b24aca7c6e8efe8e0e2a6ebd807a683600be442b35bd46e4418"
+            "PatientId": "P0",
+            "Username": "testtest",
+            "Password": "cf1a19b3596101f8575212fff127cafcc1121a5247436cc5917fc36784f11f291f46e961f99ab0492aee71a3b73ddf8a"
         }
     ]}

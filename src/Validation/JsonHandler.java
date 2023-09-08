@@ -461,5 +461,10 @@ public class JsonHandler {
         return null;
     }
 
+    public static void writeDataToFile(JSONObject data, File file) throws IOException {
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write(data.toJSONString());
+        }
+    }
 
 }
