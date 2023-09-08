@@ -3,8 +3,9 @@
 		{
 			"ImagingReports":[
 				{
-					"IRID":"IR1",
-					"AdministeringClinic":"City Hospital Radiology"
+					"ImagingReportsID":"IR1",
+					"Report Name":"asdsad",
+					"AdministeringClinic":"asdsad"
 				}
 			],
 			"PatientIdentifiers":{
@@ -13,36 +14,25 @@
 				"PhoneNumber":"+1 (123) 456-7890"
 			},
 			"Procedures":[
-				{
-					"ProcedureID":"Pro1",
-					"ProcedureNotes":"Successful surgery no complications."
-				}
+				
 			],
 			"VitalSigns":[
 				{
 					"VitalSignsID":"VS1",
-					"Height":"5'10\"",
-					"Weight":"175 lbs"
+					"Height":"324324",
+					"Weight":"234342"
+				},
+				{
+					"VitalSignsID":"VS2",
+					"Height":"234324",
+					"Weight":"234324"
 				}
 			],
 			"Diagnosis":[
-				{
-					"DiagnosisDescription":"Hypertension",
-					"DiagnoseID":"Dia1",
-					"Notes":"Patient needs to monitor blood pressure regularly."
-				},
-				{
-					"DiagnosisDescription":"asd",
-					"DiagnoseID":"asd",
-					"Notes":"asd"
-				}
+				
 			],
 			"Allergies":[
-				{
-					"AllergiesID":"AL1",
-					"ReactionDescription":"Skin rash",
-					"TreatmentPlan":"Avoid Penicillin-containing medications."
-				}
+				
 			]
 		}
 	],
@@ -51,11 +41,20 @@
 			"ImagingReports":[
 				
 			],
+			"PatientIdentifiers":{
+				"Address":"123 Main Street Cityville USA",
+				"Username":"hussein",
+				"PhoneNumber":"+1 (123) 456-7890"
+			},
 			"Procedures":[
 				
 			],
 			"VitalSigns":[
-				
+				{
+					"VitalSignsID":"VS1",
+					"Height":"324324",
+					"Weight":"234234"
+				}
 			],
 			"Diagnosis":[
 				

@@ -442,5 +442,24 @@ public class JsonHandler {
             return "Error: Failed to parse the JSON content.";
         }
     }
+    public JSONObject getPatientInfoByKey(String key) {
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONObject patInfo = (JSONObject) parser.parse(new FileReader(Paths.get(PATIENT_FILE).toFile()));
+
+            if (patInfo.containsKey(key)) {
+                JSONArray patientArray = (JSONArray) patInfo.get(key);
+                if (patientArray.size() > 0) {
+                    return (JSONObject) patientArray.get(0);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 }

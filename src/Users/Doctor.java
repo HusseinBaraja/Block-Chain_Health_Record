@@ -149,6 +149,9 @@ public class Doctor extends Users {
         String reqItem = "PatientIdentifiers";
 
         JsonHandler getPatInfo = new JsonHandler();
+
+        JSONObject patientInfo = getPatInfo.getPatientInfoByUsername(patient_username);
+
         getPatInfo.getPatientInfoByUsername(patient_username);
 
         currPatientID = getPatInfo.getPatientKey();
@@ -161,7 +164,7 @@ public class Doctor extends Users {
                             "This patient didn't add his basic information yet, would you like to do that? ",
                             "yes or no");
                     switch (checkDocOptions) {
-                        case "yes" -> addIdentifiersData();
+                        case "yes" -> addIdentifiersData(currPatientID);
                         case "no" -> {
                             return;
                         }
@@ -192,34 +195,34 @@ public class Doctor extends Users {
 
         switch (option) {
             case 1:
-                addIdentifiersData();
+                addIdentifiersData(currPatientID);
                 break;
             case 2:
-                addDemographicData();
+                addDemographicData(currPatientID);
                 break;
             case 3:
-                addDiagnosisData();
+                addDiagnosisData(currPatientID, patientInfo);
                 break;
             case 4:
-                addAllergiesData();
+                addAllergiesData(currPatientID, patientInfo);
                 break;
             case 5:
-                addImmunizationsData();
+                addImmunizationsData(currPatientID);
                 break;
             case 6:
-                addMedicationsData();
+                addMedicationsData(currPatientID);
                 break;
             case 7:
-                addProceduresData();
+                addProceduresData(currPatientID, patientInfo);
                 break;
             case 8:
-                addLaboratoryTestResultsData();
+                addLaboratoryTestResultsData(currPatientID);
                 break;
             case 9:
-                addVitalSignsData();
+                addVitalSignsData(currPatientID, patientInfo);
                 break;
             case 10:
-                addImagingReportsData();
+                addImagingReportsData(currPatientID, patientInfo);
                 break;
             case 11:
                 System.out.println("\u001B[32mReturning to Doctor Menu, Bye :-)\u001B[0m"); // Green return message
@@ -229,44 +232,7 @@ public class Doctor extends Users {
         }
     }
 
-    public void addDataToJSON(String dataType, String procedureNote,
-                                     String diagnosisDesc, String diagnosisID, String diagnosisNote) {
-
-        JSONParser parser = new JSONParser();
-
-        try {
-            FileReader reader = new FileReader("src/database/insignificant_data.json");
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            JSONArray patientArray = (JSONArray) jsonObject.get(currPatientID);
-            JSONObject patientObject = (JSONObject) patientArray.get(0);
-
-
-            JSONArray dataTypeInfo = (JSONArray) patientObject.get(dataType);
-            JSONObject newDataInfo = new JSONObject();
-            newDataInfo.put("ProcedureID", procedureNote);
-            newDataInfo.put("ProcedureNotes", procedureNote);
-            dataTypeInfo.add(newDataInfo);
-
-            // Add Diagnosis
-            JSONArray diagnosis = (JSONArray) patientObject.get("Diagnosis");
-            JSONObject newDiagnosis = new JSONObject();
-            newDiagnosis.put("DiagnosisDescription", diagnosisDesc);
-            newDiagnosis.put("DiagnoseID", diagnosisID);
-            newDiagnosis.put("Notes", diagnosisNote);
-            diagnosis.add(newDiagnosis);
-
-            // Write back to file
-            FileWriter file = new FileWriter("src/database/insignificant_data.json");
-            file.write(jsonObject.toJSONString());
-            file.flush();
-            file.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void addDemographicData() {
+    private void addDemographicData(String patientId) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Patient Demographic Data ---");
@@ -292,7 +258,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -304,13 +270,13 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addDiagnosisData() {
+    private void addDiagnosisData(String patientId, JSONObject data) {
         JSONObject patientData = new JSONObject();
         System.out.println("--- Add Patient Diagnosis Data ---");
         JSONObject DiagnosisInformation = new JSONObject();
 
-        String diagnosisID = InputValidator.valString("Enter Diagnosis ID: ", "Diagnosis ID");
-        DiagnosisInformation.put("DiagnoseID", diagnosisID);
+        String diagnosisID = generateAndIncrementID(data, "Diagnosis");
+        DiagnosisInformation.put("DiagnosisID", diagnosisID);
 
         String diagnosisDescription = InputValidator.valString("Enter Diagnosis Description: ", "Diagnosis Description");
         DiagnosisInformation.put("DiagnosisDescription", diagnosisDescription);
@@ -333,7 +299,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -345,14 +311,14 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addAllergiesData() {
+    private void addAllergiesData(String patientId, JSONObject data) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Allergy Data ---");
         JSONObject allergiesInformation = new JSONObject();
 
-        String allergyID = InputValidator.valString("Enter Allergy ID: ", "Allergy ID");
-        allergiesInformation.put("AllergyID", allergyID);
+        String allergyID = generateAndIncrementID(data, "Allergies");
+        allergiesInformation.put("AllergiesID", allergyID);
 
         String allergenName = InputValidator.valString("Enter Allergen Name: ", "Allergen Name");
         allergiesInformation.put("AllergenName", allergenName);
@@ -380,7 +346,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -392,7 +358,7 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addImmunizationsData() {
+    private void addImmunizationsData(String patientId) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Immunization Data ---");
@@ -413,7 +379,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -425,7 +391,7 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addMedicationsData() {
+    private void addMedicationsData(String patientId) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Medication Data ---");
@@ -446,7 +412,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -458,14 +424,14 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addProceduresData() {
+    private void addProceduresData(String patientId, JSONObject data) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Procedure Data---");
         JSONObject proceduresInformation = new JSONObject();
 
-        String procedureID = InputValidator.valString("Enter Procedure ID: ", "Procedure ID");
-        proceduresInformation.put("ProcedureID", procedureID);
+        String procedureID = generateAndIncrementID(data, "Procedures");
+        proceduresInformation.put("ProceduresID", procedureID);
 
         String procedureName = InputValidator.valString("Enter Procedure Name: ", "Procedure Name");
         proceduresInformation.put("ProcedureName", procedureName);
@@ -484,7 +450,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -496,14 +462,14 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addVitalSignsData() {
+    private void addVitalSignsData(String patientId, JSONObject data) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Vital Signs Data---");
 
         JSONObject vitalSignsInformation = new JSONObject();
 
-        String vitalSignsID = InputValidator.valString("Enter VitalSigns ID: ", "VitalSigns ID");
+        String vitalSignsID = generateAndIncrementID(data, "VitalSigns");
         vitalSignsInformation.put("VitalSignsID", vitalSignsID);
 
         String temperature = InputValidator.valString("Enter Temperature: ", "Temperature");
@@ -513,7 +479,7 @@ public class Doctor extends Users {
         vitalSignsInformation.put("Height", height);
 
         String weight = InputValidator.valString("Enter Weight: ", "Procedure Doctor");
-        vitalSignsInformation.put("ProcedureDoctor", weight);
+        vitalSignsInformation.put("Weight", weight);
 
         String bloodPressure = InputValidator.valString("Enter Blood Pressures: ", "Blood Pressure");
         vitalSignsInformation.put("BloodPressure", bloodPressure);
@@ -525,7 +491,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -537,7 +503,7 @@ public class Doctor extends Users {
         addData();
     }
 
-    private void addLaboratoryTestResultsData() {
+    private void addLaboratoryTestResultsData(String patientId) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Laboratory Test Result Data ---");
@@ -561,7 +527,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -574,15 +540,15 @@ public class Doctor extends Users {
 
     }
 
-    private void addImagingReportsData() {
+    private void addImagingReportsData(String patientId, JSONObject data) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Imaging Reports Data---");
 
         JSONObject imagingReportsInformation = new JSONObject();
 
-        String imagingReportID = InputValidator.valString("Enter ImagingReport ID: ", "ImagingReport ID");
-        imagingReportsInformation.put("ImagingReportID", imagingReportID);
+        String imagingReportID = generateAndIncrementID(data, "ImagingReports");
+        imagingReportsInformation.put("ImagingReportsID", imagingReportID);
 
         String reportName = InputValidator.valString("Enter Report Name: ", "Report Name");
         imagingReportsInformation.put("Report Name", reportName);
@@ -598,7 +564,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -653,7 +619,7 @@ public class Doctor extends Users {
 
     }
 
-    private void addIdentifiersData(){
+    private void addIdentifiersData(String patientId){
 
         JSONObject patientData = new JSONObject();
 
@@ -678,7 +644,7 @@ public class Doctor extends Users {
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
-        inputData.put("P1", patientData);
+        inputData.put(patientId, patientData);
 
         orderSignificance addUser = new orderSignificance();
 
@@ -688,6 +654,36 @@ public class Doctor extends Users {
             e.printStackTrace();
         }
         addData();
+    }
+
+    private String generateAndIncrementID(JSONObject patientData, String category) {
+        String lastID = "";
+        JSONArray categoryArray = (JSONArray) patientData.get(category);
+
+        if (categoryArray.size() > 0) {
+            JSONObject lastItem = (JSONObject) categoryArray.get(categoryArray.size() - 1);
+            lastID = (String) lastItem.get(category + "ID");
+        }
+
+        // Generate the new ID by incrementing the last ID
+        String newID;
+        if (!lastID.isEmpty()) {
+            int lastIDNumber = Integer.parseInt(lastID.substring(2));
+            if (category == "VitalSigns") newID = "VS" + (lastIDNumber + 1);
+            else if(category == "Procedures") newID = "Pro" + (lastIDNumber + 1);
+            else if (category == "Diagnosis") newID = "Dia" + (lastIDNumber + 1);
+            else if (category == "Allergies") newID = "AL" + (lastIDNumber + 1);
+            else newID = "IR" + (lastIDNumber + 1);
+        } else {
+            if (category == "VitalSigns") newID = "VS1";
+            else if(category == "Procedures") newID = "Pro1";
+            else if (category == "Diagnosis") newID = "Dia1";
+            else if (category == "Allergies") newID = "AL1";
+            else newID = "IR1";
+
+        }
+
+        return newID;
     }
 
 }
