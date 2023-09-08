@@ -26,7 +26,7 @@ public class Electronic_Health_Record_Application {
     private static String masterFolder = "master";
     private static String fileName = masterFolder + "/chain.bin";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         mainMenu();
     }
 
@@ -60,7 +60,7 @@ public class Electronic_Health_Record_Application {
         }
     }
 
-    private static void mainMenu() throws IOException {
+    private static void mainMenu() throws Exception {
         while (true) {
             clearScreen();
             System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
@@ -100,7 +100,7 @@ public class Electronic_Health_Record_Application {
         System.out.flush();
     }
 
-    private static void signIn() throws IOException {
+    private static void signIn() throws Exception {
         clearScreen();
 
         System.out.println();
@@ -271,7 +271,7 @@ public class Electronic_Health_Record_Application {
         }
     }
 
-    private static boolean isUsernameExistsInSections(JSONObject data, String username) {
+    public static boolean isUsernameExistsInSections(JSONObject data, String username) {
         String[] sections = {"Admin", "HealthProvider", "Doctor", "Patient"};
         for (String section : sections) {
             JSONArray sectionArray = (JSONArray) data.get(section);

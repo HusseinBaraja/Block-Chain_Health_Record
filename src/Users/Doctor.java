@@ -9,12 +9,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
+import java.io.File;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Set;
+
+import static Application.Electronic_Health_Record_Application.isUsernameExistsInSections;
 
 public class Doctor extends Users {
 
@@ -53,31 +56,46 @@ public class Doctor extends Users {
 
 
     private void doctorMenu() {
-        System.out.println("\u001B[36mDoctor Menu:\u001B[0m"); // Cyan header
-        System.out.println("\u001B[32m1. View Patient Information\u001B[0m"); // Green menu item
-        System.out.println("\u001B[32m2. Add Patient Information\u001B[0m"); // Green menu item
-        System.out.println("\u001B[32m3. Modify Patient Information Patient\u001B[0m"); // Green menu item
-        System.out.println("\u001B[32m4. Logout\u001B[0m"); // Green menu item
+        currPatientName = InputValidator.valString("Enter patient username: ", "username");
 
-        int choice = InputValidator.valInt("\u001B[36mChoice:\u001B[0m ", "choice"); // Cyan input prompt
 
-        switch (choice) {
-            case 1:
-                viewPatientData();
-                break;
-            case 2:
-                addData();
-                break;
-            case 3:
-                String patientUsername = InputValidator.valString("Enter the patient's username: ", "username");
-                modifyPatientData(patientUsername);
-                break;
-            case 4:
-                System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
-                return;
-            default:
-                System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
+        String user_file = "src/database/user_database.json";
+        JsonHandler patient = new JsonHandler();
+        JSONObject data = patient.getRootInfo(new File(user_file));
+        if (isUsernameExistsInSections(data, currPatientName)){
+            System.out.println("\u001B[36mDoctor Menu:\u001B[0m"); // Cyan header
+            System.out.println("\u001B[32m1. View Patient Information\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m2. Add Patient Information\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m3. Modify Patient Information Patient\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m4. Logout\u001B[0m"); // Green menu item
+
+            int choice = InputValidator.valInt("\u001B[36mChoice:\u001B[0m ", "choice"); // Cyan input prompt
+
+            switch (choice) {
+                case 1:
+                    viewPatientData();
+                    break;
+                case 2:
+                    addData();
+                    break;
+                case 3:
+                    String patientUsername = InputValidator.valString("Enter the patient's username: ", "username");
+                    modifyPatientData(patientUsername);
+                    break;
+                case 4:
+                    System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
+                    return;
+                default:
+                    System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
+            }
         }
+        else {
+            System.out.println("Username was not found!");
+            doctorMenu();
+        }
+
+
+
     }
 
     private void modifyPatientData(String patientUsername) {
@@ -187,19 +205,17 @@ public class Doctor extends Users {
     }
 
     private void addData() {
-        String patient_username = InputValidator.valString("Enter patient username: ", "username");
-        currPatientName = patient_username;
         String reqItem = "PatientIdentifiers";
 
         JsonHandler getPatInfo = new JsonHandler();
 
-        JSONObject patientInfo = getPatInfo.getPatientInfoByUsername(patient_username);
+        JSONObject patientInfo = getPatInfo.getPatientInfoByUsername(currPatientName);
 
-        getPatInfo.getPatientInfoByUsername(patient_username);
+        getPatInfo.getPatientInfoByUsername(currPatientName);
 
         currPatientID = getPatInfo.getPatientKey();
         while (true){
-            switch (CheckItemsExist(reqItem, patient_username)){
+            switch (CheckItemsExist(reqItem, currPatientName)){
                 case "true":
                     break;
                 case "False":

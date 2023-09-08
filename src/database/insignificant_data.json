@@ -20,7 +20,21 @@
 				}
 			],
 			"Diagnosis":[
-				
+				{
+					"DiagnosisDescription":"sfa",
+					"Notes":"sfasf",
+					"DiagnosisID":"Di1"
+				},
+				{
+					"DiagnosisDescription":"fsdsg",
+					"Notes":"dsfg",
+					"DiagnosisID":"Di2"
+				},
+				{
+					"DiagnosisDescription":"sdfd",
+					"Notes":"wrtbw",
+					"DiagnosisID":"Di3"
+				}
 			],
 			"Allergies":[
 				
