@@ -1,5 +1,6 @@
 package Application;
 
+import Signature.MySignature;
 import Users.Admin;
 import Users.Doctor;
 import Users.HealthProvider;
@@ -16,6 +17,8 @@ import Blockchain.Hasher;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.PrivateKey;
+import java.util.Base64;
 import java.util.Collections;
 
 
