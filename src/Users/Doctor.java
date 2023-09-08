@@ -144,8 +144,10 @@ public class Doctor extends Users {
         return Boolean.toString(keyList.contains(reqItem));
     }
 
+    private String currPatientName;
     private void addData() {
         String patient_username = InputValidator.valString("Enter patient username: ", "username");
+        currPatientName = patient_username;
         String reqItem = "PatientIdentifiers";
 
         JsonHandler getPatInfo = new JsonHandler();
@@ -638,6 +640,8 @@ public class Doctor extends Users {
 
         String phoneNumber = InputValidator.valPhoneNumber("Enter PhoneNumber: ", "Phone Number");
         patientIdentifiers.put("PhoneNumber", phoneNumber);
+
+        patientIdentifiers.put("Username", currPatientName);
 
         patientData.put("PatientIdentifiers", patientIdentifiers);
 

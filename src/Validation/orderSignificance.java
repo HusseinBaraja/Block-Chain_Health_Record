@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static Application.Electronic_Health_Record_Application.addDataToBlockchain;
 
@@ -112,8 +113,27 @@ public class orderSignificance {
                     JSONObject currentPatientData = (JSONObject) patientDataArray.get(0); // assuming each patient ID has only one JSONObject in the array
 
                     if (currentPatientData.containsKey(dataTypeToAdd)) {
-                        JSONObject onlyPatData = (JSONObject) insignificantPatientData.get(dataTypeToAdd);
-                        ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(onlyPatData);
+                        if (Objects.equals(dataTypeToAdd, "PatientIdentifiers")){
+                            JSONObject test = (JSONObject) inputObject.get(patientId);
+                            JSONObject test2 = (JSONObject) test.get("PatientIdentifiers");
+                            String username = (String) test2.get("Username");
+                            String address = (String) test2.get("Address");
+                            String phoneNumber = (String) test2.get("PhoneNumber");
+
+                            JSONArray patientDataToMod = (JSONArray) insignificantDataObject.get(patientId);
+                            JSONObject identifierData = (JSONObject) patientDataToMod.get(0);
+                            JSONObject identifierOverwrite = (JSONObject) identifierData.get("PatientIdentifiers");
+
+                            identifierOverwrite.put("Username", username);
+                            identifierOverwrite.put("Address", address);
+                            identifierOverwrite.put("PhoneNumber", phoneNumber);
+
+//                            test.add(insignificantPatientData);
+//                            insignificantDataObject.put(patientId ,insignificantPatientData);
+                        } else {
+                            JSONObject onlyPatData = (JSONObject) insignificantPatientData.get(dataTypeToAdd);
+                            ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(onlyPatData);
+                        }
                     } else {
                         JSONArray newArray = new JSONArray();
                         newArray.add(insignificantPatientData);
