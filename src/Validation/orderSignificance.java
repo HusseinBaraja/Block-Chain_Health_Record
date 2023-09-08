@@ -89,6 +89,7 @@ public class orderSignificance {
                     if (!significantCategoryData.isEmpty()) {
                         significantPatientData.put(category, significantCategoryData);
                     }
+                    // here
                     if (!insignificantCategoryData.isEmpty()) {
                         insignificantPatientData.put(category, insignificantCategoryData);
                     }
@@ -111,7 +112,8 @@ public class orderSignificance {
                     JSONObject currentPatientData = (JSONObject) patientDataArray.get(0); // assuming each patient ID has only one JSONObject in the array
 
                     if (currentPatientData.containsKey(dataTypeToAdd)) {
-                        ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(insignificantPatientData);
+                        JSONObject onlyPatData = (JSONObject) insignificantPatientData.get("Diagnosis");
+                        ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(onlyPatData);
                     } else {
                         JSONArray newArray = new JSONArray();
                         newArray.add(insignificantPatientData);

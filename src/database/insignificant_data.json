@@ -32,10 +32,9 @@
 					"Notes":"Patient needs to monitor blood pressure regularly."
 				},
 				{
-					"Diagnosis":{
-						"DiagnosisDescription":"asd",
-						"Notes":"asd"
-					}
+					"DiagnosisDescription":"asd",
+					"DiagnoseID":"asd",
+					"Notes":"asd"
 				}
 			],
 			"Allergies":[
