@@ -179,7 +179,7 @@ public class JsonHandler {
     private final List<String[]> USER_FIELDS = Arrays.asList(
             new String[]{"Name", "Username", "Password"},
             new String[]{"Name", "ClinicOrHospital", "ContactNumber", "Username", "Password", "AccessGranted"},
-            new String[]{"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender", "PlaceOfWork"},
+            new String[]{"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender", "PlaceOfWork", "PublicKeyPath", "PrivateKeyPath"},
             new String[]{"PatientId", "Username", "Password"}
     );
 

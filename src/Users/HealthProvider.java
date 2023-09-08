@@ -1,16 +1,20 @@
 package Users;
 
 import Blockchain.Hasher;
+import Cryptography.KeyAccess;
+import Cryptography.MyKeyPair;
 import Validation.InputValidator;
 import Validation.JsonHandler;
 
-import java.util.UUID;
+import java.io.IOException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
 
 public class HealthProvider {
     private String username;
 
-
-    public HealthProvider(String username) {
+    public HealthProvider(String username) throws IOException {
         this.username = username;
         switch (new JsonHandler().getAccessStatus(username, "HealthProvider")) {
             case 1 -> healthProviderMenu();
@@ -19,7 +23,7 @@ public class HealthProvider {
             default -> System.out.println("There was an error in the system!");
         }
     }
-    private void healthProviderMenu() {
+    private void healthProviderMenu() throws IOException {
         System.out.println("Health Provider Menu:");
         System.out.println("1. Add Doctor");
         System.out.println("2. Remove Doctor");
@@ -41,7 +45,8 @@ public class HealthProvider {
                 System.out.println("Invalid choice.");
         }
     }
-    private void addDoctor() {
+
+    private void addDoctor() throws IOException {
         clearScreen();
 
         System.out.println("\u001B[36mAdd Doctor:\u001B[0m"); // Cyan header
@@ -56,11 +61,24 @@ public class HealthProvider {
 
         String placeOfWork = new JsonHandler().getItem("Name", "HealthProvider", this.username);
 
+        // Generate the doctor's key pair
+        MyKeyPair.create();
+        PublicKey publicKey = MyKeyPair.getPublicKey();
+        PrivateKey privateKey = MyKeyPair.getPrivateKey();
+
+        // Store the doctor's key pair in separate files
+        String publicKeyPath = "account_directory/" + username + "_public_key.pem";
+        String privateKeyPath = "account_directory/" + username + "_private_key.pem";
+
+
+        KeyAccess.put(publicKey.getEncoded(), publicKeyPath);
+        KeyAccess.put(privateKey.getEncoded(), privateKeyPath);
+
         // Hash the password using SHA-384
         String hashedPassword = Hasher.sha384(password);
 
-        String[] userAttributes = {"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender", "PlaceOfWork"};
-        Object[] newDoctor = {name, username, hashedPassword, phoneNumber, dob, age, gender, placeOfWork};
+        String[] userAttributes = {"Name", "Username", "Password", "PhoneNumber", "DOB", "Age", "Gender", "PlaceOfWork", "PublicKeyPath", "PrivateKeyPath"};
+        Object[] newDoctor = {name, username, hashedPassword, phoneNumber, dob, age, gender, placeOfWork, publicKeyPath, privateKeyPath};
 
         JsonHandler healthProvider = new JsonHandler();
         healthProvider.addNewUser("Doctor", userAttributes, newDoctor);

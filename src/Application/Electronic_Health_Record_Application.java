@@ -14,6 +14,7 @@ import Blockchain.Block;
 import Blockchain.Hasher;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 
 
@@ -23,7 +24,7 @@ public class Electronic_Health_Record_Application {
     private static String masterFolder = "master";
     private static String fileName = masterFolder + "/chain.bin";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         mainMenu();
     }
 
@@ -57,7 +58,7 @@ public class Electronic_Health_Record_Application {
         }
     }
 
-    private static void mainMenu() {
+    private static void mainMenu() throws IOException {
         while (true) {
             clearScreen();
             System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
@@ -97,7 +98,7 @@ public class Electronic_Health_Record_Application {
         System.out.flush();
     }
 
-    private static void signIn() {
+    private static void signIn() throws IOException {
         clearScreen();
 
         System.out.println();

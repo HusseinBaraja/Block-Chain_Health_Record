@@ -71,84 +71,16 @@
     ],
     "Doctor": [
         {
-            "Name": "Dr. Emma Watson",
-            "Username": "hussein",
-            "Password": "48a3c4db80ed3e181eb849b62afc377eef5d3ef9cef296dd1b044e1c2c2d3cd0980da9cf52d608c8f0c4e077d6945b19",
-            "PhoneNumber": "111-111-1111",
-            "DOB": "1985-04-15",
-            "Age": 38,
-            "Gender": "Female",
-            "PlaceOfWork": "MediCare Clinic"
-        },
-        {
-            "Name": "Dr. Chris Hemsworth",
-            "Username": "chrishem",
-            "Password": "48a3c4db80ed3e181eb849b62afc377eef5d3ef9cef296dd1b044e1c2c2d3cd0980da9cf52d608c8f0c4e077d6945b19",
-            "PhoneNumber": "222-222-2222",
-            "DOB": "1983-08-11",
-            "Age": 40,
-            "Gender": "Male",
-            "PlaceOfWork": "HealFast Hospital"
-        },
-        {
-            "Name": "Dr. Natalie Portman",
-            "Username": "natport",
-            "Password": "natport789",
-            "PhoneNumber": "333-333-3333",
-            "DOB": "1981-06-09",
-            "Age": 42,
-            "Gender": "Female",
-            "PlaceOfWork": "test"
-        },
-        {
-            "Name": "Hamza",
-            "Username": "Hamza123",
-            "Password": "22fb611cd86ce683197f835b60d6d0156fd72cdc8a55dc4f02d5943caaa61676879572e728681d633f5a8ad94f307d21",
+            "Name": "mohammed",
+            "Username": "mohammed",
+            "Password": "646f3ddb847cab8845c9e88e343b9f84e5acf352318606c36f3a9a659c3a39245439cd8141c297d5c56a85eeeaeef4f1",
             "PhoneNumber": "0123456789",
             "DOB": "2023-10-23",
-            "Age": 13,
+            "Age": 12,
             "Gender": "male",
-            "PlaceOfWork": "test"
-        },
-        {
-            "Name": "Hamza",
-            "Username": "hamzaa",
-            "Password": "43c72bf82f5cee461ee697023d931ce6e7b7745124028861343f9522befc5d5cd8a53ea91759f7b87187271f9748d545",
-            "PhoneNumber": "0123456789",
-            "DOB": "4123-12-31",
-            "Age": 14,
-            "Gender": "male",
-            "PlaceOfWork": "test"
-        },
-        {
-            "Name": "john",
-            "Username": "hussein",
-            "Password": "5ba379264b8d9cd87722925ec60afd11d5109cc008a7d29e3ae3d7ea69c5344fe2eb5d398ef78ec7ad4847788590250d",
-            "PhoneNumber": "0123456789",
-            "DOB": "1231-23-12",
-            "Age": 123,
-            "Gender": "male",
-            "PlaceOfWork": "MediCare Clinic"
-        },
-        {
-            "Name": "Esmail",
-            "Username": "esmaill",
-            "Password": "06af66239332a818d631310a92d301f74237cc5eec969f0488b5e4fe2535244e60390ae0d793a8adc8f648b0bfbf8f92",
-            "PhoneNumber": "0123456789",
-            "DOB": "2134-12-13",
-            "Age": 123,
-            "Gender": "male",
-            "PlaceOfWork": "MediCare Clinic"
-        },
-        {
-            "Name": "Mohammed",
-            "Username": "momomo",
-            "Password": "121d99daeaacddad8e818977a131023a18fd817bb355924aea25dba5f183d9d6e49e0e71dd832b46296d0faa93faf96b",
-            "PhoneNumber": "0123456789",
-            "DOB": "1234-56-78",
-            "Age": 123,
-            "Gender": "male",
-            "PlaceOfWork": "test"
+            "PlaceOfWork": "MediCare Clinic",
+            "PublicKeyPath": "account_directory/mohammed_public_key.pem",
+            "PrivateKeyPath": "account_directory/mohammed_private_key.pem"
         }
     ],
     "Patient": [
