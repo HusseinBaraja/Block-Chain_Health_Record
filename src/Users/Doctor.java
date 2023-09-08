@@ -1,20 +1,41 @@
 package Users;
 
+import Cryptography.KeyAccess;
+import Signature.MySignature;
 import Validation.InputValidator;
 import Validation.JsonHandler;
 import Validation.orderSignificance;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
-import java.io.FileWriter;
+
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 public class Doctor extends Users {
+
+    public static void main(String[] args) throws Exception {
+        Doctor doctor = new Doctor("mohammed");
+        String publicKeyPath = doctor.getPublicKeyPath();
+        String privateKeyPath = doctor.getPrivateKeyPath();
+
+        System.out.println(privateKeyPath);
+        System.out.println(publicKeyPath);
+        PublicKey pubKey = KeyAccess.getPublicKey(publicKeyPath);
+        PrivateKey privKey = KeyAccess.getPrivateKey(privateKeyPath);
+        System.out.println(Base64.getEncoder().encodeToString(pubKey.getEncoded()));
+        System.out.println(Base64.getEncoder().encodeToString(privKey.getEncoded()));
+
+        MySignature sig = new MySignature();
+
+
+    }
+
+
     private static String currPatientID;
     private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
 
@@ -28,13 +49,15 @@ public class Doctor extends Users {
         } else {
             System.out.println("Doctor info was not found!");
         }
-        switch (new JsonHandler().getAccessStatus(username, "Doctor")) {
-            case 1 -> doctorMenu();
-            case 0 -> System.out.println("This doctor doesn't have access to the system!");
-            case 2 -> System.out.println("This doctor is not in the system!");
-            default -> System.out.println("There was an error in the system!");
-        }
+//        switch (new JsonHandler().getAccessStatus(username, "Doctor")) {
+//            case 1 -> doctorMenu();
+//            case 0 -> System.out.println("This doctor doesn't have access to the system!");
+//            case 2 -> System.out.println("This doctor is not in the system!");
+//            default -> System.out.println("There was an error in the system!");
+//        }
     }
+
+
 
     private void doctorMenu() {
         System.out.println("\u001B[36mDoctor Menu:\u001B[0m"); // Cyan header
@@ -145,6 +168,31 @@ public class Doctor extends Users {
     }
 
     private String currPatientName;
+
+
+    public String getPublicKeyPath() {
+        // Retrieve the current doctor's information from your data structure
+        JSONObject doctorInfo = new JsonHandler().getUserInfoByUserName("Doctor", this.getUsername());
+
+        if (doctorInfo != null) {
+            return (String) doctorInfo.get("PublicKeyPath");
+        } else {
+            return null; // Handle the case where the doctor's information is not found
+        }
+    }
+
+    // Add a method to get the PrivateKeyPath of the current doctor
+    public String getPrivateKeyPath() {
+        // Retrieve the current doctor's information from your data structure
+        JSONObject doctorInfo = new JsonHandler().getUserInfoByUserName("Doctor", this.getUsername());
+
+        if (doctorInfo != null) {
+            return (String) doctorInfo.get("PrivateKeyPath");
+        } else {
+            return null; // Handle the case where the doctor's information is not found
+        }
+    }
+
     private void addData() {
         String patient_username = InputValidator.valString("Enter patient username: ", "username");
         currPatientName = patient_username;

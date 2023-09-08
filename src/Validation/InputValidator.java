@@ -1,6 +1,8 @@
 package Validation;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -250,5 +252,190 @@ public class InputValidator {
             }
         }
     }
+
+    /**
+     * Validate a date using regex and date format.
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the date input.
+     * @param dateFormat The expected date format (e.g., "yyyy-MM-dd").
+     * @return The validated date as a string in the specified format.
+     */
+    public static String valDate(String prompt, String inputName, String dateFormat) {
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        Pattern datePattern = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+
+        while (true) {
+            System.out.print(prompt);
+            String dateString = scanner.nextLine().trim();
+
+            Matcher matcher = datePattern.matcher(dateString);
+
+            if (matcher.matches()) {
+                // The input matches the expected date format, now check if it's a valid date
+                try {
+                    Date date = sdf.parse(dateString);
+                    if (date != null) {
+                        return dateString;
+                    } else {
+                        System.out.printf("\u001B[31mInvalid %s. Please enter a valid date in the format '%s'.\u001B[0m%n", inputName, dateFormat);
+                    }
+                } catch (ParseException e) {
+                    System.out.printf("\u001B[31mInvalid %s. Please enter a valid date in the format '%s'.\u001B[0m%n", inputName, dateFormat);
+                }
+            } else {
+                System.out.printf("\u001B[31mInvalid %s. Please enter a valid date in the format '%s'.\u001B[0m%n", inputName, dateFormat);
+            }
+        }
+    }
+
+    /**
+     * Validate a weight input in kilograms.
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the weight input.
+     * @return The validated weight input in kilograms.
+     */
+    public static float valWeight(String prompt, String inputName) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.printf("You didn't enter anything. Please input a valid %s%n", inputName);
+            } else {
+                try {
+                    float weight = Float.parseFloat(input);
+                    // You can add additional validation logic here if needed.
+                    return weight;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input. Please enter a valid weight.");
+                }
+            }
+        }
+    }
+
+    /**
+     * Validate a height input in centimeters.
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the height input.
+     * @return The validated height input in centimeters.
+     */
+    public static float valHeight(String prompt, String inputName) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.printf("You didn't enter anything. Please input a valid %s%n", inputName);
+            } else {
+                try {
+                    float height = Float.parseFloat(input);
+                    // You can add additional validation logic here if needed.
+                    return height;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input. Please enter a valid height.");
+                }
+            }
+        }
+    }
+
+    /**
+     * Validate a temperature input in Celsius.
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the temperature input.
+     * @return The validated temperature input in Celsius.
+     */
+    public static float valTemperature(String prompt, String inputName) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.printf("You didn't enter anything. Please input a valid %s%n", inputName);
+            } else {
+                try {
+                    float temperature = Float.parseFloat(input);
+                    // You can add additional validation logic here if needed.
+                    return temperature;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input. Please enter a valid temperature.");
+                }
+            }
+        }
+    }
+
+    /**
+     * Validate a blood pressure input in the format "systolic/diastolic" (e.g., "120/80").
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the blood pressure input.
+     * @return The validated blood pressure input in the specified format.
+     */
+    public static String valBloodPressure(String prompt, String inputName) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            // Define a regular expression pattern for valid blood pressure (e.g., "120/80")
+            String bloodPressurePattern = "\\d{1,3}/\\d{1,3}";
+
+            if (input.matches(bloodPressurePattern)) {
+                return input;
+            } else {
+                System.out.printf("\u001B[31mInvalid %s. Please enter a valid blood pressure in the format 'systolic/diastolic' (e.g., '120/80').\u001B[0m%n", inputName);
+            }
+        }
+    }
+
+    /**
+     * Validate a heart rate input in beats per minute (BPM).
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the heart rate input.
+     * @return The validated heart rate input in BPM.
+     */
+    public static int valHeartRate(String prompt, String inputName) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.printf("You didn't enter anything. Please input a valid %s%n", inputName);
+            } else {
+                try {
+                    int heartRate = Integer.parseInt(input);
+                    // You can add additional validation logic here if needed.
+                    return heartRate;
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input. Please enter a valid heart rate (BPM).");
+                }
+            }
+        }
+    }
+    /**
+     * Validate a status input to be either "active" or "not active" (case-insensitive).
+     *
+     * @param prompt The prompt that should be displayed to the user.
+     * @param inputName The name of the status input.
+     * @return The validated status input ("active" or "not active").
+     */
+    public static String valStatus(String prompt, String inputName) {
+        while (true) {
+            System.out.print(prompt);
+            String status = scanner.nextLine().trim().toLowerCase();
+
+            if (status.equals("active") || status.equals("not active")) {
+                return status;
+            } else {
+                System.out.printf("\u001B[31mInvalid %s. Please enter either 'active' or 'not active'.\u001B[0m%n", inputName);
+            }
+        }
+    }
+
+
+
 }
 
