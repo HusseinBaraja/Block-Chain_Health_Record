@@ -41,7 +41,7 @@ public class Doctor extends Users {
                 PrivateKey privKey = KeyAccess.getPrivateKey(privateKeyPath);
 
                 switch (new JsonHandler().getAccessStatus(username, "Doctor")) {
-                    case 1 -> doctorMenu();
+                    case 1 -> doctorMenu(privKey, pubKey);
                     case 0 -> System.out.println("This doctor doesn't have access to the system!");
                     case 2 -> System.out.println("This doctor is not in the system!");
                     default -> System.out.println("There was an error in the system!");
@@ -55,7 +55,7 @@ public class Doctor extends Users {
     }
 
 
-    private void doctorMenu() {
+    private void doctorMenu(PrivateKey privateKey, PublicKey publicKey) {
         currPatientName = InputValidator.valString("Enter patient username: ", "username");
 
 
@@ -76,7 +76,7 @@ public class Doctor extends Users {
                     viewPatientData();
                     break;
                 case 2:
-                    addData();
+                    addData(privateKey, publicKey);;
                     break;
                 case 3:
                     String patientUsername = InputValidator.valString("Enter the patient's username: ", "username");
@@ -91,7 +91,7 @@ public class Doctor extends Users {
         }
         else {
             System.out.println("Username was not found!");
-            doctorMenu();
+            doctorMenu(privateKey, publicKey);
         }
 
 
@@ -204,7 +204,7 @@ public class Doctor extends Users {
         }
     }
 
-    private void addData() {
+    private void addData(PrivateKey privateKey, PublicKey publicKey) {
         String reqItem = "PatientIdentifiers";
 
         JsonHandler getPatInfo = new JsonHandler();
@@ -223,7 +223,7 @@ public class Doctor extends Users {
                             "This patient didn't add his basic information yet, would you like to do that? ",
                             "yes or no");
                     switch (checkDocOptions) {
-                        case "yes" -> addIdentifiersData(currPatientID);
+                        case "yes" -> addIdentifiersData(currPatientID, privateKey, publicKey);
                         case "no" -> {
                             return;
                         }
@@ -254,34 +254,34 @@ public class Doctor extends Users {
 
         switch (option) {
             case 1:
-                addIdentifiersData(currPatientID);
+                addIdentifiersData(currPatientID, privateKey, publicKey);
                 break;
             case 2:
-                addDemographicData(currPatientID);
+                addDemographicData(currPatientID, privateKey, publicKey);
                 break;
             case 3:
-                addDiagnosisData(currPatientID, patientInfo);
+                addDiagnosisData(currPatientID, patientInfo, privateKey, publicKey);
                 break;
             case 4:
-                addAllergiesData(currPatientID, patientInfo);
+                addAllergiesData(currPatientID, patientInfo, privateKey, publicKey);
                 break;
             case 5:
-                addImmunizationsData(currPatientID);
+                addImmunizationsData(currPatientID, privateKey, publicKey);
                 break;
             case 6:
-                addMedicationsData(currPatientID);
+                addMedicationsData(currPatientID, privateKey, publicKey);
                 break;
             case 7:
-                addProceduresData(currPatientID, patientInfo);
+                addProceduresData(currPatientID, patientInfo, privateKey, publicKey);
                 break;
             case 8:
-                addLaboratoryTestResultsData(currPatientID);
+                addLaboratoryTestResultsData(currPatientID, privateKey, publicKey);
                 break;
             case 9:
-                addVitalSignsData(currPatientID, patientInfo);
+                addVitalSignsData(currPatientID, patientInfo, privateKey, publicKey);
                 break;
             case 10:
-                addImagingReportsData(currPatientID, patientInfo);
+                addImagingReportsData(currPatientID, patientInfo, privateKey, publicKey);
                 break;
             case 11:
                 System.out.println("\u001B[32mReturning to Doctor Menu, Bye :-)\u001B[0m"); // Green return message
@@ -291,7 +291,7 @@ public class Doctor extends Users {
         }
     }
 
-    private void addDemographicData(String patientId) {
+    private void addDemographicData(String patientId, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Patient Demographic Data ---");
@@ -312,6 +312,16 @@ public class Doctor extends Users {
         String bloodType = InputValidator.valBloodType("Enter patient blood type (e.g., 'A+', 'B-', 'AB+'): ", "blood type");
         DemographicInformation.put("BloodType", bloodType);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = DemographicInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        DemographicInformation.put("Signature", signature);
+
+
         patientData.put("DemographicInformation", DemographicInformation);
 
         JSONObject inputData = new JSONObject();
@@ -326,10 +336,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addDiagnosisData(String patientId, JSONObject data) {
+    private void addDiagnosisData(String patientId, JSONObject data, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
         System.out.println("--- Add Patient Diagnosis Data ---");
         JSONObject DiagnosisInformation = new JSONObject();
@@ -353,6 +363,14 @@ public class Doctor extends Users {
         String notes = InputValidator.valString("Enter Notes: ", "Notes");
         DiagnosisInformation.put("Notes", notes);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = DiagnosisInformation.toJSONString();
+
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        DiagnosisInformation.put("Signature", signature);
+
         patientData.put("Diagnosis", DiagnosisInformation);
 
         JSONObject inputData = new JSONObject();
@@ -367,10 +385,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addAllergiesData(String patientId, JSONObject data) {
+    private void addAllergiesData(String patientId, JSONObject data, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Allergy Data ---");
@@ -400,6 +418,15 @@ public class Doctor extends Users {
         String medicationToAvoid = InputValidator.valString("Enter Medication To Avoid: ", "Medication To Avoid");
         allergiesInformation.put("MedicationToAvoid", medicationToAvoid);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = allergiesInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        allergiesInformation.put("Signature", signature);
+
         patientData.put("Allergies", allergiesInformation);
 
         JSONObject inputData = new JSONObject();
@@ -414,10 +441,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addImmunizationsData(String patientId) {
+    private void addImmunizationsData(String patientId, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Immunization Data ---");
@@ -433,6 +460,16 @@ public class Doctor extends Users {
         String administeringClinic = InputValidator.valString("Enter Administering Clinic or Hospital: ", "Administering Clinic");
         immunizationsInformation.put("AdministeringClinic", administeringClinic);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = immunizationsInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        immunizationsInformation.put("Signature", signature);
+
+
         patientData.put("Immunizations", immunizationsInformation);
 
         JSONObject inputData = new JSONObject();
@@ -447,10 +484,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addMedicationsData(String patientId) {
+    private void addMedicationsData(String patientId, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Medication Data ---");
@@ -466,6 +503,16 @@ public class Doctor extends Users {
         String frequency = InputValidator.valString("Enter Frequency: ", "Frequency");
         medicationsInformation.put("Frequency", frequency);
 
+
+        // Convert the demographicData JSON object to a string
+        String dataToSign = medicationsInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        medicationsInformation.put("Signature", signature);
+
         patientData.put("Medications", medicationsInformation);
 
         JSONObject inputData = new JSONObject();
@@ -480,10 +527,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addProceduresData(String patientId, JSONObject data) {
+    private void addProceduresData(String patientId, JSONObject data, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Procedure Data---");
@@ -504,6 +551,15 @@ public class Doctor extends Users {
         String procedureNotes = InputValidator.valString("Enter Procedure Notes: ", "Procedure Notes");
         proceduresInformation.put("ProcedureNotes", procedureNotes);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = proceduresInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        proceduresInformation.put("Signature", signature);
+
         patientData.put("Procedures", proceduresInformation);
 
         JSONObject inputData = new JSONObject();
@@ -518,10 +574,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addVitalSignsData(String patientId, JSONObject data) {
+    private void addVitalSignsData(String patientId, JSONObject data, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Vital Signs Data---");
@@ -546,6 +602,16 @@ public class Doctor extends Users {
         String heartRate = InputValidator.valString("Enter Heart Rate: ", "Heart Rate");
         vitalSignsInformation.put("HeartRate", heartRate);
 
+
+        // Convert the demographicData JSON object to a string
+        String dataToSign = vitalSignsInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        vitalSignsInformation.put("Signature", signature);
+
         patientData.put("VitalSigns", vitalSignsInformation);
         JSONObject inputData = new JSONObject();
 
@@ -559,10 +625,10 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
-    private void addLaboratoryTestResultsData(String patientId) {
+    private void addLaboratoryTestResultsData(String patientId, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Laboratory Test Result Data ---");
@@ -583,6 +649,16 @@ public class Doctor extends Users {
         laboratoryTestResultsInformation.put("TestTimestamp", testTimestamp);
         patientData.put("LaboratoryTestResults", laboratoryTestResultsInformation);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = laboratoryTestResultsInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        laboratoryTestResultsInformation.put("Signature", signature);
+
+
         JSONObject inputData = new JSONObject();
 
         //Here we should generate new PatientIDs for new patients
@@ -595,11 +671,11 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
 
     }
 
-    private void addImagingReportsData(String patientId, JSONObject data) {
+    private void addImagingReportsData(String patientId, JSONObject data, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
         System.out.println("--- Add Patient Imaging Reports Data---");
@@ -618,6 +694,15 @@ public class Doctor extends Users {
         String administeringClinic = InputValidator.valString("Enter Administering Clinic: ", "Administering Clinic");
         imagingReportsInformation.put("AdministeringClinic", administeringClinic);
 
+        // Convert the demographicData JSON object to a string
+        String dataToSign = imagingReportsInformation.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        imagingReportsInformation.put("Signature", signature);
+
         patientData.put("ImagingReports", imagingReportsInformation);
 
         JSONObject inputData = new JSONObject();
@@ -632,7 +717,7 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
     // Significant
@@ -678,7 +763,7 @@ public class Doctor extends Users {
 
     }
 
-    private void addIdentifiersData(String patientId){
+    private void addIdentifiersData(String patientId, PrivateKey privateKey, PublicKey publicKey){
 
         JSONObject patientData = new JSONObject();
 
@@ -700,6 +785,17 @@ public class Doctor extends Users {
 
         patientIdentifiers.put("Username", currPatientName);
 
+
+        // Convert the demographicData JSON object to a string
+        String dataToSign = patientIdentifiers.toJSONString();
+
+        // Sign the data using the private key
+        String signature = signData(dataToSign, privateKey);
+
+        // Add the signature to the demographicData JSON object
+        patientIdentifiers.put("Signature", signature);
+
+
         patientData.put("PatientIdentifiers", patientIdentifiers);
 
         JSONObject inputData = new JSONObject();
@@ -714,7 +810,7 @@ public class Doctor extends Users {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        addData();
+        addData(privateKey, publicKey);
     }
 
     private String generateAndIncrementID(JSONObject patientData, String category) {
@@ -747,4 +843,14 @@ public class Doctor extends Users {
         return newID;
     }
 
+    private String signData(String data, PrivateKey privateKey) {
+        try {
+            MySignature mySignature = new MySignature();
+            byte[] signatureBytes = mySignature.getSignature(data, privateKey);
+            return Base64.getEncoder().encodeToString(signatureBytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
