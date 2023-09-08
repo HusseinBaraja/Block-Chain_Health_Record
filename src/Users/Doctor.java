@@ -18,45 +18,38 @@ import java.util.Set;
 
 public class Doctor extends Users {
 
-    public static void main(String[] args) throws Exception {
-        Doctor doctor = new Doctor("mohammed");
-        String publicKeyPath = doctor.getPublicKeyPath();
-        String privateKeyPath = doctor.getPrivateKeyPath();
-
-        System.out.println(privateKeyPath);
-        System.out.println(publicKeyPath);
-        PublicKey pubKey = KeyAccess.getPublicKey(publicKeyPath);
-        PrivateKey privKey = KeyAccess.getPrivateKey(privateKeyPath);
-        System.out.println(Base64.getEncoder().encodeToString(pubKey.getEncoded()));
-        System.out.println(Base64.getEncoder().encodeToString(privKey.getEncoded()));
-
-        MySignature sig = new MySignature();
-
-
-    }
-
-
     private static String currPatientID;
     private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
 
-    public Doctor(String username) {
+    public Doctor(String username) throws Exception {
         super(username); // Assuming the parent class "Users" needs this for its own reasons.
         JsonHandler handler = new JsonHandler();
         JSONObject userInfo = handler.getUserInfoByUserName("Doctor", username);
 
         if (userInfo != null) {
             username = (String) userInfo.get("Username");
+
+            // Retrieve public and private key paths from user profile data
+            String publicKeyPath = (String) userInfo.get("PublicKeyPath");
+            String privateKeyPath = (String) userInfo.get("PrivateKeyPath");
+
+            if (publicKeyPath != null && privateKeyPath != null) {
+                PublicKey pubKey = KeyAccess.getPublicKey(publicKeyPath);
+                PrivateKey privKey = KeyAccess.getPrivateKey(privateKeyPath);
+
+                switch (new JsonHandler().getAccessStatus(username, "Doctor")) {
+                    case 1 -> doctorMenu();
+                    case 0 -> System.out.println("This doctor doesn't have access to the system!");
+                    case 2 -> System.out.println("This doctor is not in the system!");
+                    default -> System.out.println("There was an error in the system!");
+                }
+            } else {
+                System.out.println("Public and private key paths not found in user profile!");
+            }
         } else {
             System.out.println("Doctor info was not found!");
         }
-//        switch (new JsonHandler().getAccessStatus(username, "Doctor")) {
-//            case 1 -> doctorMenu();
-//            case 0 -> System.out.println("This doctor doesn't have access to the system!");
-//            case 2 -> System.out.println("This doctor is not in the system!");
-//            default -> System.out.println("There was an error in the system!");
-//        }
     }
-
 
 
     private void doctorMenu() {
