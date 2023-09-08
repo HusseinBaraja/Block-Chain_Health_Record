@@ -60,30 +60,6 @@ public class InputValidator {
         }
     }
 
-    /**
-     * Validate integer inputs based on range, sign, and other requirements.
-     *
-     * @param prompt The prompt to be displayed.
-     * @param inputName the name of the float input.
-     * @return The validated Float input.
-     */
-    public static float valFloat(String prompt, String inputName) {
-        while (true) {
-            System.out.print(prompt);
-            String input = scanner.nextLine();
-
-            if (input.isEmpty()) {
-                System.out.printf("You didn't enter anything, Please input a valid %s%n", inputName);
-            } else {
-                try {
-                    return Float.parseFloat(input);
-                } catch (NumberFormatException ex) {
-                    System.out.println("Invalid input. Please enter a whole or fractional number.");
-                }
-
-            }
-        }
-    }
 
     /**
      * Validate a phone number based on a regular expression pattern.

@@ -12,17 +12,14 @@ import org.json.simple.JSONObject;
 import java.io.File;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static Application.Electronic_Health_Record_Application.isUsernameExistsInSections;
 
 public class Doctor extends Users {
 
     private static String currPatientID;
-    private static final String DEMOGRAPHIC_FILE = "src/database/insignificant_data.json";
 
     public Doctor(String username) throws Exception {
         super(username); // Assuming the parent class "Users" needs this for its own reasons.
@@ -76,7 +73,7 @@ public class Doctor extends Users {
                     viewPatientData();
                     break;
                 case 2:
-                    addData(privateKey, publicKey);;
+                    addData(privateKey, publicKey);
                     break;
                 case 3:
                     String patientUsername = InputValidator.valString("Enter the patient's username: ", "username");
@@ -179,30 +176,6 @@ public class Doctor extends Users {
     }
 
     private String currPatientName;
-
-
-    public String getPublicKeyPath() {
-        // Retrieve the current doctor's information from your data structure
-        JSONObject doctorInfo = new JsonHandler().getUserInfoByUserName("Doctor", this.getUsername());
-
-        if (doctorInfo != null) {
-            return (String) doctorInfo.get("PublicKeyPath");
-        } else {
-            return null; // Handle the case where the doctor's information is not found
-        }
-    }
-
-    // Add a method to get the PrivateKeyPath of the current doctor
-    public String getPrivateKeyPath() {
-        // Retrieve the current doctor's information from your data structure
-        JSONObject doctorInfo = new JsonHandler().getUserInfoByUserName("Doctor", this.getUsername());
-
-        if (doctorInfo != null) {
-            return (String) doctorInfo.get("PrivateKeyPath");
-        } else {
-            return null; // Handle the case where the doctor's information is not found
-        }
-    }
 
     private void addData(PrivateKey privateKey, PublicKey publicKey) {
         String reqItem = "PatientIdentifiers";
@@ -350,10 +323,10 @@ public class Doctor extends Users {
         String diagnosisDescription = InputValidator.valString("Enter Diagnosis Description: ", "Diagnosis Description");
         DiagnosisInformation.put("DiagnosisDescription", diagnosisDescription);
 
-        String dateOfDiagnosis = InputValidator.valString("Enter Date of Diagnosis: ", "Date Of Diagnosis");
+        String dateOfDiagnosis = InputValidator.valDate("Enter Date of Diagnosis: ", "Date Of Diagnosis", "yyyy-MM-dd");
         DiagnosisInformation.put("DateOfDiagnosis", dateOfDiagnosis);
 
-        String diagnosisStatus = InputValidator.valString("Enter Diagnosis Status: ", "Diagnosis Status");
+        String diagnosisStatus = InputValidator.valStatus("Enter Diagnosis Status (active or not active): ", "Diagnosis Status");
         DiagnosisInformation.put("DiagnosisStatus", diagnosisStatus);
 
         // check again
@@ -406,13 +379,13 @@ public class Doctor extends Users {
         String reactionDescription = InputValidator.valString("Enter Reaction Description: ", "Reaction Description");
         allergiesInformation.put("ReactionDescription", reactionDescription);
 
-        String diagnosisDate = InputValidator.valString("Enter Diagnosis Date: ", "Diagnosis Date");
+        String diagnosisDate = InputValidator.valDate("Enter Diagnosis Date: ", "Diagnosis Date", "yyyy-MM-dd");
         allergiesInformation.put("DiagnosisDate", diagnosisDate);
 
         String treatmentPlan = InputValidator.valString("Enter Treatment Plan: ", "Treatment Plan");
         allergiesInformation.put("TreatmentPlan", treatmentPlan);
 
-        String status = InputValidator.valString("Enter Status: ", "Status");
+        String status = InputValidator.valStatus("Enter Status (active or not active): ", "Status");
         allergiesInformation.put("Status", status);
 
         String medicationToAvoid = InputValidator.valString("Enter Medication To Avoid: ", "Medication To Avoid");
@@ -454,7 +427,7 @@ public class Doctor extends Users {
         String vaccineName = InputValidator.valString("Enter Vaccine Name: ", "Vaccine Name");
         immunizationsInformation.put("VaccineName", vaccineName);
 
-        String dateAdministered = InputValidator.valString("Enter Date Administered: ", "Date Administered");
+        String dateAdministered = InputValidator.valDate("Enter Date Administered: ", "Date Administered", "yyyy-MM-dd");
         immunizationsInformation.put("DateAdministered", dateAdministered);
 
         String administeringClinic = InputValidator.valString("Enter Administering Clinic or Hospital: ", "Administering Clinic");
@@ -542,7 +515,7 @@ public class Doctor extends Users {
         String procedureName = InputValidator.valString("Enter Procedure Name: ", "Procedure Name");
         proceduresInformation.put("ProcedureName", procedureName);
 
-        String procedureDate = InputValidator.valString("Enter Procedure Date: ", "Procedure Date");
+        String procedureDate = InputValidator.valDate("Enter Procedure Date: ", "Procedure Date", "yyyy-MM-dd");
         proceduresInformation.put("ProcedureDate", procedureDate);
 
         String procedureDoctor = InputValidator.valString("Enter Procedure Doctor: ", "Procedure Doctor");
@@ -587,19 +560,19 @@ public class Doctor extends Users {
         String vitalSignsID = generateAndIncrementID(data, "VitalSigns");
         vitalSignsInformation.put("VitalSignsID", vitalSignsID);
 
-        String temperature = InputValidator.valString("Enter Temperature: ", "Temperature");
+        float temperature = InputValidator.valTemperature("Enter Temperature in Celsius: ", "Temperature");
         vitalSignsInformation.put("Temperature", temperature);
 
-        String height = InputValidator.valString("Enter Height: ", "Height");
+        float height = InputValidator.valHeight("Enter Height: ", "Height");
         vitalSignsInformation.put("Height", height);
 
-        String weight = InputValidator.valString("Enter Weight: ", "Procedure Doctor");
+        float weight = InputValidator.valWeight("Enter Weight: ", "Weight");
         vitalSignsInformation.put("Weight", weight);
 
-        String bloodPressure = InputValidator.valString("Enter Blood Pressures: ", "Blood Pressure");
+        String bloodPressure = InputValidator.valBloodPressure("Enter Blood Pressures: ", "Blood Pressure");
         vitalSignsInformation.put("BloodPressure", bloodPressure);
 
-        String heartRate = InputValidator.valString("Enter Heart Rate: ", "Heart Rate");
+        int heartRate = InputValidator.valHeartRate("Enter Heart Rate: ", "Heart Rate");
         vitalSignsInformation.put("HeartRate", heartRate);
 
 
@@ -628,6 +601,7 @@ public class Doctor extends Users {
         addData(privateKey, publicKey);
     }
 
+
     private void addLaboratoryTestResultsData(String patientId, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
 
@@ -635,18 +609,21 @@ public class Doctor extends Users {
 
         JSONObject laboratoryTestResultsInformation = new JSONObject();
         String testName = InputValidator.valString("Enter Test Name: ", "Test Name");
-
         laboratoryTestResultsInformation.put("TestName", testName);
         String result = InputValidator.valString("Enter Result: ", "Result");
-
         laboratoryTestResultsInformation.put("Result", result);
         String labTechnicianName = InputValidator.valString("Enter Lab Technician Name: ", "Lab Technician Name");
-
         laboratoryTestResultsInformation.put("LabTechnicianName", labTechnicianName);
-        // Modify
-        String testTimestamp = InputValidator.valString("Enter TestTimestamp: ", "Test Timestamp");
+
+        // Get the current timestamp
+        Date timestamp = new Date();
+
+        // Format the timestamp as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String testTimestamp = dateFormat.format(timestamp);
 
         laboratoryTestResultsInformation.put("TestTimestamp", testTimestamp);
+
         patientData.put("LaboratoryTestResults", laboratoryTestResultsInformation);
 
         // Convert the demographicData JSON object to a string
@@ -657,7 +634,6 @@ public class Doctor extends Users {
 
         // Add the signature to the demographicData JSON object
         laboratoryTestResultsInformation.put("Signature", signature);
-
 
         JSONObject inputData = new JSONObject();
 
@@ -672,7 +648,6 @@ public class Doctor extends Users {
             e.printStackTrace();
         }
         addData(privateKey, publicKey);
-
     }
 
     private void addImagingReportsData(String patientId, JSONObject data, PrivateKey privateKey, PublicKey publicKey) {
@@ -720,7 +695,6 @@ public class Doctor extends Users {
         addData(privateKey, publicKey);
     }
 
-    // Significant
     private void viewPatientData() {
         String patient_username = InputValidator.valString("Enter patient username: ", "username");
 

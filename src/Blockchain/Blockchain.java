@@ -59,7 +59,5 @@ public class Blockchain {
 		String chain = new GsonBuilder().setPrettyPrinting().create().toJson(db);
 		System.out.println(chain);
 	}
-	
-	
-	
+
 }

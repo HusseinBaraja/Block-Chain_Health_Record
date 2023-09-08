@@ -158,26 +158,4 @@ public class orderSignificance {
             insignificantFile.write(formatJson(insignificantDataObject.toJSONString()));
         }
     }
-
-    private void addDataToInsignificant(JSONObject insignificantDataObject, String patientId, String dataTypeToAdd, JSONObject dataToAdd) {
-        if (insignificantDataObject.containsKey(patientId)) {
-            JSONObject currentPatientData = (JSONObject) insignificantDataObject.get(patientId);
-            if (currentPatientData.containsKey(dataTypeToAdd)) {
-                ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(dataToAdd);
-            } else {
-                JSONArray newArray = new JSONArray();
-                newArray.add(dataToAdd);
-                currentPatientData.put(dataTypeToAdd, newArray);
-            }
-        } else {
-            JSONObject newPatientData = new JSONObject();
-            JSONArray newArray = new JSONArray();
-            newArray.add(dataToAdd);
-            newPatientData.put(dataTypeToAdd, newArray);
-            insignificantDataObject.put(patientId, newPatientData);
-        }
-    }
-
-
-
 }

@@ -15,7 +15,6 @@ public class Users {
 
     public enum UserRole { ADMIN, RECEPTIONIST, DOCTOR, PATIENT, HEALTH_PROVIDER, NONE }
 
-
     public Users(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
@@ -78,19 +77,5 @@ public class Users {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
 }

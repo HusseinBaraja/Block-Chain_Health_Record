@@ -36,14 +36,4 @@ public class MyKeyPair {
 		publicKey = keyMaker.keyPair.getPublic();
 		privateKey = keyMaker.keyPair.getPrivate();
 	}
-
-	public static void put(byte[] keyBytes,String path) {
-		File f = new File(path);
-		f.getParentFile().mkdir();
-		try {
-			Files.write(Paths.get(path), keyBytes, StandardOpenOption.CREATE);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

@@ -3,9 +3,6 @@ package Users;
 import Validation.InputValidator;
 import Validation.JsonHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Admin extends Users {
 
     public Admin(String username) {
