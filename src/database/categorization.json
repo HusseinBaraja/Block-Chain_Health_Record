@@ -14,7 +14,7 @@
     "BloodType": "significant"
   },
   "Diagnosis": {
-    "DiagnoseCode": "significant",
+    "DiagnoseID": "significant",
     "DiagnosisDescription": "insignificant",
     "DateOfDiagnosis": "significant",
     "DiagnosisStatus": "significant",
@@ -22,6 +22,7 @@
     "Notes": "insignificant"
   },
   "Allergies": {
+    "AllergyID": "significant",
     "AllergenName": "significant",
     "ReactionSeverity": "significant",
     "ReactionDescription": "insignificant",
@@ -41,6 +42,7 @@
     "Frequency": "significant"
   },
   "Procedures": {
+    "ProcedureID": "significant",
     "ProcedureName": "significant",
     "ProcedureDate": "significant",
     "ProcedureDoctor": "significant",
@@ -53,6 +55,7 @@
     "TestTimestamp": "significant"
   },
   "VitalSigns": {
+    "VitalSignsID": "significant",
     "Temperature": "significant",
     "Height": "insignificant",
     "Weight": "insignificant",
@@ -60,6 +63,7 @@
     "HeartRate": "significant"
   },
   "ImagingReports": {
+    "ImagingReportID": "significant",
     "ReportName": "significant",
     "ReportResult": "significant",
     "AdministeringClinic": "insignificant"

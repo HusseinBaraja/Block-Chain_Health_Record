@@ -1,60 +1,69 @@
 {
 	"P1":[
 		{
-			"ImagingReports":{
-				"AdministeringClinic":"City Hospital Radiology"
-			},
+			"ImagingReports":[
+				{
+					"IRID":"IR1",
+					"AdministeringClinic":"City Hospital Radiology"
+				}
+			],
 			"PatientIdentifiers":{
 				"Address":"123 Main Street Cityville USA",
 				"Username":"john",
 				"PhoneNumber":"+1 (123) 456-7890"
 			},
-			"Procedures":{
-				"ProcedureNotes":"Successful surgery no complications."
-			},
-			"VitalSigns":{
-				"Height":"5'10\"",
-				"Weight":"175 lbs"
-			},
-			"Diagnosis":{
-				"DiagnosisDescription":"Hypertension",
-				"DiagnoseID":"Dia1",
-				"Notes":"Patient needs to monitor blood pressure regularly."
-			},
-			"Allergies":{
-				"ReactionDescription":"Skin rash",
-				"TreatmentPlan":"Avoid Penicillin-containing medications."
-			}
+			"Procedures":[
+				{
+					"ProcedureID":"Pro1",
+					"ProcedureNotes":"Successful surgery no complications."
+				}
+			],
+			"VitalSigns":[
+				{
+					"VitalSignsID":"VS1",
+					"Height":"5'10\"",
+					"Weight":"175 lbs"
+				}
+			],
+			"Diagnosis":[
+				{
+					"DiagnosisDescription":"Hypertension",
+					"DiagnoseID":"Dia1",
+					"Notes":"Patient needs to monitor blood pressure regularly."
+				},
+				{
+					"Diagnosis":{
+						"DiagnosisDescription":"asd",
+						"Notes":"asd"
+					}
+				}
+			],
+			"Allergies":[
+				{
+					"AllergiesID":"AL1",
+					"ReactionDescription":"Skin rash",
+					"TreatmentPlan":"Avoid Penicillin-containing medications."
+				}
+			]
 		}
 	],
 	"P2":[
 		{
-			"ImagingReports":{
-				"AdministeringClinic":"13"
-			},
-			"PatientIdentifiers":{
-				"Address":"2",
-				"Username":"1",
-				"PhoneNumber":"3"
-			},
-			"Procedures":{
-				"ProcedureNotes":"10"
-			},
-			"VitalSigns":{
-				"Height":"11",
-				"Weight":"12"
-			},
-			"Diagnosis":{
-				"DiagnosisDescription":"5",
-				"Notes":"6"
-			},
-			"Allergies":{
-				"TreatmentPlan":"9",
-				"ReactionDescription":"8"
-			}
+			"ImagingReports":[
+				
+			],
+			"Procedures":[
+				
+			],
+			"VitalSigns":[
+				
+			],
+			"Diagnosis":[
+				
+			],
+			"Allergies":[
+				
+			]
 		}
-	],
-	"P3":[
-		
 	]
 }

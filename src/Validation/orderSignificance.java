@@ -6,6 +6,7 @@ import org.json.simple.parser.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static Application.Electronic_Health_Record_Application.addDataToBlockchain;
 
@@ -45,10 +46,17 @@ public class orderSignificance {
         return prettyJSONBuilder.toString();
     }
 
-    public void sortData(JSONObject inputObject) throws IOException{
-        JSONObject significanceObject = readJsonFile("database/categorization.json");
+    public void sortData(JSONObject inputObject, String dataTypeToAdd) throws IOException{
+        JSONObject significanceObject = readJsonFile("src/database/categorization.json");
         JSONObject significantDataObject = new JSONObject();
         JSONObject insignificantDataObject = readJsonFile("src/database/insignificant_data.json");
+
+        ArrayList<String> forceOnBoth = new ArrayList<>();
+        forceOnBoth.add("DiagnoseID");
+        forceOnBoth.add("AllergyID");
+        forceOnBoth.add("ProcedureID");
+        forceOnBoth.add("VitalSignsID");
+        forceOnBoth.add("ImagingReportID");
 
         for (Object patientIdObj : inputObject.keySet()) {
             String patientId = (String) patientIdObj;
@@ -65,11 +73,17 @@ public class orderSignificance {
 
                     for (Object itemKeyObj : categoryData.keySet()) {
                         String itemKey = (String) itemKeyObj;
-                        if ("significant".equals(((JSONObject) significanceObject.get(category)).get(itemKey))) {
+                        if(forceOnBoth.contains(itemKey)){
                             significantCategoryData.put(itemKey, categoryData.get(itemKey));
-                        } else {
                             insignificantCategoryData.put(itemKey, categoryData.get(itemKey));
+                        } else {
+                            if ("significant".equals(((JSONObject) significanceObject.get(category)).get(itemKey))) {
+                                significantCategoryData.put(itemKey, categoryData.get(itemKey));
+                            } else {
+                                insignificantCategoryData.put(itemKey, categoryData.get(itemKey));
+                            }
                         }
+
                     }
 
                     if (!significantCategoryData.isEmpty()) {
@@ -93,11 +107,25 @@ public class orderSignificance {
 
             if (!insignificantPatientData.isEmpty()) {
                 if (insignificantDataObject.containsKey(patientId)) {
-                    ((JSONArray) insignificantDataObject.get(patientId)).add(insignificantPatientData);
+                    JSONArray patientDataArray = (JSONArray) insignificantDataObject.get(patientId);
+                    JSONObject currentPatientData = (JSONObject) patientDataArray.get(0); // assuming each patient ID has only one JSONObject in the array
+
+                    if (currentPatientData.containsKey(dataTypeToAdd)) {
+                        ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(insignificantPatientData);
+                    } else {
+                        JSONArray newArray = new JSONArray();
+                        newArray.add(insignificantPatientData);
+                        currentPatientData.put(dataTypeToAdd, newArray);
+                    }
                 } else {
+                    JSONObject newPatientData = new JSONObject();
                     JSONArray newArray = new JSONArray();
                     newArray.add(insignificantPatientData);
-                    insignificantDataObject.put(patientId, newArray);
+                    newPatientData.put(dataTypeToAdd, newArray);
+
+                    JSONArray newPatientDataArray = new JSONArray();
+                    newPatientDataArray.add(newPatientData);
+                    insignificantDataObject.put(patientId, newPatientDataArray);
                 }
             }
         }
@@ -106,6 +134,25 @@ public class orderSignificance {
 
         try (FileWriter insignificantFile = new FileWriter("src/database/insignificant_data.json")) {
             insignificantFile.write(formatJson(insignificantDataObject.toJSONString()));
+        }
+    }
+
+    private void addDataToInsignificant(JSONObject insignificantDataObject, String patientId, String dataTypeToAdd, JSONObject dataToAdd) {
+        if (insignificantDataObject.containsKey(patientId)) {
+            JSONObject currentPatientData = (JSONObject) insignificantDataObject.get(patientId);
+            if (currentPatientData.containsKey(dataTypeToAdd)) {
+                ((JSONArray) currentPatientData.get(dataTypeToAdd)).add(dataToAdd);
+            } else {
+                JSONArray newArray = new JSONArray();
+                newArray.add(dataToAdd);
+                currentPatientData.put(dataTypeToAdd, newArray);
+            }
+        } else {
+            JSONObject newPatientData = new JSONObject();
+            JSONArray newArray = new JSONArray();
+            newArray.add(dataToAdd);
+            newPatientData.put(dataTypeToAdd, newArray);
+            insignificantDataObject.put(patientId, newPatientData);
         }
     }
 
