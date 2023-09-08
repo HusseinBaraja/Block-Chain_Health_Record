@@ -1,5 +1,6 @@
 package Application;
 
+import Signature.MySignature;
 import Users.Admin;
 import Users.Doctor;
 import Users.HealthProvider;
@@ -16,6 +17,8 @@ import Blockchain.Hasher;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.PrivateKey;
+import java.util.Base64;
 import java.util.Collections;
 
 
@@ -26,7 +29,7 @@ public class Electronic_Health_Record_Application {
     private static String masterFolder = "master";
     private static String fileName = masterFolder + "/chain.bin";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         mainMenu();
     }
 
@@ -60,7 +63,7 @@ public class Electronic_Health_Record_Application {
         }
     }
 
-    private static void mainMenu() throws IOException {
+    private static void mainMenu() throws Exception {
         while (true) {
             clearScreen();
             System.out.println("\u001B[34m+---------------------------------+\u001B[0m"); // Blue border
@@ -100,7 +103,7 @@ public class Electronic_Health_Record_Application {
         System.out.flush();
     }
 
-    private static void signIn() throws IOException {
+    private static void signIn() throws Exception {
         clearScreen();
 
         System.out.println();

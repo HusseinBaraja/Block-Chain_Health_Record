@@ -2,28 +2,46 @@
 	"P0":[
 		{
 			"ImagingReports":[
-				
+				{
+					"ImagingReportsID":"IR1",
+					"Report Name":"asdsad",
+					"AdministeringClinic":"asdsad"
+				},
+				{
+					"ImagingReportsID":"IR2",
+					"Report Name":"asdsad",
+					"AdministeringClinic":"asdsad"
+				}
 			],
 			"PatientIdentifiers":{
-				"Address":"oldasf3qr",
+				"Address":"231321",
 				"Username":"testtest",
-				"PhoneNumber":"8432924201"
+				"PhoneNumber":"0123456789"
 			},
 			"Procedures":[
 				
 			],
 			"VitalSigns":[
-				{
-					"VitalSignsID":"VS1",
-					"Height":"234324",
-					"Weight":"23424"
-				}
+				
 			],
 			"Diagnosis":[
 				
 			],
 			"Allergies":[
 				
+			]
+		}
+	],
+	"null":[
+		{
+			"PatientIdentifiers":[
+				{
+					"PatientIdentifiers":{
+						"Address":"31212",
+						"Username":"mohammed",
+						"PhoneNumber":"0123456789"
+					}
+				}
 			]
 		}
 	]
