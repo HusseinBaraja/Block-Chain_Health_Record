@@ -53,11 +53,11 @@ public class orderSignificance {
         JSONObject insignificantDataObject = readJsonFile("src/database/insignificant_data.json");
 
         ArrayList<String> forceOnBoth = new ArrayList<>();
-        forceOnBoth.add("DiagnoseID");
-        forceOnBoth.add("AllergyID");
-        forceOnBoth.add("ProcedureID");
+        forceOnBoth.add("DiagnosisID");
+        forceOnBoth.add("AllergiesID");
+        forceOnBoth.add("ProceduresID");
         forceOnBoth.add("VitalSignsID");
-        forceOnBoth.add("ImagingReportID");
+        forceOnBoth.add("ImagingReportsID");
 
         for (Object patientIdObj : inputObject.keySet()) {
             String patientId = (String) patientIdObj;
