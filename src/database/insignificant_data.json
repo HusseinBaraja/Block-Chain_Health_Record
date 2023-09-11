@@ -4,8 +4,8 @@
 			"ImagingReports":[
 				{
 					"ImagingReportsID":"IR1",
-					"Report Name":"Chest X-Ray",
-					"AdministeringClinic":"Imaging Center A"
+					"Report Name":"MRI Brain Scan",
+					"AdministeringClinic":"Town Radiology Center"
 				}
 			],
 			"PatientIdentifiers":{
@@ -15,7 +15,7 @@
 			},
 			"Procedures":[
 				{
-					"ProcedureNotes":"Check for fractures",
+					"ProcedureNotes":"Routine cleaning",
 					"ProceduresID":"PR1"
 				}
 			],
@@ -23,21 +23,89 @@
 				{
 					"VitalSignsID":"VS1",
 					"Height":160.0,
-					"Weight":50.0
+					"Weight":60.0
 				}
 			],
 			"Diagnosis":[
 				{
-					"DiagnosisDescription":"fsaf",
-					"Notes":"ads",
+					"DiagnosisDescription":"Hypertension",
+					"Notes":"High blood pressure",
+					"DiagnosisID":"DI1"
+				},
+				{
+					"DiagnosisDescription":"Migraine",
+					"Notes":"Frequent headaches\"",
+					"DiagnosisID":"DI2"
+				},
+				{
+					"DiagnosisDescription":"Type 2 Diabetes",
+					"Notes":"Requires insulin",
+					"DiagnosisID":"DI3"
+				}
+			],
+			"Allergies":[
+				{
+					"AllergiesID":"AL1",
+					"ReactionDescription":"Anaphylaxis",
+					"TreatmentPlan":"Avoid shellfish, carry EpiPen"
+				},
+				{
+					"AllergiesID":"AL2",
+					"ReactionDescription":"Hives",
+					"TreatmentPlan":"Avoid penicilli"
+				}
+			]
+		}
+	],
+	"P1":[
+		{
+			"ImagingReports":[
+				{
+					"ImagingReportsID":"IR1",
+					"Report Name":"MRI of Brain",
+					"AdministeringClinic":"Springfield Imaging Center"
+				},
+				{
+					"ImagingReportsID":"IR2",
+					"Report Name":"MRI of Lumbar Spine",
+					"AdministeringClinic":"Oakville Radiology Center"
+				}
+			],
+			"PatientIdentifiers":{
+				"Address":"Dubai",
+				"Username":"Hamzaa",
+				"PhoneNumber":"0123123211"
+			},
+			"Procedures":[
+				{
+					"ProcedureNotes":"Routine dental checkup",
+					"ProceduresID":"PR1"
+				}
+			],
+			"VitalSigns":[
+				{
+					"VitalSignsID":"VS1",
+					"Height":180.0,
+					"Weight":70.0
+				}
+			],
+			"Diagnosis":[
+				{
+					"DiagnosisDescription":"Asthma",
+					"Notes":"Uses inhaler as needed",
 					"DiagnosisID":"DI1"
 				}
 			],
 			"Allergies":[
 				{
 					"AllergiesID":"AL1",
-					"ReactionDescription":"Skin rash",
-					"TreatmentPlan":"Antihistamines"
+					"ReactionDescription":"Sneezing",
+					"TreatmentPlan":"Antihistamines as needed"
+				},
+				{
+					"AllergiesID":"AL2",
+					"ReactionDescription":"Hives and difficulty breathing",
+					"TreatmentPlan":"Avoid sulfa drugs, carry EpiPen"
 				}
 			]
 		}

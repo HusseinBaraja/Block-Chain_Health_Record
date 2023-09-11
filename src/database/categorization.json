@@ -17,6 +17,7 @@
   },
   "Diagnosis": {
     "DiagnoseID": "significant",
+    "DiagnosisCode": "significant",
     "DiagnosisDescription": "insignificant",
     "DateOfDiagnosis": "significant",
     "DiagnosisStatus": "significant",

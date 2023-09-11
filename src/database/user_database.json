@@ -60,5 +60,10 @@
             "PatientId": "P0",
             "Username": "Cristina",
             "Password": "b73c3d8a1bf3ff549670b5a99b0aae2be51e150010147e32a4220e21eaf945a62074f11a796fbe9a28407d51c363f345"
+        },
+        {
+            "PatientId": "P1",
+            "Username": "Hamzaa",
+            "Password": "1ec8f56081b102a0034e080d2ccddb9d3d504cc945f7f6acd00873b886278b019aa6adff6d9ad422e6c8d8f3348e7505"
         }
     ]}

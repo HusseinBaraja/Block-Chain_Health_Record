@@ -316,6 +316,9 @@ public class Doctor extends Users {
         String diagnosisID = generateAndIncrementID(data, "Diagnosis");
         DiagnosisInformation.put("DiagnosisID", diagnosisID);
 
+        String diagnosisCode = InputValidator.valString("Enter Diagnosis Code: ", "Diagnosis Code");
+        DiagnosisInformation.put("DiagnosisCode", diagnosisCode);
+
         String diagnosisDescription = InputValidator.valString("Enter Diagnosis Description: ", "Diagnosis Description");
         DiagnosisInformation.put("DiagnosisDescription", diagnosisDescription);
 
