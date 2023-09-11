@@ -1,5 +1,6 @@
 package Users;
 
+import Blockchain.Blockchain;
 import Cryptography.KeyAccess;
 import Signature.MySignature;
 import Validation.InputValidator;
@@ -63,7 +64,8 @@ public class Doctor extends Users {
             System.out.println("\u001B[36mDoctor Menu:\u001B[0m"); // Cyan header
             System.out.println("\u001B[32m1. Add Patient Information\u001B[0m"); // Green menu item
             System.out.println("\u001B[32m2. Modify Patient Information Patient\u001B[0m"); // Green menu item
-            System.out.println("\u001B[32m3. Logout\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m3. View Patient info\u001B[0m"); // Green menu item
+            System.out.println("\u001B[32m4. Logout\u001B[0m"); // Green menu item
 
             int choice = InputValidator.valInt("\u001B[36mChoice:\u001B[0m ", "choice"); // Cyan input prompt
 
@@ -76,6 +78,9 @@ public class Doctor extends Users {
                     modifyPatientData(patientUsername);
                     break;
                 case 3:
+                    ViewPatientData();
+                    break;
+                case 4:
                     System.out.println("\u001B[32mLogging out from the account, Bye :-)\u001B[0m"); // Green logout message
                     return;
                 default:
@@ -219,6 +224,11 @@ public class Doctor extends Users {
         System.out.println("10. \u001B[32mAdd Patient Imaging Reports Data\u001B[0m"); // Green menu item
         System.out.println("11. \u001B[32mBack to Doctor Menu\u001B[0m"); // Green menu item
 
+        SelectOption(patientInfo, privateKey, publicKey);
+
+    }
+
+    private void SelectOption(JSONObject patientInfo, PrivateKey privateKey, PublicKey publicKey){
         int option = InputValidator.valInt("\u001B[36mEnter your choice:\u001B[0m ", "choice"); // Cyan input prompt
 
         switch (option) {
@@ -257,8 +267,11 @@ public class Doctor extends Users {
                 return;
             default:
                 System.out.println("\u001B[31mInvalid choice.\u001B[0m"); // Red error message
+                SelectOption(patientInfo, privateKey, publicKey);
         }
     }
+
+
 
     private void addDemographicData(String patientId, PrivateKey privateKey, PublicKey publicKey) {
         JSONObject patientData = new JSONObject();
@@ -783,5 +796,11 @@ public class Doctor extends Users {
             e.printStackTrace();
             return null;
         }
+    }
+    private static String masterFolder = "master";
+    private static String fileName = masterFolder + "/chain.bin";
+    private void ViewPatientData(){
+        Blockchain bc = Blockchain.getInstance(fileName);
+        bc.writeChain();
     }
 }
