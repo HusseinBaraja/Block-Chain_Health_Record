@@ -754,16 +754,16 @@ public class Doctor extends Users {
         String newID;
         if (!lastID.isEmpty()) {
             int lastIDNumber = Integer.parseInt(lastID.substring(2));
-            if (category == "VitalSigns") newID = "VS" + (lastIDNumber + 1);
-            else if(category == "Procedures") newID = "Pro" + (lastIDNumber + 1);
-            else if (category == "Diagnosis") newID = "Dia" + (lastIDNumber + 1);
-            else if (category == "Allergies") newID = "AL" + (lastIDNumber + 1);
+            if (Objects.equals(category, "VitalSigns")) newID = "VS" + (lastIDNumber + 1);
+            else if(Objects.equals(category, "Procedures")) newID = "PR" + (lastIDNumber + 1);
+            else if (Objects.equals(category, "Diagnosis")) newID = "DI" + (lastIDNumber + 1);
+            else if (Objects.equals(category, "Allergies")) newID = "AL" + (lastIDNumber + 1);
             else newID = "IR" + (lastIDNumber + 1);
         } else {
-            if (category == "VitalSigns") newID = "VS1";
-            else if(category == "Procedures") newID = "Pro1";
-            else if (category == "Diagnosis") newID = "Dia1";
-            else if (category == "Allergies") newID = "AL1";
+            if (Objects.equals(category, "VitalSigns")) newID = "VS1";
+            else if(Objects.equals(category, "Procedures")) newID = "PR1";
+            else if (Objects.equals(category, "Diagnosis")) newID = "DI1";
+            else if (Objects.equals(category, "Allergies")) newID = "AL1";
             else newID = "IR1";
 
         }

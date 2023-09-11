@@ -16,7 +16,7 @@
 			"Procedures":[
 				{
 					"ProcedureNotes":"Check for fractures",
-					"ProceduresID":"Pro1"
+					"ProceduresID":"PR1"
 				}
 			],
 			"VitalSigns":[
@@ -30,7 +30,7 @@
 				{
 					"DiagnosisDescription":"Hypertension",
 					"Notes":"High blood pressure",
-					"DiagnosisID":"Dia1"
+					"DiagnosisID":"DI1"
 				}
 			],
 			"Allergies":[
